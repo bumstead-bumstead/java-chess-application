@@ -14,6 +14,7 @@ public class Pawn {
         return color;
     }
 
+    //todo : white, black이 아닌 입력에 대한 예외처리?
     public void setColor(String color) {
         this.color = color;
     }
