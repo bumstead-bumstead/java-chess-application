@@ -9,10 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BoardTest {
     private Board board;
+
     @BeforeEach
-    public void initializeBoard() {
+    public void init() {
         board = new Board();
     }
+
     @Test
     public void create() throws Exception {
         verifyInsertion(board, Pawn.COLOR_WHITE, 0);
@@ -24,5 +26,12 @@ class BoardTest {
         board.add(pawn);
         assertEquals(sequenceNumber + 1, board.size());
         assertEquals(pawn, board.findPawn(sequenceNumber));
+    }
+
+    @Test
+    public void initialize() throws Exception {
+        board.initialize();
+        assertEquals("pppppppp", board.getWhitePawnsResult());
+        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
     }
 }
