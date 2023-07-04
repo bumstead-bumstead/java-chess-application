@@ -34,4 +34,10 @@ class BoardTest {
         assertEquals("pppppppp", board.getWhitePawnsResult());
         assertEquals("PPPPPPPP", board.getBlackPawnsResult());
     }
+
+    @Test
+    public void print() throws Exception {
+        board.initialize();
+        System.out.println(board.print());
+    }
 }
