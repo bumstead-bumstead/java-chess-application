@@ -10,7 +10,7 @@ public class Board {
     private final static int BOARD_LINE_UNIT = 8;
     private final static int BLACK_PAWN_LINE_NUMBER = 1;
     private final static int WHITE_PAWN_LINE_NUMBER = 6;
-    private List<Pawn> pawns = new ArrayList<>();
+    private List<Pawn> pawns;
 
     public Board() {
         this.pawns = new ArrayList<>();
@@ -24,17 +24,18 @@ public class Board {
         }
     }
 
-    private void fillCurrentLocation(int currentLineNumber) {
-        if (currentLineNumber == BLACK_PAWN_LINE_NUMBER) {
-            pawns.add(new Pawn(Pawn.COLOR_BLACK));
-            return;
+    public String print() {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < 64; i++) {
+            result.append(getRepresentationOfCurrentLocation(i));
+
+            if (isEndOfLine(i)) {
+                result.append("\n");
+            }
         }
 
-        if (currentLineNumber == WHITE_PAWN_LINE_NUMBER) {
-            pawns.add(new Pawn(Pawn.COLOR_WHITE));
-            return;
-        }
-        pawns.add(null);
+        return result.toString();
     }
 
     public void add(Pawn pawn) {
@@ -85,5 +86,32 @@ public class Board {
 
     private static int getBlackPawnStartLocation() {
         return BLACK_PAWN_LINE_NUMBER * BOARD_LINE_UNIT;
+    }
+
+    private char getRepresentationOfCurrentLocation(int location) {
+        Pawn pawn = pawns.get(location);
+
+        if (pawn == null) {
+            return '.';
+        }
+
+        return pawn.getRepresentation();
+    }
+
+    private static boolean isEndOfLine(int i) {
+        return i % BOARD_LINE_UNIT == 7;
+    }
+
+    private void fillCurrentLocation(int currentLineNumber) {
+        if (currentLineNumber == BLACK_PAWN_LINE_NUMBER) {
+            pawns.add(new Pawn(Pawn.COLOR_BLACK));
+            return;
+        }
+
+        if (currentLineNumber == WHITE_PAWN_LINE_NUMBER) {
+            pawns.add(new Pawn(Pawn.COLOR_WHITE));
+            return;
+        }
+        pawns.add(null);
     }
 }
