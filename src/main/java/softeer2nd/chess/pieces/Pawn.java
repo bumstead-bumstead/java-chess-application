@@ -1,8 +1,8 @@
-package softeer2nd;
+package softeer2nd.chess.pieces;
 
 public class Pawn {
-    final static String COLOR_WHITE = "white";
-    final static String COLOR_BLACK = "black";
+    public final static String COLOR_WHITE = "white";
+    public final static String COLOR_BLACK = "black";
 
     private String color;
 
@@ -14,7 +14,6 @@ public class Pawn {
         return color;
     }
 
-    //todo : white, black이 아닌 입력에 대한 예외처리?
     public void setColor(String color) {
         this.color = color;
     }
