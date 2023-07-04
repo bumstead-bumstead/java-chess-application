@@ -25,4 +25,9 @@ public class Pawn {
     public char getRepresentation() {
         return this.pieceColor.getRepresentation();
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(pieceColor.getRepresentation());
+    }
 }
