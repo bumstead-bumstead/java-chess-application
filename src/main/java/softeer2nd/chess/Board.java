@@ -10,108 +10,92 @@ public class Board {
     private final static int BOARD_LINE_UNIT = 8;
     private final static int BLACK_PAWN_LINE_NUMBER = 1;
     private final static int WHITE_PAWN_LINE_NUMBER = 6;
-    private List<Pawn> pawns;
+    private List<List<Pawn>> pawns;
 
     public Board() {
         this.pawns = new ArrayList<>();
     }
 
     public void initialize() {
-        for (int i = 0; i < 64; i++) {
-            int currentLineNumber = i / BOARD_LINE_UNIT;
+        pawns.clear();
 
-            fillCurrentLocation(currentLineNumber);
+        for (int i = 0; i < BOARD_LINE_UNIT; i++) {
+            fillCurrentRow(i, getCurrentPawn(i));
         }
+    }
+
+    private void fillCurrentRow(int i, Pawn pawn) {
+        List<Pawn> line = new ArrayList<>();
+
+        for (int j = 0; j < BOARD_LINE_UNIT; j++) {
+            line.add(pawn);
+        }
+
+        pawns.add(line);
+    }
+
+    private static Pawn getCurrentPawn(int i) {
+        Pawn pawn = null;
+        if (i == BLACK_PAWN_LINE_NUMBER) {
+            pawn = new Pawn(Pawn.COLOR_BLACK);
+        }
+        if (i == WHITE_PAWN_LINE_NUMBER) {
+            pawn = new Pawn(Pawn.COLOR_WHITE);
+        }
+
+        return pawn;
     }
 
     public String print() {
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < 64; i++) {
-            result.append(getRepresentationOfCurrentLocation(i));
+        for (int i = 0; i < BOARD_LINE_UNIT; i++) {
+            List<Pawn> line = pawns.get(i);
 
-            if (isEndOfLine(i)) {
-                result.append("\n");
-            }
+            result.append(joinListToString(line));
+            result.append("\n");
         }
 
         return result.toString();
     }
 
-    public void add(Pawn pawn) {
-        pawns.add(pawn);
+    private String joinListToString(List<Pawn> line) {
+        StringBuilder result = new StringBuilder();
+
+        for (Pawn pawn : line) {
+            if (pawn == null) {
+                result.append(".");
+                continue;
+            }
+            result.append(pawn);
+        }
+
+        return result.toString();
     }
 
     public int size() {
         return pawns.size();
     }
 
-    public Pawn findPawn(int i) {
-        return pawns.get(i);
-    }
-
-    public List<Pawn> getPawns() {
+    public List<List<Pawn>> getPawns() {
         return pawns;
-    }
-
-    public void setPawns(List<Pawn> pawns) {
-        this.pawns = pawns;
     }
 
     public String getWhitePawnsResult() {
         StringBuilder result = new StringBuilder();
-        int startLocation = getWhitePawnStartLocation();
+        List<Pawn> whitePawnRow = pawns.get(WHITE_PAWN_LINE_NUMBER);
 
-        for (int i = startLocation; i < startLocation + BOARD_LINE_UNIT; i++) {
-            result.append(pawns.get(i).getRepresentation());
-        }
+        whitePawnRow.forEach(result::append);
 
         return result.toString();
     }
 
     public String getBlackPawnsResult() {
         StringBuilder result = new StringBuilder();
-        int startLocation = getBlackPawnStartLocation();
+        List<Pawn> blackPawnRow = pawns.get(BLACK_PAWN_LINE_NUMBER);
 
-        for (int i = startLocation; i < startLocation + BOARD_LINE_UNIT; i++) {
-            result.append(pawns.get(i).getRepresentation());
-        }
+        blackPawnRow.forEach(result::append);
 
         return result.toString();
-    }
-
-    private static int getWhitePawnStartLocation() {
-        return WHITE_PAWN_LINE_NUMBER * BOARD_LINE_UNIT;
-    }
-
-    private static int getBlackPawnStartLocation() {
-        return BLACK_PAWN_LINE_NUMBER * BOARD_LINE_UNIT;
-    }
-
-    private char getRepresentationOfCurrentLocation(int location) {
-        Pawn pawn = pawns.get(location);
-
-        if (pawn == null) {
-            return '.';
-        }
-
-        return pawn.getRepresentation();
-    }
-
-    private static boolean isEndOfLine(int i) {
-        return i % BOARD_LINE_UNIT == 7;
-    }
-
-    private void fillCurrentLocation(int currentLineNumber) {
-        if (currentLineNumber == BLACK_PAWN_LINE_NUMBER) {
-            pawns.add(new Pawn(Pawn.COLOR_BLACK));
-            return;
-        }
-
-        if (currentLineNumber == WHITE_PAWN_LINE_NUMBER) {
-            pawns.add(new Pawn(Pawn.COLOR_WHITE));
-            return;
-        }
-        pawns.add(null);
     }
 }

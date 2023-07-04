@@ -16,19 +16,6 @@ class BoardTest {
     }
 
     @Test
-    public void create() throws Exception {
-        verifyInsertion(board, Pawn.COLOR_WHITE, 0);
-        verifyInsertion(board, Pawn.COLOR_BLACK, 1);
-    }
-
-    private static void verifyInsertion(Board board, String color, int sequenceNumber) {
-        Pawn pawn = new Pawn(color);
-        board.add(pawn);
-        assertEquals(sequenceNumber + 1, board.size());
-        assertEquals(pawn, board.findPawn(sequenceNumber));
-    }
-
-    @Test
     public void initialize() throws Exception {
         board.initialize();
         assertEquals("pppppppp", board.getWhitePawnsResult());
