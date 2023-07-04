@@ -17,21 +17,24 @@ public class Board {
     }
 
     public void initialize() {
-        //todo : 초기 상태로 list 채우기
         for (int i = 0; i < 64; i++) {
             int currentLineNumber = i / BOARD_LINE_UNIT;
 
-            if (currentLineNumber == BLACK_PAWN_LINE_NUMBER) {
-                pawns.add(new Pawn(Pawn.COLOR_BLACK));
-                continue;
-            }
-
-            if (currentLineNumber == WHITE_PAWN_LINE_NUMBER) {
-                pawns.add(new Pawn(Pawn.COLOR_WHITE));
-                continue;
-            }
-            pawns.add(null);
+            fillCurrentLocation(currentLineNumber);
         }
+    }
+
+    private void fillCurrentLocation(int currentLineNumber) {
+        if (currentLineNumber == BLACK_PAWN_LINE_NUMBER) {
+            pawns.add(new Pawn(Pawn.COLOR_BLACK));
+            return;
+        }
+
+        if (currentLineNumber == WHITE_PAWN_LINE_NUMBER) {
+            pawns.add(new Pawn(Pawn.COLOR_WHITE));
+            return;
+        }
+        pawns.add(null);
     }
 
     public void add(Pawn pawn) {
