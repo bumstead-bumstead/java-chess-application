@@ -1,5 +1,6 @@
 package softeer2nd.chess.pieces;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.PieceColor;
@@ -10,6 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PieceTest {
+    Piece whitePiece;
+    Piece blackPiece;
+
+    @BeforeEach
+    void init() {
+        whitePiece = Piece.createWhiteBishop();
+        blackPiece = Piece.createBlackBishop();
+    }
 
     @Test
     @DisplayName("생성된 기물의 field가 유효해야한다.")
@@ -31,33 +40,24 @@ public class PieceTest {
     @Test
     @DisplayName("기물의 색이 흰 색이면 isWhite()는 true를 반환해야 한다.")
     public void isWhiteTrue() {
-        Piece whitePiece = Piece.createWhiteBishop();
-
         assertTrue(whitePiece.isWhite());
     }
 
     @Test
     @DisplayName("기물의 색이 검은 색이면 isWhite는 false를 반환해야 한다.")
     public void isWhiteFalse() {
-        Piece blackPiece = Piece.createBlackBishop();
-
         assertFalse(blackPiece.isWhite());
     }
 
     @Test
     @DisplayName("기물의 색이 검정 색이면 isBlack()는 true를 반환해야 한다.")
     public void isBlackTrue() {
-        Piece blackPiece = Piece.createBlackBishop();
-
         assertTrue(blackPiece.isBlack());
     }
 
     @Test
     @DisplayName("기물의 색이 흰 색이면 isBlack은 false를 반환해야 한다.")
     public void isBlackFalse() {
-        //given
-        Piece whitePiece = Piece.createWhiteBishop();
-
         assertFalse(whitePiece.isBlack());
     }
 
