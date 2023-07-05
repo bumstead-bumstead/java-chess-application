@@ -87,6 +87,6 @@ public class Piece {
 
     @Override
     public String toString() {
-        return String.valueOf(pieceColor.getRepresentation());
+        return representation.getRepresentation().toString();
     }
 }

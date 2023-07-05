@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.pieces.Piece;
+
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 import java.util.ArrayList;
@@ -8,10 +9,11 @@ import java.util.List;
 
 public class Board {
 
-    private final static int BOARD_LINE_UNIT = 8;
+    private final static int BOARD_LENGTH = 8;
     private final static int BLACK_PAWN_LINE_NUMBER = 1;
     private final static int WHITE_PAWN_LINE_NUMBER = 6;
     private List<List<Piece>> pieces;
+
 
     public Board() {
         this.pieces = new ArrayList<>();
@@ -20,41 +22,61 @@ public class Board {
     public void initialize() {
         pieces.clear();
 
-        for (int i = 0; i < BOARD_LINE_UNIT; i++) {
-            fillCurrentRow(i, getCurrentPiece(i));
-        }
+        fillFirstBlackRow();
+        fillOneRow(Piece.createBlackPawn());
+        fillOneRow(null);
+        fillOneRow(null);
+        fillOneRow(null);
+        fillOneRow(null);
+        fillOneRow(Piece.createWhitePawn());
+        fillFirstWhiteRow();
     }
 
-    private void fillCurrentRow(int i, Piece piece) {
-        List<Piece> line = new ArrayList<>();
+    private void fillFirstBlackRow() {
+        List<Piece> row = new ArrayList<>();
+        row.add(Piece.createBlackRook());
+        row.add(Piece.createBlackKnight());
+        row.add(Piece.createBlackBishop());
+        row.add(Piece.createBlackQueen());
+        row.add(Piece.createBlackKing());
+        row.add(Piece.createBlackBishop());
+        row.add(Piece.createBlackKnight());
+        row.add(Piece.createBlackRook());
 
-        for (int j = 0; j < BOARD_LINE_UNIT; j++) {
-            line.add(piece);
-        }
-
-        pieces.add(line);
+        pieces.add(row);
     }
 
-    private static Piece getCurrentPiece(int i) {
-        Piece piece = null;
-        if (i == BLACK_PAWN_LINE_NUMBER) {
-            piece = new Piece(Piece.COLOR_BLACK);
-        }
-        if (i == WHITE_PAWN_LINE_NUMBER) {
-            piece = new Piece(Piece.COLOR_WHITE);
+    private void fillFirstWhiteRow() {
+        List<Piece> row = new ArrayList<>();
+        row.add(Piece.createWhiteRook());
+        row.add(Piece.createWhiteKnight());
+        row.add(Piece.createWhiteBishop());
+        row.add(Piece.createWhiteQueen());
+        row.add(Piece.createWhiteKing());
+        row.add(Piece.createWhiteBishop());
+        row.add(Piece.createWhiteKnight());
+        row.add(Piece.createWhiteRook());
+
+        pieces.add(row);
+    }
+
+    private void fillOneRow(Piece piece) {
+        List<Piece> row = new ArrayList<>();
+
+        for (int index = 0; index < BOARD_LENGTH; index++) {
+            row.add(piece);
         }
 
-        return piece;
+        pieces.add(row);
     }
 
     public String print() {
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < BOARD_LINE_UNIT; i++) {
+        for (int i = 0; i < BOARD_LENGTH; i++) {
             List<Piece> line = pieces.get(i);
 
             result.append(appendNewLine(joinListToString(line)));
-            result.append("\n");
         }
 
         return result.toString();
@@ -74,29 +96,37 @@ public class Board {
         return result.toString();
     }
 
-    public int size() {
-        return pieces.size();
-    }
-
-    public List<List<Piece>> getPieces() {
-        return pieces;
-    }
-
-    public String getWhitePawnsResult() {
+    public String showBoard() {
         StringBuilder result = new StringBuilder();
-        List<Piece> whitePawnRow = pieces.get(WHITE_PAWN_LINE_NUMBER);
 
-        whitePawnRow.forEach(result::append);
+        for (int i = 0; i < BOARD_LENGTH; i++) {
+            List<Piece> line = pieces.get(i);
+
+            result.append(appendNewLine(joinListToString(line)));
+        }
 
         return result.toString();
+
     }
 
-    public String getBlackPawnsResult() {
-        StringBuilder result = new StringBuilder();
-        List<Piece> blackPawnRow = pieces.get(BLACK_PAWN_LINE_NUMBER);
+    public int pieceCount() {
+        int numberOfPieces = 0;
 
-        blackPawnRow.forEach(result::append);
+        for (int row = 0; row < BOARD_LENGTH; row++) {
+            numberOfPieces += getNumberOfPiecesOfOneRow(row);
+        }
 
-        return result.toString();
+        return numberOfPieces;
+    }
+
+    private int getNumberOfPiecesOfOneRow(int row) {
+        int numberOfPieces = 0;
+        for (int column = 0; column < BOARD_LENGTH; column++) {
+            if (pieces.get(row).get(column) == null) {
+                continue;
+            }
+            numberOfPieces++;
+        }
+        return numberOfPieces;
     }
 }

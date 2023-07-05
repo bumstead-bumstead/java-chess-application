@@ -18,5 +18,9 @@ public enum PieceRepresentation {
         this.representation = representation;
     }
 
+    public Character getRepresentation() {
+        return representation;
+    }
+
     private final Character representation;
 }
