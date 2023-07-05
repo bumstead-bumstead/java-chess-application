@@ -2,7 +2,7 @@ package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.PieceColor;
 
-public class Pawn {
+public class Piece {
     public final static String COLOR_WHITE = "white";
     public final static String COLOR_BLACK = "black";
     public final static char REPRESENTATION_WHITE = 'p';
@@ -10,11 +10,11 @@ public class Pawn {
 
     private PieceColor pieceColor;
 
-    public Pawn() {
+    public Piece() {
         this.pieceColor = PieceColor.valueOf(COLOR_WHITE.toUpperCase());
     }
 
-    public Pawn(String color) {
+    public Piece(String color) {
         this.pieceColor = PieceColor.valueOf(color.toUpperCase());
     }
 

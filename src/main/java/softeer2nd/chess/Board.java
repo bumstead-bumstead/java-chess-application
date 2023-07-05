@@ -1,6 +1,6 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.pieces.Pawn;
+import softeer2nd.chess.pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,47 +10,47 @@ public class Board {
     private final static int BOARD_LINE_UNIT = 8;
     private final static int BLACK_PAWN_LINE_NUMBER = 1;
     private final static int WHITE_PAWN_LINE_NUMBER = 6;
-    private List<List<Pawn>> pawns;
+    private List<List<Piece>> pieces;
 
     public Board() {
-        this.pawns = new ArrayList<>();
+        this.pieces = new ArrayList<>();
     }
 
     public void initialize() {
-        pawns.clear();
+        pieces.clear();
 
         for (int i = 0; i < BOARD_LINE_UNIT; i++) {
-            fillCurrentRow(i, getCurrentPawn(i));
+            fillCurrentRow(i, getCurrentPiece(i));
         }
     }
 
-    private void fillCurrentRow(int i, Pawn pawn) {
-        List<Pawn> line = new ArrayList<>();
+    private void fillCurrentRow(int i, Piece piece) {
+        List<Piece> line = new ArrayList<>();
 
         for (int j = 0; j < BOARD_LINE_UNIT; j++) {
-            line.add(pawn);
+            line.add(piece);
         }
 
-        pawns.add(line);
+        pieces.add(line);
     }
 
-    private static Pawn getCurrentPawn(int i) {
-        Pawn pawn = null;
+    private static Piece getCurrentPiece(int i) {
+        Piece piece = null;
         if (i == BLACK_PAWN_LINE_NUMBER) {
-            pawn = new Pawn(Pawn.COLOR_BLACK);
+            piece = new Piece(Piece.COLOR_BLACK);
         }
         if (i == WHITE_PAWN_LINE_NUMBER) {
-            pawn = new Pawn(Pawn.COLOR_WHITE);
+            piece = new Piece(Piece.COLOR_WHITE);
         }
 
-        return pawn;
+        return piece;
     }
 
     public String print() {
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < BOARD_LINE_UNIT; i++) {
-            List<Pawn> line = pawns.get(i);
+            List<Piece> line = pieces.get(i);
 
             result.append(joinListToString(line));
             result.append("\n");
@@ -59,31 +59,31 @@ public class Board {
         return result.toString();
     }
 
-    private String joinListToString(List<Pawn> line) {
+    private String joinListToString(List<Piece> line) {
         StringBuilder result = new StringBuilder();
 
-        for (Pawn pawn : line) {
-            if (pawn == null) {
+        for (Piece piece : line) {
+            if (piece == null) {
                 result.append(".");
                 continue;
             }
-            result.append(pawn);
+            result.append(piece);
         }
 
         return result.toString();
     }
 
     public int size() {
-        return pawns.size();
+        return pieces.size();
     }
 
-    public List<List<Pawn>> getPawns() {
-        return pawns;
+    public List<List<Piece>> getPieces() {
+        return pieces;
     }
 
     public String getWhitePawnsResult() {
         StringBuilder result = new StringBuilder();
-        List<Pawn> whitePawnRow = pawns.get(WHITE_PAWN_LINE_NUMBER);
+        List<Piece> whitePawnRow = pieces.get(WHITE_PAWN_LINE_NUMBER);
 
         whitePawnRow.forEach(result::append);
 
@@ -92,7 +92,7 @@ public class Board {
 
     public String getBlackPawnsResult() {
         StringBuilder result = new StringBuilder();
-        List<Pawn> blackPawnRow = pawns.get(BLACK_PAWN_LINE_NUMBER);
+        List<Piece> blackPawnRow = pieces.get(BLACK_PAWN_LINE_NUMBER);
 
         blackPawnRow.forEach(result::append);
 
