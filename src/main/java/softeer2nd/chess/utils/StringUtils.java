@@ -7,6 +7,7 @@ public class StringUtils {
     }
 
     public static String appendNewLine(String string) {
-        return string + NEWLINE;
+        StringBuilder result = new StringBuilder(string);
+        return result.append(NEWLINE).toString();
     }
 }
