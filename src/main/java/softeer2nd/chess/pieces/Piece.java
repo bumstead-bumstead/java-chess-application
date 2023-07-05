@@ -89,4 +89,12 @@ public class Piece {
     public String toString() {
         return representation.getRepresentation().toString();
     }
+
+    public boolean isBlack() {
+        return pieceColor.equals(PieceColor.BLACK);
+    }
+
+    public boolean isWhite() {
+        return pieceColor.equals(PieceColor.WHITE);
+    }
 }
