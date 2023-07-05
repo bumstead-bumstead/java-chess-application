@@ -5,20 +5,28 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
     private Board board;
 
     @BeforeEach
-    public void init() {
+    public void setup() {
         board = new Board();
     }
 
     @Test
-    public void initialize() throws Exception {
+    public void create() throws Exception {
         board.initialize();
-        assertEquals("pppppppp", board.getWhitePawnsResult());
-        assertEquals("PPPPPPPP", board.getBlackPawnsResult());
+        assertEquals(32, board.pieceCount());
+        String blankRank = appendNewLine("........");
+        assertEquals(
+                appendNewLine("RNBQKBNR") +
+                        appendNewLine("PPPPPPPP") +
+                        blankRank + blankRank + blankRank + blankRank +
+                        appendNewLine("pppppppp") +
+                        appendNewLine("rnbqkbnr"),
+                board.showBoard());
     }
 
     @Test
