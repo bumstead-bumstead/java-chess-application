@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.pieces.Piece;
+import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class Board {
         for (int i = 0; i < BOARD_LINE_UNIT; i++) {
             List<Piece> line = pieces.get(i);
 
-            result.append(joinListToString(line));
+            result.append(appendNewLine(joinListToString(line)));
             result.append("\n");
         }
 
