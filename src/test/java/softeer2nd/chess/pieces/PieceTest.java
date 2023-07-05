@@ -7,7 +7,7 @@ import softeer2nd.chess.PieceRepresentation;
 import softeer2nd.chess.PieceType;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PieceTest {
 
@@ -27,6 +27,40 @@ public class PieceTest {
         verifyPiece(Piece.createWhitePawn(), PieceColor.WHITE, PieceType.PAWN, PieceRepresentation.WHITE_PAWN);
         verifyPiece(Piece.createWhiteQueen(), PieceColor.WHITE, PieceType.QUEEN, PieceRepresentation.WHITE_QUEEN);
     }
+
+    @Test
+    @DisplayName("기물의 색이 흰 색이면 isWhite()는 true를 반환해야 한다.")
+    public void isWhiteTrue() {
+        Piece whitePiece = Piece.createWhiteBishop();
+
+        assertTrue(whitePiece.isWhite());
+    }
+
+    @Test
+    @DisplayName("기물의 색이 검은 색이면 isWhite는 false를 반환해야 한다.")
+    public void isWhiteFalse() {
+        Piece blackPiece = Piece.createBlackBishop();
+
+        assertFalse(blackPiece.isWhite());
+    }
+
+    @Test
+    @DisplayName("기물의 색이 검정 색이면 isBlack()는 true를 반환해야 한다.")
+    public void isBlackTrue() {
+        Piece blackPiece = Piece.createBlackBishop();
+
+        assertTrue(blackPiece.isBlack());
+    }
+
+    @Test
+    @DisplayName("기물의 색이 흰 색이면 isBlack은 false를 반환해야 한다.")
+    public void isBlackFalse() {
+        //given
+        Piece whitePiece = Piece.createWhiteBishop();
+
+        assertFalse(whitePiece.isBlack());
+    }
+
 
     private void verifyPiece(final Piece piece, final PieceColor pieceColor, final PieceType pieceType, final PieceRepresentation pieceRepresentation) {
         assertEquals(pieceColor, piece.getPieceColor());
