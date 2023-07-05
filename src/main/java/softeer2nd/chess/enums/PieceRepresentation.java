@@ -1,4 +1,4 @@
-package softeer2nd.chess;
+package softeer2nd.chess.enums;
 
 public enum PieceRepresentation {
     WHITE_KING('k'),

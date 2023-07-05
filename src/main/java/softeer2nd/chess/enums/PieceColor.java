@@ -1,4 +1,4 @@
-package softeer2nd.chess;
+package softeer2nd.chess.enums;
 
 public enum PieceColor {
     WHITE("white", 'p'), BLACK("black", 'P');
