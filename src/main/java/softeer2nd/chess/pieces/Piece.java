@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.PieceColor;
+import softeer2nd.chess.PieceType;
 
 public class Piece {
     public final static String COLOR_WHITE = "white";
@@ -8,14 +9,16 @@ public class Piece {
     public final static char REPRESENTATION_WHITE = 'p';
     public final static char REPRESENTATION_BLACK = 'P';
 
-    private PieceColor pieceColor;
+    private final PieceColor pieceColor;
+    private final PieceType pieceType;
 
-    public Piece() {
-        this.pieceColor = PieceColor.valueOf(COLOR_WHITE.toUpperCase());
+    private Piece(PieceColor pieceColor, PieceType pieceType) {
+        this.pieceColor = pieceColor;
+        this.pieceType = pieceType;
     }
 
-    public Piece(String color) {
-        this.pieceColor = PieceColor.valueOf(color.toUpperCase());
+    public static Piece createPiece(PieceColor pieceColor, PieceType pieceType) {
+        return new Piece(pieceColor, pieceType);
     }
 
     public String getColor() {
