@@ -1,6 +1,7 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.utils.ChessCoordinationParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,6 @@ public class Board {
         return numberOfPieces;
     }
 
-
     //각 Rank를 클래스로 래핑하게 되면, 행 별 count를 Rank 객체에서 유지하는 것이 좋을 것 같다.
     public int count(Piece.Color color, Piece.Type type) {
         int number = 0;
@@ -61,6 +61,13 @@ public class Board {
         }
 
         return number;
+    }
+
+    public Piece findPiece(String coordination) {
+        int column = ChessCoordinationParser.parseFile(coordination.charAt(0));
+        int row = ChessCoordinationParser.parseRank(coordination.charAt(1));
+
+        return pieces.get(row).get(column);
     }
 
     private int countOneRank(Piece.Color color, Piece.Type type, int rank) {
