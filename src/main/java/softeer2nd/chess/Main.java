@@ -21,7 +21,7 @@ public class Main {
             if (command.equals("start")) {
                 System.out.println("게임을 시작합니다.");
                 board.initialize();
-                System.out.println(board.print());
+                System.out.println(board.showBoard());
                 continue;
             }
             if (command.equals("end")) {

@@ -2,7 +2,7 @@ package softeer2nd.chess.utils;
 
 import softeer2nd.chess.Position;
 
-public class ChessCoordinationParser {
+public class ChessPositionParser {
     private final static int BOARD_LENGTH = 8;
 
     public static Position parse(String position) {
