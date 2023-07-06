@@ -4,6 +4,8 @@ import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.ChessCoordinationParser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
@@ -12,7 +14,6 @@ public class Board {
 
     private final static int BOARD_LENGTH = 8;
     private List<List<Piece>> pieces;
-
 
     public Board() {
         this.pieces = new ArrayList<>();
@@ -60,6 +61,7 @@ public class Board {
         }
         return result.toString();
     }
+
     public int pieceCount() {
         int numberOfPieces = 0;
 
@@ -98,6 +100,50 @@ public class Board {
         }
 
         return totalPoint;
+    }
+
+    public <T> List<Piece> getSortedPiecesAscending(Piece.Color color) {
+        List<Piece> result = new ArrayList<>();
+
+        //메서드 분리 필요 -> Rank 분리 후에
+        for (int row = 0; row < BOARD_LENGTH; row++) {
+            for (int column = 0; column < BOARD_LENGTH; column++) {
+                Piece piece = pieces.get(row).get(column);
+                if (isSameColor(color, piece)) {
+                    result.add(piece);
+                }
+            }
+        }
+
+        Collections.sort(result, new Comparator<Piece>() {
+            @Override
+            public int compare(Piece o1, Piece o2) {
+                return (int) (o1.getType().getScore() - o2.getType().getScore());
+            }
+        });
+        return result;
+    }
+
+    public <T> List<Piece> getSortedPiecesDescending(Piece.Color color) {
+        List<Piece> result = new ArrayList<>();
+
+        //메서드 분리 필요 -> Rank 분리 후에
+        for (int row = 0; row < BOARD_LENGTH; row++) {
+            for (int column = 0; column < BOARD_LENGTH; column++) {
+                Piece piece = pieces.get(row).get(column);
+                if (isSameColor(color, piece)) {
+                    result.add(piece);
+                }
+            }
+        }
+
+        Collections.sort(result, new Comparator<Piece>() {
+            @Override
+            public int compare(Piece o1, Piece o2) {
+                return (int) (o2.getType().getScore() - o1.getType().getScore());
+            }
+        });
+        return result;
     }
 
     private double calculatePointOfPiece(Piece piece, Piece.Color targetColor, int column) {
