@@ -63,11 +63,9 @@ public class Board {
         return number;
     }
 
-    public Piece findPiece(String coordination) {
-        int column = ChessCoordinationParser.parseFile(coordination.charAt(0));
-        int row = ChessCoordinationParser.parseRank(coordination.charAt(1));
-
-        return pieces.get(row).get(column);
+    public Piece findPiece(String request) {
+        Position position = ChessCoordinationParser.parse(request);
+        return pieces.get(position.getRow()).get(position.getColumn());
     }
 
     private int countOneRank(Piece.Color color, Piece.Type type, int rank) {
