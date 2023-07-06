@@ -5,14 +5,11 @@ import softeer2nd.chess.pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
+import static softeer2nd.chess.Board.BOARD_LENGTH;
+
 public class Rank {
 
     private List<Piece> list;
-    private static final int RANK_LENGTH = 8;
-
-    private Rank() {
-        this.list = new ArrayList<>();
-    }
 
     private Rank(List<Piece> rank) {
         this.list = rank;
@@ -50,7 +47,7 @@ public class Rank {
     public static Rank createRank(Piece piece) {
         List<Piece> list = new ArrayList<>();
 
-        for (int index = 0; index < RANK_LENGTH; index++) {
+        for (int index = 0; index < BOARD_LENGTH; index++) {
             list.add(piece);
         }
 
@@ -63,6 +60,18 @@ public class Rank {
 
     public Piece get(int column) {
         return list.get(column);
+    }
+
+    public List<Piece> collectPieces(Piece.Color color) {
+        List<Piece> result = new ArrayList<>();
+
+        for (Piece piece : list) {
+            if (isSameColor(color, piece)) {
+                result.add(piece);
+            }
+        }
+
+        return result;
     }
 
     public String concat() {
@@ -92,6 +101,7 @@ public class Rank {
     private static boolean isSameColor(Piece.Color color, Piece piece) {
         return piece.getColor() == color;
     }
+
     private static boolean isSameType(Piece.Type type, Piece piece) {
         return piece.getType() == type;
     }

@@ -10,7 +10,8 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class Board {
 
-    private final static int BOARD_LENGTH = 8;
+    public final static int BOARD_LENGTH = 8;
+    public static final double PAWN_HALF_SCORE = 0.5;
     private List<Rank> pieces;
 
     public Board() {
@@ -54,32 +55,27 @@ public class Board {
     public String showBoard() {
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < BOARD_LENGTH; i++) {
-            Rank rank = pieces.get(i);
-
+        for (Rank rank : pieces) {
             result.append(appendNewLine(rank.concat()));
         }
+
         return result.toString();
     }
 
     public int pieceCount() {
         int numberOfPieces = 0;
 
-        for (int row = 0; row < BOARD_LENGTH; row++) {
-            Rank rank = pieces.get(row);
+        for (Rank rank : pieces) {
             numberOfPieces += rank.count();
         }
 
         return numberOfPieces;
     }
 
-    //각 Rank를 클래스로 래핑하게 되면, 행 별 count를 Rank 객체에서 유지하는 것이 좋을 것 같다.
-
     public int count(Piece.Color color, Piece.Type type) {
         int number = 0;
 
-        for (int row = 0; row < BOARD_LENGTH; row++) {
-            Rank rank = pieces.get(row);
+        for (Rank rank : pieces) {
             number += rank.count(color, type);
         }
 
@@ -97,8 +93,7 @@ public class Board {
     public double calculatePoint(Piece.Color targetColor) {
         double totalPoint = 0;
 
-        for (int row = 0; row < BOARD_LENGTH; row++) {
-            Rank rank = pieces.get(row);
+        for (Rank rank : pieces) {
             for (int column = 0; column < BOARD_LENGTH; column++) {
                 Piece targetPiece = rank.get(column);
                 totalPoint += calculatePointOfPiece(targetPiece, targetColor, column);
@@ -109,7 +104,7 @@ public class Board {
     }
 
     public List<Piece> getSortedPiecesAscending(Piece.Color color) {
-        List<Piece> result = collectPiecesByColor(color);
+        List<Piece> result = collectPieces(color);
 
         result.sort((piece1, piece2) -> (int) (piece1.getType().getScore() - piece2.getType().getScore()));
 
@@ -117,23 +112,18 @@ public class Board {
     }
 
     public List<Piece> getSortedPiecesDescending(Piece.Color color) {
-        List<Piece> result = collectPiecesByColor(color);
+        List<Piece> result = collectPieces(color);
 
         result.sort((piece1, piece2) -> (int) (piece2.getType().getScore() - piece1.getType().getScore()));
 
         return result;
     }
 
-    private List<Piece> collectPiecesByColor(Piece.Color color) {
+    private List<Piece> collectPieces(Piece.Color color) {
         List<Piece> result = new ArrayList<>();
 
         for (Rank rank : pieces) {
-            for (int column = 0; column < BOARD_LENGTH; column++) {
-                Piece piece = rank.get(column);
-                if (isSameColor(color, piece)) {
-                    result.add(piece);
-                }
-            }
+            result.addAll(rank.collectPieces(color));
         }
 
         return result;
@@ -146,7 +136,7 @@ public class Board {
             point = piece.getType().getScore();
         }
         if (isPawn(piece) && hasMultiplePawnsInColumn(targetColor, column)) {
-            point = 0.5;
+            point = PAWN_HALF_SCORE;
         }
 
         return point;
