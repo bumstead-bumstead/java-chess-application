@@ -44,4 +44,13 @@ class BoardTest {
         int numberOfWhiteRook = board.count(Piece.Color.WHITE, Piece.Type.ROOK);
         assertEquals(numberOfWhiteRook, 2);
     }
+
+    @Test
+    @DisplayName("초기화된 상태에서 a8 : 검정색 룩, h8 : 검정색 룩, a1 : 흰색 룩, h1 : 흰색 룩이 위치해야한다.")
+    public void findPiece() throws Exception {
+        assertEquals(Piece.createBlackRook(), board.findPiece("a8"));
+        assertEquals(Piece.createBlackRook(), board.findPiece("h8"));
+        assertEquals(Piece.createWhiteRook(), board.findPiece("a1"));
+        assertEquals(Piece.createWhiteRook(), board.findPiece("h1"));
+    }
 }
