@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.pieces.Piece;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
@@ -90,7 +92,7 @@ class BoardTest {
 
     @Test
     @DisplayName("같은 열에 폰이 두 개 이상 있는 경우 개당 0.5점을 갖는다.")
-    public void caculcatePointWithMultiplePawns() throws Exception {
+    public void calculatePointWithMultiplePawns() throws Exception {
         board.initializeEmpty();
 
         addPiece("f1", Piece.createBlackPawn());
@@ -100,6 +102,47 @@ class BoardTest {
         assertEquals(1.5, board.calculatePoint(Piece.Color.BLACK), 0.01);
 
         System.out.println(board.showBoard());
+    }
+
+    @Test
+    @DisplayName("정렬 기능 테스트_오름차순")
+    public void sort() {
+        board.initializeEmpty();
+
+        addPiece("f1", Piece.createBlackPawn());
+        addPiece("a2", Piece.createBlackBishop());
+        addPiece("b3", Piece.createBlackRook());
+        addPiece("d3", Piece.createBlackQueen());
+
+        List<Piece> expectedResult = List.of(Piece.createBlackPawn(),
+                Piece.createBlackBishop(),
+                Piece.createBlackRook(),
+                Piece.createBlackQueen());
+
+        List<Piece> actualResult = board.getSortedPiecesAscending(Piece.Color.BLACK);
+
+        assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    @DisplayName("정렬 기능 테스트_내림차순")
+    public void sortDescending() {
+        board.initializeEmpty();
+
+        addPiece("f1", Piece.createBlackPawn());
+        addPiece("a2", Piece.createBlackBishop());
+        addPiece("b3", Piece.createBlackRook());
+        addPiece("d3", Piece.createBlackQueen());
+
+        List<Piece> expectedResult = List.of(Piece.createBlackQueen(),
+                Piece.createBlackRook(),
+                Piece.createBlackBishop(),
+                Piece.createBlackPawn()
+                );
+
+        List<Piece> actualResult = board.getSortedPiecesDescending(Piece.Color.BLACK);
+
+        assertEquals(actualResult, expectedResult);
     }
 
     private void addPiece(String position, Piece piece) {
