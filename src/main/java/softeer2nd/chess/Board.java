@@ -1,11 +1,9 @@
 package softeer2nd.chess;
 
 import softeer2nd.chess.pieces.Piece;
-import softeer2nd.chess.utils.ChessCoordinationParser;
+import softeer2nd.chess.utils.ChessPositionParser;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import static softeer2nd.chess.utils.StringUtils.appendNewLine;
@@ -13,7 +11,7 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 public class Board {
 
     private final static int BOARD_LENGTH = 8;
-    private List<List<Piece>> pieces;
+    private List<Rank> pieces;
 
     public Board() {
         this.pieces = new ArrayList<>();
@@ -22,42 +20,44 @@ public class Board {
     public void initialize() {
         pieces.clear();
 
-        fillFirstBlackRow();
-        fillOneRow(Piece.createBlackPawn());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createWhitePawn());
-        fillFirstWhiteRow();
+        pieces.add(Rank.createFirstBlackRank());
+        pieces.add(Rank.createRank(Piece.createBlackPawn()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createWhitePawn()));
+        pieces.add(Rank.createFirstWhiteRank());
     }
 
     public void initializeEmpty() {
         pieces.clear();
 
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
-        fillOneRow(Piece.createBlank());
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createRank(Piece.createBlank()));
     }
 
     public void move(String request, Piece piece) {
-        Position position = ChessCoordinationParser.parse(request);
+        Position position = ChessPositionParser.parse(request);
 
-        pieces.get(position.getRow()).set(position.getColumn(), piece);
+        Rank rank = pieces.get(position.getRow());
+
+        rank.set(position.getColumn(), piece);
     }
 
     public String showBoard() {
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < BOARD_LENGTH; i++) {
-            List<Piece> line = pieces.get(i);
+            Rank rank = pieces.get(i);
 
-            result.append(appendNewLine(joinListToString(line)));
+            result.append(appendNewLine(rank.concat()));
         }
         return result.toString();
     }
@@ -66,7 +66,8 @@ public class Board {
         int numberOfPieces = 0;
 
         for (int row = 0; row < BOARD_LENGTH; row++) {
-            numberOfPieces += getNumberOfPiecesOfOneRow(row);
+            Rank rank = pieces.get(row);
+            numberOfPieces += rank.count();
         }
 
         return numberOfPieces;
@@ -77,24 +78,29 @@ public class Board {
     public int count(Piece.Color color, Piece.Type type) {
         int number = 0;
 
-        for (int rank = 0; rank < BOARD_LENGTH; rank++) {
-            number += countOneRank(color, type, rank);
+        for (int row = 0; row < BOARD_LENGTH; row++) {
+            Rank rank = pieces.get(row);
+            number += rank.count(color, type);
         }
 
         return number;
     }
 
     public Piece findPiece(String request) {
-        Position position = ChessCoordinationParser.parse(request);
-        return pieces.get(position.getRow()).get(position.getColumn());
+        Position position = ChessPositionParser.parse(request);
+
+        Rank rank = pieces.get(position.getRow());
+
+        return rank.get(position.getColumn());
     }
 
     public double calculatePoint(Piece.Color targetColor) {
         double totalPoint = 0;
 
         for (int row = 0; row < BOARD_LENGTH; row++) {
+            Rank rank = pieces.get(row);
             for (int column = 0; column < BOARD_LENGTH; column++) {
-                Piece targetPiece = pieces.get(row).get(column);
+                Piece targetPiece = rank.get(column);
                 totalPoint += calculatePointOfPiece(targetPiece, targetColor, column);
             }
         }
@@ -102,47 +108,34 @@ public class Board {
         return totalPoint;
     }
 
-    public <T> List<Piece> getSortedPiecesAscending(Piece.Color color) {
-        List<Piece> result = new ArrayList<>();
+    public List<Piece> getSortedPiecesAscending(Piece.Color color) {
+        List<Piece> result = collectPiecesByColor(color);
 
-        //메서드 분리 필요 -> Rank 분리 후에
-        for (int row = 0; row < BOARD_LENGTH; row++) {
-            for (int column = 0; column < BOARD_LENGTH; column++) {
-                Piece piece = pieces.get(row).get(column);
-                if (isSameColor(color, piece)) {
-                    result.add(piece);
-                }
-            }
-        }
+        result.sort((piece1, piece2) -> (int) (piece1.getType().getScore() - piece2.getType().getScore()));
 
-        Collections.sort(result, new Comparator<Piece>() {
-            @Override
-            public int compare(Piece o1, Piece o2) {
-                return (int) (o1.getType().getScore() - o2.getType().getScore());
-            }
-        });
         return result;
     }
 
-    public <T> List<Piece> getSortedPiecesDescending(Piece.Color color) {
+    public List<Piece> getSortedPiecesDescending(Piece.Color color) {
+        List<Piece> result = collectPiecesByColor(color);
+
+        result.sort((piece1, piece2) -> (int) (piece2.getType().getScore() - piece1.getType().getScore()));
+
+        return result;
+    }
+
+    private List<Piece> collectPiecesByColor(Piece.Color color) {
         List<Piece> result = new ArrayList<>();
 
-        //메서드 분리 필요 -> Rank 분리 후에
-        for (int row = 0; row < BOARD_LENGTH; row++) {
+        for (Rank rank : pieces) {
             for (int column = 0; column < BOARD_LENGTH; column++) {
-                Piece piece = pieces.get(row).get(column);
+                Piece piece = rank.get(column);
                 if (isSameColor(color, piece)) {
                     result.add(piece);
                 }
             }
         }
 
-        Collections.sort(result, new Comparator<Piece>() {
-            @Override
-            public int compare(Piece o1, Piece o2) {
-                return (int) (o2.getType().getScore() - o1.getType().getScore());
-            }
-        });
         return result;
     }
 
@@ -179,77 +172,5 @@ public class Board {
 
     private static boolean isPawn(Piece targetPiece) {
         return targetPiece.getType() == Piece.Type.PAWN;
-    }
-
-    private int countOneRank(Piece.Color color, Piece.Type type, int rank) {
-        int number = 0;
-
-        for (int file = 0; file < BOARD_LENGTH; file++) {
-            Piece piece = pieces.get(rank).get(file);
-
-            if (piece.getType().equals(type) && piece.getColor().equals(color)) {
-                number++;
-            }
-        }
-        return number;
-    }
-
-    private int getNumberOfPiecesOfOneRow(int row) {
-        int numberOfPieces = 0;
-        for (int column = 0; column < BOARD_LENGTH; column++) {
-            if (pieces.get(row).get(column).getType().equals(Piece.Type.NO_PIECE)) {
-                continue;
-            }
-            numberOfPieces++;
-        }
-        return numberOfPieces;
-    }
-
-    private String joinListToString(List<Piece> line) {
-        StringBuilder result = new StringBuilder();
-
-        for (Piece piece : line) {
-            result.append(piece.getRepresentation());
-        }
-
-        return result.toString();
-    }
-
-    private void fillFirstBlackRow() {
-        List<Piece> row = new ArrayList<>();
-        row.add(Piece.createBlackRook());
-        row.add(Piece.createBlackKnight());
-        row.add(Piece.createBlackBishop());
-        row.add(Piece.createBlackQueen());
-        row.add(Piece.createBlackKing());
-        row.add(Piece.createBlackBishop());
-        row.add(Piece.createBlackKnight());
-        row.add(Piece.createBlackRook());
-
-        pieces.add(row);
-    }
-
-    private void fillFirstWhiteRow() {
-        List<Piece> row = new ArrayList<>();
-        row.add(Piece.createWhiteRook());
-        row.add(Piece.createWhiteKnight());
-        row.add(Piece.createWhiteBishop());
-        row.add(Piece.createWhiteQueen());
-        row.add(Piece.createWhiteKing());
-        row.add(Piece.createWhiteBishop());
-        row.add(Piece.createWhiteKnight());
-        row.add(Piece.createWhiteRook());
-
-        pieces.add(row);
-    }
-
-    private void fillOneRow(Piece piece) {
-        List<Piece> row = new ArrayList<>();
-
-        for (int index = 0; index < BOARD_LENGTH; index++) {
-            row.add(piece);
-        }
-
-        pieces.add(row);
     }
 }
