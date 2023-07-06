@@ -31,6 +31,25 @@ public class Board {
         fillFirstWhiteRow();
     }
 
+    public void initializeEmpty() {
+        pieces.clear();
+
+        fillOneRow(Piece.createBlank());
+        fillOneRow(Piece.createBlank());
+        fillOneRow(Piece.createBlank());
+        fillOneRow(Piece.createBlank());
+        fillOneRow(Piece.createBlank());
+        fillOneRow(Piece.createBlank());
+        fillOneRow(Piece.createBlank());
+        fillOneRow(Piece.createBlank());
+    }
+
+    public void move(String request, Piece piece) {
+        Position position = ChessCoordinationParser.parse(request);
+
+        pieces.get(position.getRow()).set(position.getColumn(), piece);
+    }
+
     public String showBoard() {
         StringBuilder result = new StringBuilder();
 
@@ -41,7 +60,6 @@ public class Board {
         }
         return result.toString();
     }
-
     public int pieceCount() {
         int numberOfPieces = 0;
 
@@ -53,6 +71,7 @@ public class Board {
     }
 
     //각 Rank를 클래스로 래핑하게 되면, 행 별 count를 Rank 객체에서 유지하는 것이 좋을 것 같다.
+
     public int count(Piece.Color color, Piece.Type type) {
         int number = 0;
 
