@@ -87,6 +87,54 @@ public class Board {
         return pieces.get(position.getRow()).get(position.getColumn());
     }
 
+    public double calculatePoint(Piece.Color targetColor) {
+        double totalPoint = 0;
+
+        for (int row = 0; row < BOARD_LENGTH; row++) {
+            for (int column = 0; column < BOARD_LENGTH; column++) {
+                Piece targetPiece = pieces.get(row).get(column);
+                totalPoint += calculatePointOfPiece(targetPiece, targetColor, column);
+            }
+        }
+
+        return totalPoint;
+    }
+
+    private double calculatePointOfPiece(Piece piece, Piece.Color targetColor, int column) {
+        double point = 0;
+
+        if (isSameColor(targetColor, piece)) {
+            point = piece.getType().getScore();
+        }
+        if (isPawn(piece) && hasMultiplePawnsInColumn(targetColor, column)) {
+            point = 0.5;
+        }
+
+        return point;
+    }
+
+    private boolean hasMultiplePawnsInColumn(Piece.Color color, int column) {
+        int pawnCount = 0;
+
+        for (int row = 0; row < BOARD_LENGTH; row++) {
+            Piece targetPiece = pieces.get(row).get(column);
+
+            if (isPawn(targetPiece) && isSameColor(color, targetPiece)) {
+                pawnCount++;
+            }
+        }
+
+        return pawnCount > 1;
+    }
+
+    private static boolean isSameColor(Piece.Color color, Piece targetPiece) {
+        return targetPiece.getColor() == color;
+    }
+
+    private static boolean isPawn(Piece targetPiece) {
+        return targetPiece.getType() == Piece.Type.PAWN;
+    }
+
     private int countOneRank(Piece.Color color, Piece.Type type, int rank) {
         int number = 0;
 
