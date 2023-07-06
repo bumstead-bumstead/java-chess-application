@@ -51,6 +51,31 @@ public class Board {
         return numberOfPieces;
     }
 
+
+    //각 Rank를 클래스로 래핑하게 되면, 행 별 count를 Rank 객체에서 유지하는 것이 좋을 것 같다.
+    public int count(Piece.Color color, Piece.Type type) {
+        int number = 0;
+
+        for (int rank = 0; rank < BOARD_LENGTH; rank++) {
+            number += countOneRank(color, type, rank);
+        }
+
+        return number;
+    }
+
+    private int countOneRank(Piece.Color color, Piece.Type type, int rank) {
+        int number = 0;
+
+        for (int file = 0; file < BOARD_LENGTH; file++) {
+            Piece piece = pieces.get(rank).get(file);
+
+            if (piece.getType().equals(type) && piece.getColor().equals(color)) {
+                number++;
+            }
+        }
+        return number;
+    }
+
     private int getNumberOfPiecesOfOneRow(int row) {
         int numberOfPieces = 0;
         for (int column = 0; column < BOARD_LENGTH; column++) {
