@@ -12,10 +12,12 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 class BoardTest {
     private Board board;
+    private ChessView chessView;
 
     @BeforeEach
     public void setup() {
         board = new Board();
+        chessView = new ChessView();
         board.initialize();
     }
 
@@ -30,7 +32,7 @@ class BoardTest {
                         blankRank + blankRank + blankRank + blankRank +
                         appendNewLine("pppppppp") +
                         appendNewLine("rnbqkbnr"),
-                board.showBoard());
+                chessView.showBoard(board));
     }
 
     @Test
@@ -57,7 +59,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("b5에 검정색 룩을 move하면 board에 반영되어야 한다.")
+    @DisplayName("b5에 검정색 룩을 놓으면 board에 반영되어야 한다.")
     public void setPiece() throws Exception {
         board.initializeEmpty();
 
@@ -66,42 +68,7 @@ class BoardTest {
         board.setPiece(position, piece);
 
         assertEquals(piece, board.findPiece(position));
-        System.out.println(board.showBoard());
-    }
-
-    @Test
-    @DisplayName("점수 계산 테스트")
-    public void caculcatePoint() throws Exception {
-        board.initializeEmpty();
-
-        addPiece("b6", Piece.createBlackPawn(new Position("b6")));
-        addPiece("e6", Piece.createBlackQueen(new Position("e6")));
-        addPiece("b8", Piece.createBlackKing(new Position("b8")));
-        addPiece("c8", Piece.createBlackRook(new Position("c8")));
-
-        addPiece("f2", Piece.createWhitePawn(new Position("f2")));
-        addPiece("g2", Piece.createWhitePawn(new Position("g2")));
-        addPiece("e1", Piece.createWhiteRook(new Position("e1")));
-        addPiece("f1", Piece.createWhiteKing(new Position("f1")));
-
-        assertEquals(7.0, board.calculatePoint(Piece.Color.WHITE), 0.01);
-        assertEquals(15.0, board.calculatePoint(Piece.Color.BLACK), 0.01);
-
-        System.out.println(board.showBoard());
-    }
-
-    @Test
-    @DisplayName("같은 열에 폰이 두 개 이상 있는 경우 개당 0.5점을 갖는다.")
-    public void calculatePointWithMultiplePawns() throws Exception {
-        board.initializeEmpty();
-
-        addPiece("f1", Piece.createBlackPawn(new Position("f1")));
-        addPiece("f2", Piece.createBlackPawn(new Position("f2")));
-        addPiece("f3", Piece.createBlackPawn(new Position("f3")));
-
-        assertEquals(1.5, board.calculatePoint(Piece.Color.BLACK), 0.01);
-
-        System.out.println(board.showBoard());
+        System.out.println(chessView.showBoard(board));
     }
 
     @Test
@@ -143,18 +110,6 @@ class BoardTest {
         List<Piece> actualResult = board.getSortedPiecesDescending(Piece.Color.BLACK);
 
         assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    @DisplayName("기물 이동 테스트")
-    public void move() throws Exception {
-        board.initialize();
-
-        String sourcePosition = "b2";
-        String targetPosition = "b3";
-        board.move(sourcePosition, targetPosition);
-        assertEquals(Piece.createBlank(new Position(sourcePosition)), board.findPiece(sourcePosition));
-        assertEquals(Piece.createWhitePawn(new Position(targetPosition)), board.findPiece(targetPosition));
     }
 
     private void addPiece(String position, Piece piece) {
