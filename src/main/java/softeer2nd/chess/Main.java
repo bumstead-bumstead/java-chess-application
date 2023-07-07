@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static Board board = new Board();
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         try {
             run();
         } catch (RuntimeException e) {
@@ -22,6 +22,17 @@ public class Main {
                 System.out.println("게임을 시작합니다.");
                 board.initialize();
                 System.out.println(board.showBoard());
+                continue;
+            }
+            if (command.startsWith("move")) {
+                String[] commandArray = command.split(" ");
+                String sourcePosition = commandArray[1];
+                String targetPosition = commandArray[2];
+
+                System.out.println("기물을 이동합니다. : " + sourcePosition + " to " + targetPosition);
+                board.move(sourcePosition, targetPosition);
+                System.out.println(board.showBoard());
+                System.out.println("---------------------------");
                 continue;
             }
             if (command.equals("end")) {
