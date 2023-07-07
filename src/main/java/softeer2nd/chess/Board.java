@@ -54,8 +54,12 @@ public class Board {
 
     public void move(String sourcePosition, String targetPosition) {
         Piece oldPiece = findPiece(sourcePosition);
-        setPiece(sourcePosition, Piece.createBlank(ChessPositionParser.parse(sourcePosition)));
-        setPiece(targetPosition, Piece.createMovedPiece(oldPiece, ChessPositionParser.parse(targetPosition)));
+
+        Position parsedSourcePosition = ChessPositionParser.parse(sourcePosition);
+        Position parsedTargetPosition = ChessPositionParser.parse(targetPosition);
+
+        setPiece(sourcePosition, Piece.createBlank(parsedSourcePosition));
+        setPiece(targetPosition, Piece.createMovedPiece(oldPiece, parsedTargetPosition));
     }
 
     public String showBoard() {
