@@ -145,6 +145,18 @@ class BoardTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @Test
+    @DisplayName("기물 이동 테스트")
+    public void move() throws Exception {
+        board.initialize();
+
+        String sourcePosition = "b2";
+        String targetPosition = "b3";
+        board.move(sourcePosition, targetPosition);
+        assertEquals(Piece.createBlank(new Position(sourcePosition)), board.findPiece(sourcePosition));
+        assertEquals(Piece.createWhitePawn(new Position(targetPosition)), board.findPiece(targetPosition));
+    }
+
     private void addPiece(String position, Piece piece) {
         board.move(position, piece);
     }
