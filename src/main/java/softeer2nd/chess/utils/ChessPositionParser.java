@@ -11,12 +11,12 @@ public class ChessPositionParser {
 
         return new Position(row, column);
     }
-    private static int parseRank(char characterRank) {
+    public static int parseRank(char characterRank) {
         int rank = Character.getNumericValue(characterRank);
         return BOARD_LENGTH - rank;
     }
 
-    private static int parseFile(char file) {
+    public static int parseFile(char file) {
         return file - 'a';
     }
 }

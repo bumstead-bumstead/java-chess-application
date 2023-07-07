@@ -3,34 +3,37 @@ package softeer2nd.chess.pieces;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.Position;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PieceTest {
     Piece whitePiece;
     Piece blackPiece;
+    Position testPosition;
 
     @BeforeEach
     void init() {
-        whitePiece = Piece.createWhiteBishop();
-        blackPiece = Piece.createBlackBishop();
+        testPosition = new Position(0, 0);
+        whitePiece = Piece.createWhiteBishop(testPosition);
+        blackPiece = Piece.createBlackBishop(testPosition);
     }
 
     @Test
     @DisplayName("생성된 기물의 field가 유효해야한다.")
     public void create_piece() {
-        verifyPiece(Piece.createBlackBishop(), Piece.Color.BLACK, Piece.Type.BISHOP);
-        verifyPiece(Piece.createBlackRook(), Piece.Color.BLACK, Piece.Type.ROOK);
-        verifyPiece(Piece.createBlackKing(), Piece.Color.BLACK, Piece.Type.KING);
-        verifyPiece(Piece.createBlackKnight(), Piece.Color.BLACK, Piece.Type.KNIGHT);
-        verifyPiece(Piece.createBlackPawn(), Piece.Color.BLACK, Piece.Type.PAWN);
-        verifyPiece(Piece.createBlackQueen(), Piece.Color.BLACK, Piece.Type.QUEEN);
-        verifyPiece(Piece.createWhiteBishop(), Piece.Color.WHITE, Piece.Type.BISHOP);
-        verifyPiece(Piece.createWhiteRook(), Piece.Color.WHITE, Piece.Type.ROOK);
-        verifyPiece(Piece.createWhiteKing(), Piece.Color.WHITE, Piece.Type.KING);
-        verifyPiece(Piece.createWhiteKnight(), Piece.Color.WHITE, Piece.Type.KNIGHT);
-        verifyPiece(Piece.createWhitePawn(), Piece.Color.WHITE, Piece.Type.PAWN);
-        verifyPiece(Piece.createWhiteQueen(), Piece.Color.WHITE, Piece.Type.QUEEN);
+        verifyPiece(Piece.createBlackBishop(testPosition), Piece.Color.BLACK, Piece.Type.BISHOP);
+        verifyPiece(Piece.createBlackRook(testPosition), Piece.Color.BLACK, Piece.Type.ROOK);
+        verifyPiece(Piece.createBlackKing(testPosition), Piece.Color.BLACK, Piece.Type.KING);
+        verifyPiece(Piece.createBlackKnight(testPosition), Piece.Color.BLACK, Piece.Type.KNIGHT);
+        verifyPiece(Piece.createBlackPawn(testPosition), Piece.Color.BLACK, Piece.Type.PAWN);
+        verifyPiece(Piece.createBlackQueen(testPosition), Piece.Color.BLACK, Piece.Type.QUEEN);
+        verifyPiece(Piece.createWhiteBishop(testPosition), Piece.Color.WHITE, Piece.Type.BISHOP);
+        verifyPiece(Piece.createWhiteRook(testPosition), Piece.Color.WHITE, Piece.Type.ROOK);
+        verifyPiece(Piece.createWhiteKing(testPosition), Piece.Color.WHITE, Piece.Type.KING);
+        verifyPiece(Piece.createWhiteKnight(testPosition), Piece.Color.WHITE, Piece.Type.KNIGHT);
+        verifyPiece(Piece.createWhitePawn(testPosition), Piece.Color.WHITE, Piece.Type.PAWN);
+        verifyPiece(Piece.createWhiteQueen(testPosition), Piece.Color.WHITE, Piece.Type.QUEEN);
     }
 
     @Test

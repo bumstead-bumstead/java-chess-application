@@ -10,48 +10,77 @@ import static softeer2nd.chess.Board.BOARD_LENGTH;
 public class Rank {
 
     private List<Piece> list;
+    private int rankNumber;
 
-    private Rank(List<Piece> rank) {
+    private Rank(List<Piece> rank, int rankNumber) {
         this.list = rank;
+        this.rankNumber = rankNumber;
     }
 
     public static Rank createFirstBlackRank() {
+        int rankNumber = 0;
         List<Piece> list = new ArrayList<>();
-        list.add(Piece.createBlackRook());
-        list.add(Piece.createBlackKnight());
-        list.add(Piece.createBlackBishop());
-        list.add(Piece.createBlackQueen());
-        list.add(Piece.createBlackKing());
-        list.add(Piece.createBlackBishop());
-        list.add(Piece.createBlackKnight());
-        list.add(Piece.createBlackRook());
 
-        return new Rank(list);
+        list.add(Piece.createBlackRook(new Position(rankNumber, 0)));
+        list.add(Piece.createBlackKnight(new Position(rankNumber, 1)));
+        list.add(Piece.createBlackBishop(new Position(rankNumber, 2)));
+        list.add(Piece.createBlackQueen(new Position(rankNumber, 3)));
+        list.add(Piece.createBlackKing(new Position(rankNumber, 4)));
+        list.add(Piece.createBlackBishop(new Position(rankNumber, 5)));
+        list.add(Piece.createBlackKnight(new Position(rankNumber, 6)));
+        list.add(Piece.createBlackRook(new Position(rankNumber, 7)));
+
+        return new Rank(list, rankNumber);
     }
 
     public static Rank createFirstWhiteRank() {
+        int rankNumber = 7;
         List<Piece> list = new ArrayList<>();
 
-        list.add(Piece.createWhiteRook());
-        list.add(Piece.createWhiteKnight());
-        list.add(Piece.createWhiteBishop());
-        list.add(Piece.createWhiteQueen());
-        list.add(Piece.createWhiteKing());
-        list.add(Piece.createWhiteBishop());
-        list.add(Piece.createWhiteKnight());
-        list.add(Piece.createWhiteRook());
+        list.add(Piece.createWhiteRook(new Position(rankNumber, 0)));
+        list.add(Piece.createWhiteKnight(new Position(rankNumber, 1)));
+        list.add(Piece.createWhiteBishop(new Position(rankNumber, 2)));
+        list.add(Piece.createWhiteQueen(new Position(rankNumber, 3)));
+        list.add(Piece.createWhiteKing(new Position(rankNumber, 4)));
+        list.add(Piece.createWhiteBishop(new Position(rankNumber, 5)));
+        list.add(Piece.createWhiteKnight(new Position(rankNumber, 6)));
+        list.add(Piece.createWhiteRook(new Position(rankNumber, 7)));
 
-        return new Rank(list);
+        return new Rank(list, rankNumber);
     }
 
-    public static Rank createRank(Piece piece) {
+    public static Rank createSecondBlackRank() {
+        int rankNumber = 1;
         List<Piece> list = new ArrayList<>();
 
-        for (int index = 0; index < BOARD_LENGTH; index++) {
-            list.add(piece);
+        for (int file = 0; file < BOARD_LENGTH; file++) {
+            list.add(Piece.createBlackPawn(new Position(rankNumber, file)));
         }
 
-        return new Rank(list);
+        return new Rank(list, rankNumber);
+    }
+
+    public static Rank createSecondWhiteRank() {
+        int rankNumber = 6;
+        List<Piece> list = new ArrayList<>();
+
+        for (int file = 0; file < BOARD_LENGTH; file++) {
+            list.add(Piece.createWhitePawn(new Position(rankNumber, file)));
+        }
+
+        return new Rank(list, rankNumber);
+    }
+
+    //todo : position 객체 추가해서 넣기
+    public static Rank createBlankRank(int rankNumber) {
+        List<Piece> list = new ArrayList<>();
+
+
+        for (int file = 0; file < BOARD_LENGTH; file++) {
+            list.add(Piece.createBlank(new Position(rankNumber, file)));
+        }
+
+        return new Rank(list, rankNumber);
     }
 
     public void set(int column, Piece piece) {

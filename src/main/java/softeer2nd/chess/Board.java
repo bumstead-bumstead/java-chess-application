@@ -22,26 +22,26 @@ public class Board {
         pieces.clear();
 
         pieces.add(Rank.createFirstBlackRank());
-        pieces.add(Rank.createRank(Piece.createBlackPawn()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createWhitePawn()));
+        pieces.add(Rank.createSecondBlackRank());
+        pieces.add(Rank.createBlankRank(2));
+        pieces.add(Rank.createBlankRank(3));
+        pieces.add(Rank.createBlankRank(4));
+        pieces.add(Rank.createBlankRank(5));
+        pieces.add(Rank.createSecondWhiteRank());
         pieces.add(Rank.createFirstWhiteRank());
     }
 
     public void initializeEmpty() {
         pieces.clear();
 
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
-        pieces.add(Rank.createRank(Piece.createBlank()));
+        pieces.add(Rank.createBlankRank(0));
+        pieces.add(Rank.createBlankRank(1));
+        pieces.add(Rank.createBlankRank(2));
+        pieces.add(Rank.createBlankRank(3));
+        pieces.add(Rank.createBlankRank(4));
+        pieces.add(Rank.createBlankRank(5));
+        pieces.add(Rank.createBlankRank(6));
+        pieces.add(Rank.createBlankRank(7));
     }
 
     public void move(String request, Piece piece) {
