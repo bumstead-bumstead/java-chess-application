@@ -23,11 +23,8 @@ public class ChessGame {
     public void move(String sourcePosition, String targetPosition) {
         Piece oldPiece = board.findPiece(sourcePosition);
 
-        Position parsedSourcePosition = ChessPositionParser.parse(sourcePosition);
-        Position parsedTargetPosition = ChessPositionParser.parse(targetPosition);
-
-        board.setPiece(sourcePosition, Piece.createBlank(parsedSourcePosition));
-        board.setPiece(targetPosition, Piece.createMovedPiece(oldPiece, parsedTargetPosition));
+        board.removePiece(sourcePosition);
+        board.setPiece(targetPosition, Piece.createMovedPiece(oldPiece, ChessPositionParser.parse(targetPosition)));
     }
 
     public double calculatePoint(Piece.Color targetColor) {

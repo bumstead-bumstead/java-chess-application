@@ -49,10 +49,12 @@ public class Board {
         rank.set(position.getColumn(), piece);
     }
 
+    public void removePiece(String request) {
+        Position position = ChessPositionParser.parse(request);
 
+        Rank rank = pieces.get(position.getRow());
 
-    public List<Rank> getPieces() {
-        return pieces;
+        rank.set(position.getColumn(), Piece.createBlank(position));
     }
 
     public int pieceCount() {
@@ -81,20 +83,6 @@ public class Board {
         Rank rank = pieces.get(position.getRow());
 
         return rank.get(position.getColumn());
-    }
-
-    public boolean hasMultiplePawnsInColumn(Piece.Color color, int column) {
-        int pawnCount = 0;
-
-        for (int row = 0; row < BOARD_LENGTH; row++) {
-            Piece targetPiece = pieces.get(row).get(column);
-
-            if (targetPiece.isPawn() && targetPiece.hasColor(color)) {
-                pawnCount++;
-            }
-        }
-
-        return pawnCount > 1;
     }
 
     public List<Piece> getSortedPiecesAscending(Piece.Color color) {
