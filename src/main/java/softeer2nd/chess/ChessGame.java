@@ -3,13 +3,12 @@ package softeer2nd.chess;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.ChessPositionParser;
 
+import java.util.List;
+
 import static softeer2nd.chess.Board.BOARD_LENGTH;
-import static softeer2nd.chess.Board.PAWN_HALF_SCORE;
 
 public class ChessGame {
-    /*
-    * todo : board의 초기화 부분을 제외한 기능을 포함한다.
-    * */
+    public static final double PAWN_HALF_SCORE = 0.5;
 
     private Board board;
 
@@ -30,36 +29,30 @@ public class ChessGame {
         board.setPiece(sourcePosition, Piece.createBlank(parsedSourcePosition));
         board.setPiece(targetPosition, Piece.createMovedPiece(oldPiece, parsedTargetPosition));
     }
-    
+
     public double calculatePoint(Piece.Color targetColor) {
         double totalPoint = 0;
 
-        for (Rank rank : board.getPieces()) {
-            for (int column = 0; column < BOARD_LENGTH; column++) {
-                Piece targetPiece = rank.get(column);
-                totalPoint += calculatePointOfPiece(targetPiece, targetColor, column);
-            }
+        for (int column = 0; column < BOARD_LENGTH; column++) {
+            List<Piece> pieces = board.getPiecesOfColumn(targetColor, column);
+
+            totalPoint += calculateTotalPointOfColumn(pieces);
         }
 
         return totalPoint;
     }
 
-    private double calculatePointOfPiece(Piece piece, Piece.Color targetColor, int column) {
-        double point = 0;
+    private double calculateTotalPointOfColumn(List<Piece> pieces) {
+        int pawnCount = 0;
+        int totalPoint = 0;
 
-        if (piece.hasColor(targetColor)) {
-            point = piece.getType()
-                    .getScore();
-        }
-        if (piece.isPawn() && board.hasMultiplePawnsInColumn(targetColor, column)) {
-            point = PAWN_HALF_SCORE;
+        for (Piece piece : pieces) {
+            if (piece.isPawn()) pawnCount++;
+            totalPoint += piece.getType().getScore();
         }
 
-        return point;
+        if (pawnCount > 1) totalPoint -= pawnCount * PAWN_HALF_SCORE;
+
+        return totalPoint;
     }
-
-
-
-
-
 }
