@@ -6,8 +6,6 @@ import softeer2nd.chess.utils.ChessPositionParser;
 import java.util.ArrayList;
 import java.util.List;
 
-import static softeer2nd.chess.utils.StringUtils.appendNewLine;
-
 public class Board {
 
     public final static int BOARD_LENGTH = 8;
@@ -52,24 +50,10 @@ public class Board {
         rank.set(position.getColumn(), piece);
     }
 
-    public void move(String sourcePosition, String targetPosition) {
-        Piece oldPiece = findPiece(sourcePosition);
 
-        Position parsedSourcePosition = ChessPositionParser.parse(sourcePosition);
-        Position parsedTargetPosition = ChessPositionParser.parse(targetPosition);
 
-        setPiece(sourcePosition, Piece.createBlank(parsedSourcePosition));
-        setPiece(targetPosition, Piece.createMovedPiece(oldPiece, parsedTargetPosition));
-    }
-
-    public String showBoard() {
-        StringBuilder result = new StringBuilder();
-
-        for (Rank rank : pieces) {
-            result.append(appendNewLine(rank.concat()));
-        }
-
-        return result.toString();
+    public List<Rank> getPieces() {
+        return pieces;
     }
 
     public int pieceCount() {
@@ -100,17 +84,18 @@ public class Board {
         return rank.get(position.getColumn());
     }
 
-    public double calculatePoint(Piece.Color targetColor) {
-        double totalPoint = 0;
+    public boolean hasMultiplePawnsInColumn(Piece.Color color, int column) {
+        int pawnCount = 0;
 
-        for (Rank rank : pieces) {
-            for (int column = 0; column < BOARD_LENGTH; column++) {
-                Piece targetPiece = rank.get(column);
-                totalPoint += calculatePointOfPiece(targetPiece, targetColor, column);
+        for (int row = 0; row < BOARD_LENGTH; row++) {
+            Piece targetPiece = pieces.get(row).get(column);
+
+            if (targetPiece.isPawn() && targetPiece.hasColor(color)) {
+                pawnCount++;
             }
         }
 
-        return totalPoint;
+        return pawnCount > 1;
     }
 
     public List<Piece> getSortedPiecesAscending(Piece.Color color) {
@@ -137,32 +122,5 @@ public class Board {
         }
 
         return result;
-    }
-
-    private double calculatePointOfPiece(Piece piece, Piece.Color targetColor, int column) {
-        double point = 0;
-
-        if (piece.hasColor(targetColor)) {
-            point = piece.getType().getScore();
-        }
-        if (piece.isPawn() && hasMultiplePawnsInColumn(targetColor, column)) {
-            point = PAWN_HALF_SCORE;
-        }
-
-        return point;
-    }
-
-    private boolean hasMultiplePawnsInColumn(Piece.Color color, int column) {
-        int pawnCount = 0;
-
-        for (int row = 0; row < BOARD_LENGTH; row++) {
-            Piece targetPiece = pieces.get(row).get(column);
-
-            if (targetPiece.isPawn() && targetPiece.hasColor(color)) {
-                pawnCount++;
-            }
-        }
-
-        return pawnCount > 1;
     }
 }
