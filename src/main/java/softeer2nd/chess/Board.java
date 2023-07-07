@@ -9,7 +9,6 @@ import java.util.List;
 public class Board {
 
     public final static int BOARD_LENGTH = 8;
-    public static final double PAWN_HALF_SCORE = 0.5;
     private List<Rank> pieces;
 
     public Board() {
@@ -117,10 +116,22 @@ public class Board {
     private List<Piece> collectPieces(Piece.Color color) {
         List<Piece> result = new ArrayList<>();
 
-        for (Rank rank : pieces) {
-            result.addAll(rank.collectPieces(color));
-        }
+        for (Rank rank : pieces) result.addAll(rank.collectPieces(color));
 
         return result;
+    }
+
+    public List<Piece> getPiecesOfColumn(Piece.Color targetColor, int column) {
+        List<Piece> piecesOfColumn = new ArrayList<>();
+
+        for (Rank rank : pieces) {
+            Piece piece = rank.get(column);
+
+            if (!piece.hasColor(targetColor)) continue;
+
+            piecesOfColumn.add(piece);
+        }
+
+        return piecesOfColumn;
     }
 }
