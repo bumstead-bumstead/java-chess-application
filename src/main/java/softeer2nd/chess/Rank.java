@@ -125,16 +125,4 @@ public class Rank {
 
         return pieceCount;
     }
-
-    private static boolean isSameColor(Piece.Color color, Piece piece) {
-        return piece.getColor() == color;
-    }
-
-    private static boolean isSameType(Piece.Type type, Piece piece) {
-        return piece.getType() == type;
-    }
-
-    private static boolean isEmpty(Piece piece) {
-        return piece.getType() != Piece.Type.NO_PIECE;
-    }
 }
