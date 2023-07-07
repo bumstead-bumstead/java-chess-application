@@ -44,12 +44,18 @@ public class Board {
         pieces.add(Rank.createBlankRank(7));
     }
 
-    public void move(String request, Piece piece) {
+    public void setPiece(String request, Piece piece) {
         Position position = ChessPositionParser.parse(request);
 
         Rank rank = pieces.get(position.getRow());
 
         rank.set(position.getColumn(), piece);
+    }
+
+    public void move(String sourcePosition, String targetPosition) {
+        Piece oldPiece = findPiece(sourcePosition);
+        setPiece(sourcePosition, Piece.createBlank(ChessPositionParser.parse(sourcePosition)));
+        setPiece(targetPosition, Piece.createMovedPiece(oldPiece, ChessPositionParser.parse(targetPosition)));
     }
 
     public String showBoard() {

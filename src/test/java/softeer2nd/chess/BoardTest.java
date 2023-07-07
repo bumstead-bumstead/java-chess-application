@@ -58,12 +58,12 @@ class BoardTest {
 
     @Test
     @DisplayName("b5에 검정색 룩을 move하면 board에 반영되어야 한다.")
-    public void move() throws Exception {
+    public void setPiece() throws Exception {
         board.initializeEmpty();
 
         String position = "b5";
         Piece piece = Piece.createBlackRook(new Position("b5"));
-        board.move(position, piece);
+        board.setPiece(position, piece);
 
         assertEquals(piece, board.findPiece(position));
         System.out.println(board.showBoard());
@@ -158,6 +158,6 @@ class BoardTest {
     }
 
     private void addPiece(String position, Piece piece) {
-        board.move(position, piece);
+        board.setPiece(position, piece);
     }
 }
