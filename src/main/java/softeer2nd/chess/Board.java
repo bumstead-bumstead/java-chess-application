@@ -142,10 +142,10 @@ public class Board {
     private double calculatePointOfPiece(Piece piece, Piece.Color targetColor, int column) {
         double point = 0;
 
-        if (isSameColor(targetColor, piece)) {
+        if (piece.hasColor(targetColor)) {
             point = piece.getType().getScore();
         }
-        if (isPawn(piece) && hasMultiplePawnsInColumn(targetColor, column)) {
+        if (piece.isPawn() && hasMultiplePawnsInColumn(targetColor, column)) {
             point = PAWN_HALF_SCORE;
         }
 
@@ -158,19 +158,11 @@ public class Board {
         for (int row = 0; row < BOARD_LENGTH; row++) {
             Piece targetPiece = pieces.get(row).get(column);
 
-            if (isPawn(targetPiece) && isSameColor(color, targetPiece)) {
+            if (targetPiece.isPawn() && targetPiece.hasColor(color)) {
                 pawnCount++;
             }
         }
 
         return pawnCount > 1;
-    }
-
-    private static boolean isSameColor(Piece.Color color, Piece targetPiece) {
-        return targetPiece.getColor() == color;
-    }
-
-    private static boolean isPawn(Piece targetPiece) {
-        return targetPiece.getType() == Piece.Type.PAWN;
     }
 }

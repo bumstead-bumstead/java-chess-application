@@ -39,7 +39,7 @@ public class Piece {
 
 
 
-    public Piece(Color color, Type type, Position position) {
+    private Piece(Color color, Type type, Position position) {
         this.color = color;
         this.type = type;
         this.position = position;
@@ -47,6 +47,10 @@ public class Piece {
 
     private static Piece createWhite(Type type, Position position) {
         return new Piece(Color.WHITE, type, position);
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     private static Piece createBlack(Type type, Position position) {
@@ -105,6 +109,10 @@ public class Piece {
         return new Piece(Color.NOCOLOR, Type.NO_PIECE, position);
     }
 
+    public static Piece createMovedPiece(Piece piece, Position position) {
+        return new Piece(piece.color, piece.type, position);
+    }
+
     public Color getColor() {
         return color;
     }
@@ -119,6 +127,22 @@ public class Piece {
         }
 
         return type.getBlackRepresentation();
+    }
+
+    public boolean hasColor(Color color) {
+        return this.color == color;
+    }
+
+    public boolean isPawn() {
+        return this.type == Type.PAWN;
+    }
+
+    public boolean hasType(Type type) {
+        return this.type == type;
+    }
+
+    public boolean isEmptyPiece() {
+        return this.type == Type.NO_PIECE;
     }
 
     public boolean isBlack() {

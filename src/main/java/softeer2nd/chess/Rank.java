@@ -71,7 +71,6 @@ public class Rank {
         return new Rank(list, rankNumber);
     }
 
-    //todo : position 객체 추가해서 넣기
     public static Rank createBlankRank(int rankNumber) {
         List<Piece> list = new ArrayList<>();
 
@@ -95,7 +94,7 @@ public class Rank {
         List<Piece> result = new ArrayList<>();
 
         for (Piece piece : list) {
-            if (isSameColor(color, piece)) {
+            if (piece.hasColor(color)) {
                 result.add(piece);
             }
         }
@@ -113,7 +112,7 @@ public class Rank {
 
     public int count() {
         int pieceCount = (int) list.stream()
-                .filter(piece -> !isEmpty(piece))
+                .filter(piece -> !piece.isEmptyPiece())
                 .count();
 
         return pieceCount;
@@ -121,7 +120,7 @@ public class Rank {
 
     public int count(Piece.Color color, Piece.Type type) {
         int pieceCount = (int) list.stream()
-                .filter(piece -> isSameType(type, piece) && isSameColor(color, piece))
+                .filter(piece -> piece.hasType(type) && piece.hasColor(color))
                 .count();
 
         return pieceCount;
