@@ -2,15 +2,23 @@ package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.Position;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-public class Piece {
+public abstract class Piece {
     public enum Color {
         WHITE, BLACK, NOCOLOR;
     }
 
     public enum Type {
-        PAWN('p', 1), ROOK('r', 5), KNIGHT('n', 2.5), BISHOP('b', 3), QUEEN('q', 9), KING('k', 0), NO_PIECE('.', 0);
+        PAWN('p', 1),
+        ROOK('r', 5),
+        KNIGHT('n', 2.5),
+        BISHOP('b', 3),
+        QUEEN('q', 9),
+        KING('k', 0),
+        NO_PIECE('.', 0);
 
         private char representation;
         private double score;
@@ -33,84 +41,80 @@ public class Piece {
         }
     }
 
-    private final Color color;
-    private final Type type;
-    private final Position position;
+    public enum Direction {
+        NORTH(0, 1),
+        NORTHEAST(1, 1),
+        EAST(1, 0),
+        SOUTHEAST(1, -1),
+        SOUTH(0, -1),
+        SOUTHWEST(-1, -1),
+        WEST(-1, 0),
+        NORTHWEST(-1, 1),
 
+        NNE(1, 2),
+        NNW(-1, 2),
+        SSE(1, -2),
+        SSW(-1, -2),
+        EEN(2, 1),
+        EES(2, -1),
+        WWN(-2, 1),
+        WWS(-2, -1);
 
+        private int xDegree;
+        private int yDegree;
 
-    private Piece(Color color, Type type, Position position) {
+        private Direction(int xDegree, int yDegree) {
+            this.xDegree = xDegree;
+            this.yDegree = yDegree;
+        }
+
+        public int getXDegree() {
+            return xDegree;
+        }
+
+        public int getYDegree() {
+            return yDegree;
+        }
+
+        public static List<Direction> linearDirection() {
+            return Arrays.asList(NORTH, EAST, SOUTH, WEST);
+        }
+
+        public static List<Direction> diagonalDirection() {
+            return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+        }
+
+        public static List<Direction> everyDirection() {
+            return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+        }
+
+        public static List<Direction> knightDirection() {
+            return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
+        }
+
+        public static List<Direction> whitePawnDirection() {
+            return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
+        }
+
+        public static List<Direction> blackPawnDirection() {
+            return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+        }
+    }
+
+    protected final Color color;
+    protected final Type type;
+    protected final Position position;
+
+    protected Piece(Color color, Type type, Position position) {
         this.color = color;
         this.type = type;
         this.position = position;
     }
 
-    private static Piece createWhite(Type type, Position position) {
-        return new Piece(Color.WHITE, type, position);
-    }
+    abstract Piece createMovedPiece(Position position);
 
     public Position getPosition() {
         return position;
-    }
-
-    private static Piece createBlack(Type type, Position position) {
-        return new Piece(Color.BLACK, type, position);
-    }
-
-    public static Piece createWhitePawn(Position position) {
-        return createWhite(Type.PAWN, position);
-    }
-
-    public static Piece createWhiteKnight(Position position) {
-        return createWhite(Type.KNIGHT, position);
-    }
-
-    public static Piece createWhiteKing(Position position) {
-        return createWhite(Type.KING, position);
-    }
-
-    public static Piece createWhiteQueen(Position position) {
-        return createWhite(Type.QUEEN, position);
-    }
-
-    public static Piece createWhiteRook(Position position) {
-        return createWhite(Type.ROOK, position);
-    }
-
-    public static Piece createWhiteBishop(Position position) {
-        return createWhite(Type.BISHOP, position);
-    }
-
-    public static Piece createBlackPawn(Position position) {
-        return createBlack(Type.PAWN, position);
-    }
-
-    public static Piece createBlackKnight(Position position) {
-        return createBlack(Type.KNIGHT, position);
-    }
-
-    public static Piece createBlackKing(Position position) {
-        return createBlack(Type.KING, position);
-    }
-
-    public static Piece createBlackQueen(Position position) {
-        return createBlack(Type.QUEEN, position);
-    }
-
-    public static Piece createBlackRook(Position position) {
-        return createBlack(Type.ROOK, position);
-    }
-
-    public static Piece createBlackBishop(Position position) {
-        return createBlack(Type.BISHOP, position);
-    }
-
-    public static Piece createBlank(Position position) {
-        return new Piece(Color.NOCOLOR, Type.NO_PIECE, position);
-    }
-
-    public static Piece createMovedPiece(Piece piece, Position position) {
-        return new Piece(piece.color, piece.type, position);
     }
 
     public Color getColor() {
@@ -133,10 +137,6 @@ public class Piece {
         return this.color == color;
     }
 
-    public boolean isPawn() {
-        return this.type == Type.PAWN;
-    }
-
     public boolean hasType(Type type) {
         return this.type == type;
     }
@@ -145,13 +145,7 @@ public class Piece {
         return this.type == Type.NO_PIECE;
     }
 
-    public boolean isBlack() {
-        return color.equals(Color.BLACK);
-    }
-
-    public boolean isWhite() {
-        return color.equals(Color.WHITE);
-    }
+    abstract boolean verifyMovePosition(Position position);
 
     @Override
     public boolean equals(Object o) {
