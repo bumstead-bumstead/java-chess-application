@@ -9,11 +9,11 @@ import static softeer2nd.chess.Board.BOARD_LENGTH;
 
 public class Rank {
 
-    private List<Piece> list;
+    private List<Piece> pieces;
     private int rankNumber;
 
     private Rank(List<Piece> rank, int rankNumber) {
-        this.list = rank;
+        this.pieces = rank;
         this.rankNumber = rankNumber;
     }
 
@@ -83,17 +83,17 @@ public class Rank {
     }
 
     public void set(int column, Piece piece) {
-        list.set(column, piece);
+        pieces.set(column, piece);
     }
 
     public Piece get(int column) {
-        return list.get(column);
+        return pieces.get(column);
     }
 
     public List<Piece> collectPieces(Piece.Color color) {
         List<Piece> result = new ArrayList<>();
 
-        for (Piece piece : list) {
+        for (Piece piece : pieces) {
             if (piece.hasColor(color)) {
                 result.add(piece);
             }
@@ -105,13 +105,13 @@ public class Rank {
     public String concat() {
         StringBuilder result = new StringBuilder();
 
-        list.forEach(piece -> result.append(piece.getRepresentation()));
+        pieces.forEach(piece -> result.append(piece.getRepresentation()));
 
         return result.toString();
     }
 
     public int count() {
-        int pieceCount = (int) list.stream()
+        int pieceCount = (int) pieces.stream()
                 .filter(piece -> !piece.isEmptyPiece())
                 .count();
 
@@ -119,7 +119,7 @@ public class Rank {
     }
 
     public int count(Piece.Color color, Piece.Type type) {
-        int pieceCount = (int) list.stream()
+        int pieceCount = (int) pieces.stream()
                 .filter(piece -> piece.hasType(type) && piece.hasColor(color))
                 .count();
 
