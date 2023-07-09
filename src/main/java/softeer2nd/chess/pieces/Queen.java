@@ -16,12 +16,7 @@ public class Queen extends Piece {
         return new Queen(this.getColor(), position);
     }
 
-    @Override
-    boolean verifyMovePosition(Position targetPosition) {
-        return isValidPosition(targetPosition) && isReachablePosition(targetPosition);
-    }
-
-    private boolean isReachablePosition(Position targetPosition) {
+    protected boolean isReachablePosition(Position targetPosition) {
         List<Piece.Direction> directions = Piece.Direction.everyDirection();
 
         for (Piece.Direction direction : directions) {

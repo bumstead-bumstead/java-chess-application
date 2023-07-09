@@ -13,16 +13,11 @@ public class Bishop extends Piece {
     }
 
     @Override
-    Piece createMovedPiece(Position position) {
+    public Piece createMovedPiece(Position position) {
         return new Bishop(this.getColor(), position);
     }
-
     @Override
-    boolean verifyMovePosition(Position targetPosition) {
-        return isValidPosition(targetPosition) && isReachablePosition(targetPosition);
-    }
-
-    private boolean isReachablePosition(Position targetPosition) {
+    protected boolean isReachablePosition(Position targetPosition) {
         List<Direction> directions = Piece.Direction.diagonalDirection();
 
         for (Piece.Direction direction : directions) {

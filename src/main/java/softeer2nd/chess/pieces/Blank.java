@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.Position;
+import softeer2nd.chess.exceptions.BlankMoveException;
 
 public class Blank extends Piece {
     protected Blank(Color color, Type type, Position position) {
@@ -13,7 +14,12 @@ public class Blank extends Piece {
     }
 
     @Override
-    boolean verifyMovePosition(Position position) {
+    public void verifyMovePosition(Position position)throws RuntimeException {
+        throw new BlankMoveException();
+    }
+
+    @Override
+    boolean isReachablePosition(Position targetPosition) {
         return false;
     }
 

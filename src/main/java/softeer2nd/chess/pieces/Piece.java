@@ -1,10 +1,13 @@
 package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.Position;
+import softeer2nd.chess.exceptions.OutOfPieceRangeException;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static softeer2nd.chess.Board.isValidPosition;
 
 public abstract class Piece {
     public enum Color {
@@ -145,7 +148,15 @@ public abstract class Piece {
         return this.type == Type.NO_PIECE;
     }
 
-    abstract boolean verifyMovePosition(Position position);
+    //abstract void verifyMovePosition(Position position) throws RuntimeException;
+
+    public void verifyMovePosition(Position targetPosition) throws RuntimeException {
+        if (!isValidPosition(targetPosition) || !isReachablePosition(targetPosition)) {
+            throw new OutOfPieceRangeException();
+        }
+    }
+
+    abstract boolean isReachablePosition(Position targetPosition);
 
     @Override
     public boolean equals(Object o) {

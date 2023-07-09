@@ -16,12 +16,8 @@ public class Rook extends Piece {
         return new Rook(this.getColor(), position);
     }
 
-    @Override
-    boolean verifyMovePosition(Position targetPosition) {
-        return isValidPosition(targetPosition) && isReachablePosition(targetPosition);
-    }
 
-    private boolean isReachablePosition(Position targetPosition) {
+    protected boolean isReachablePosition(Position targetPosition) {
         List<Piece.Direction> directions = Piece.Direction.linearDirection();
 
         for (Piece.Direction direction : directions) {

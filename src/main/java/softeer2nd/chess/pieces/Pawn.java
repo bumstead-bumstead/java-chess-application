@@ -4,8 +4,6 @@ import softeer2nd.chess.Position;
 
 import java.util.List;
 
-import static softeer2nd.chess.Board.isValidPosition;
-
 public class Pawn extends Piece {
     /*
     * todo
@@ -22,12 +20,7 @@ public class Pawn extends Piece {
         return new Pawn(this.getColor(), position);
     }
 
-    @Override
-    boolean verifyMovePosition(Position targetPosition) {
-        return isValidPosition(targetPosition) && isReachablePosition(targetPosition);
-    }
-
-    private boolean isReachablePosition(Position targetPosition) {
+    protected boolean isReachablePosition(Position targetPosition) {
         List<Direction> directions = Piece.Direction.blackPawnDirection();
         if (this.color == Color.WHITE) directions = Piece.Direction.whitePawnDirection();
 

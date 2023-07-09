@@ -4,8 +4,6 @@ import softeer2nd.chess.Position;
 
 import java.util.List;
 
-import static softeer2nd.chess.Board.isValidPosition;
-
 public class Knight extends Piece {
     public Knight(Piece.Color color, Position position) {
         super(color, Type.KNIGHT, position);
@@ -16,12 +14,8 @@ public class Knight extends Piece {
         return new Knight(this.getColor(), position);
     }
 
-    @Override
-    boolean verifyMovePosition(Position targetPosition) {
-        return isValidPosition(targetPosition) && isReachablePosition(targetPosition);
-    }
 
-    private boolean isReachablePosition(Position targetPosition) {
+    protected boolean isReachablePosition(Position targetPosition) {
         List<Direction> directions = Piece.Direction.knightDirection();
 
         for (Direction direction : directions) {
