@@ -111,7 +111,7 @@ public abstract class Piece {
         this.position = position;
     }
 
-    abstract Piece createMovedPiece(Position position);
+    public abstract Piece createMovedPiece(Position position);
 
     public Position getPosition() {
         return position;

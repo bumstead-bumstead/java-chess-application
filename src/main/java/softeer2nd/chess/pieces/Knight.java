@@ -12,7 +12,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    Piece createMovedPiece(Position position) {
+    public Piece createMovedPiece(Position position) {
         return new Knight(this.getColor(), position);
     }
 

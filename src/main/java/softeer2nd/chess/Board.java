@@ -1,5 +1,6 @@
 package softeer2nd.chess;
 
+import softeer2nd.chess.pieces.Blank;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.ChessPositionParser;
 
@@ -10,6 +11,10 @@ public class Board {
 
     public final static int BOARD_LENGTH = 8;
     private List<Rank> pieces;
+
+    public List<Rank> getPieces() {
+        return pieces;
+    }
 
     public Board() {
         this.pieces = new ArrayList<>();
@@ -54,7 +59,7 @@ public class Board {
 
         Rank rank = pieces.get(position.getRow());
 
-        rank.set(position.getColumn(), Piece.createBlank(position));
+        rank.set(position.getColumn(), Blank.create(position));
     }
 
     public int pieceCount() {
@@ -121,5 +126,12 @@ public class Board {
         }
 
         return piecesOfColumn;
+    }
+
+    public static boolean isValidPosition(Position targetPosition) {
+        return targetPosition.getRow() < Board.BOARD_LENGTH &&
+                targetPosition.getRow() > -1 &&
+                targetPosition.getColumn() < Board.BOARD_LENGTH &&
+                targetPosition.getColumn() > -1;
     }
 }

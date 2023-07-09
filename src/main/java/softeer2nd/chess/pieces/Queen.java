@@ -12,7 +12,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    Piece createMovedPiece(Position position) {
+    public Piece createMovedPiece(Position position) {
         return new Queen(this.getColor(), position);
     }
 
@@ -31,8 +31,8 @@ public class Queen extends Piece {
     }
 
     private boolean isReachableInDirection(Position targetPosition, Direction direction) {
-        int row = targetPosition.getRow() + direction.getYDegree();
-        int column = targetPosition.getColumn() + direction.getXDegree();
+        int row = this.position.getRow() + direction.getYDegree();
+        int column = this.position.getColumn() + direction.getXDegree();
         Position possiblePosition = new Position(row, column);
 
         while (isValidPosition(possiblePosition)) {

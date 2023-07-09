@@ -3,6 +3,8 @@ package softeer2nd.chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.pieces.Blank;
+import softeer2nd.chess.pieces.Pawn;
 import softeer2nd.chess.pieces.Piece;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,8 +45,8 @@ public class ChessGameTest {
         String targetPosition = "b3";
 
         chessGame.move(sourcePosition, targetPosition);
-        assertEquals(Piece.createBlank(new Position(sourcePosition)), chessGame.findPiece(sourcePosition));
-        assertEquals(Piece.createWhitePawn(new Position(targetPosition)), chessGame.findPiece(targetPosition));
+        assertEquals(Blank.create(new Position(sourcePosition)), chessGame.findPiece(sourcePosition));
+        assertEquals(Pawn.createWhite(new Position(targetPosition)), chessGame.findPiece(targetPosition));
     }
 
 }

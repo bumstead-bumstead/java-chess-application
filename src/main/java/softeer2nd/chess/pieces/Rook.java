@@ -12,7 +12,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    Piece createMovedPiece(Position position) {
+    public Piece createMovedPiece(Position position) {
         return new Rook(this.getColor(), position);
     }
 

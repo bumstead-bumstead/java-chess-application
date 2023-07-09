@@ -20,11 +20,13 @@ public class ChessGame {
         board.initialize();
     }
 
+
+    //todo : 예외처리 추가
     public void move(String sourcePosition, String targetPosition) {
         Piece oldPiece = board.findPiece(sourcePosition);
 
         board.removePiece(sourcePosition);
-        board.setPiece(targetPosition, Piece.createMovedPiece(oldPiece, ChessPositionParser.parse(targetPosition)));
+        board.setPiece(targetPosition, oldPiece.createMovedPiece(ChessPositionParser.parse(targetPosition)));
     }
 
     public double calculatePoint(Piece.Color targetColor) {
@@ -41,15 +43,19 @@ public class ChessGame {
 
     private double calculateTotalPointOfColumn(List<Piece> pieces) {
         int pawnCount = 0;
-        int totalPoint = 0;
+        double totalPoint = 0;
 
         for (Piece piece : pieces) {
-            if (piece.isPawn()) pawnCount++;
+            if (piece.hasType(Piece.Type.PAWN)) pawnCount++;
             totalPoint += piece.getType().getScore();
         }
 
         if (pawnCount > 1) totalPoint -= pawnCount * PAWN_HALF_SCORE;
 
         return totalPoint;
+    }
+
+    public Piece findPiece(String position) {
+        return board.findPiece(position);
     }
 }

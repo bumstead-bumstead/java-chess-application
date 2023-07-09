@@ -12,7 +12,7 @@ public class King extends Piece {
     }
 
     @Override
-    Piece createMovedPiece(Position position) {
+    public Piece createMovedPiece(Position position) {
         return new King(this.getColor(), position);
     }
 
@@ -26,9 +26,10 @@ public class King extends Piece {
         List<Direction> directions = Piece.Direction.everyDirection();
 
         for (Direction direction : directions) {
-            int row = targetPosition.getRow() + direction.getYDegree();
-            int column = targetPosition.getColumn() + direction.getXDegree();
+            int row = this.position.getRow() + direction.getYDegree();
+            int column = this.position.getColumn() + direction.getXDegree();
             Position possiblePosition = new Position(row, column);
+
             if (possiblePosition.equals(targetPosition)) return true;
         }
         return false;

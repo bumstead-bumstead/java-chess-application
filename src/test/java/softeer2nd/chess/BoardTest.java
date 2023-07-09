@@ -3,7 +3,7 @@ package softeer2nd.chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.pieces.*;
 
 import java.util.List;
 
@@ -52,10 +52,10 @@ class BoardTest {
     @Test
     @DisplayName("초기화된 상태에서 a8 : 검정색 룩, h8 : 검정색 룩, a1 : 흰색 룩, h1 : 흰색 룩이 위치해야한다.")
     public void findPiece() throws Exception {
-        assertEquals(Piece.createBlackRook(new Position("a8")), board.findPiece("a8"));
-        assertEquals(Piece.createBlackRook(new Position("h8")), board.findPiece("h8"));
-        assertEquals(Piece.createWhiteRook(new Position("a1")), board.findPiece("a1"));
-        assertEquals(Piece.createWhiteRook(new Position("h1")), board.findPiece("h1"));
+        assertEquals(Rook.createBlack(new Position("a8")), board.findPiece("a8"));
+        assertEquals(Rook.createBlack(new Position("h8")), board.findPiece("h8"));
+        assertEquals(Rook.createWhite(new Position("a1")), board.findPiece("a1"));
+        assertEquals(Rook.createWhite(new Position("h1")), board.findPiece("h1"));
     }
 
     @Test
@@ -64,7 +64,7 @@ class BoardTest {
         board.initializeEmpty();
 
         String position = "b5";
-        Piece piece = Piece.createBlackRook(new Position("b5"));
+        Piece piece = Rook.createBlack(new Position("b5"));
         board.setPiece(position, piece);
 
         assertEquals(piece, board.findPiece(position));
@@ -76,15 +76,15 @@ class BoardTest {
     public void sort() {
         board.initializeEmpty();
 
-        addPiece("f1", Piece.createBlackPawn(new Position("f1")));
-        addPiece("a2", Piece.createBlackBishop(new Position("a2")));
-        addPiece("b3", Piece.createBlackRook(new Position("b3")));
-        addPiece("d3", Piece.createBlackQueen(new Position("d3")));
+        addPiece("f1", Pawn.createBlack(new Position("f1")));
+        addPiece("a2", Bishop.createBlack(new Position("a2")));
+        addPiece("b3", Rook.createBlack(new Position("b3")));
+        addPiece("d3", Queen.createBlack(new Position("d3")));
 
-        List<Piece> expectedResult = List.of(Piece.createBlackPawn(new Position("f1")),
-                Piece.createBlackBishop(new Position("a2")),
-                Piece.createBlackRook(new Position("b3")),
-                Piece.createBlackQueen(new Position("d3")));
+        List<Piece> expectedResult = List.of(Pawn.createBlack(new Position("f1")),
+                Bishop.createBlack(new Position("a2")),
+                Rook.createBlack(new Position("b3")),
+                Queen.createBlack(new Position("d3")));
 
         List<Piece> actualResult = board.getSortedPiecesAscending(Piece.Color.BLACK);
 
@@ -96,15 +96,15 @@ class BoardTest {
     public void sortDescending() {
         board.initializeEmpty();
 
-        addPiece("f1", Piece.createBlackPawn(new Position("f1")));
-        addPiece("a2", Piece.createBlackBishop(new Position("a2")));
-        addPiece("b3", Piece.createBlackRook(new Position("b3")));
-        addPiece("d3", Piece.createBlackQueen(new Position("d3")));
+        addPiece("f1", Pawn.createBlack(new Position("f1")));
+        addPiece("a2", Bishop.createBlack(new Position("a2")));
+        addPiece("b3", Rook.createBlack(new Position("b3")));
+        addPiece("d3", Queen.createBlack(new Position("d3")));
 
-        List<Piece> expectedResult = List.of(Piece.createBlackQueen(new Position("d3")),
-                Piece.createBlackRook(new Position("b3")),
-                Piece.createBlackBishop(new Position("a2")),
-                Piece.createBlackPawn(new Position("f1"))
+        List<Piece> expectedResult = List.of(Queen.createBlack(new Position("d3")),
+                Rook.createBlack(new Position("b3")),
+                Bishop.createBlack(new Position("a2")),
+                Pawn.createBlack(new Position("f1"))
                 );
 
         List<Piece> actualResult = board.getSortedPiecesDescending(Piece.Color.BLACK);

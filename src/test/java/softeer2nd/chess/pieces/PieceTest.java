@@ -15,49 +15,49 @@ public class PieceTest {
     @BeforeEach
     void init() {
         testPosition = new Position(0, 0);
-        whitePiece = Piece.createWhiteBishop(testPosition);
-        blackPiece = Piece.createBlackBishop(testPosition);
+        whitePiece = Bishop.createWhite(testPosition);
+        blackPiece = Bishop.createBlack(testPosition);
     }
 
     @Test
     @DisplayName("생성된 기물의 field가 유효해야한다.")
     public void create_piece() {
-        verifyPiece(Piece.createBlackBishop(testPosition), Piece.Color.BLACK, Piece.Type.BISHOP);
-        verifyPiece(Piece.createBlackRook(testPosition), Piece.Color.BLACK, Piece.Type.ROOK);
-        verifyPiece(Piece.createBlackKing(testPosition), Piece.Color.BLACK, Piece.Type.KING);
-        verifyPiece(Piece.createBlackKnight(testPosition), Piece.Color.BLACK, Piece.Type.KNIGHT);
-        verifyPiece(Piece.createBlackPawn(testPosition), Piece.Color.BLACK, Piece.Type.PAWN);
-        verifyPiece(Piece.createBlackQueen(testPosition), Piece.Color.BLACK, Piece.Type.QUEEN);
-        verifyPiece(Piece.createWhiteBishop(testPosition), Piece.Color.WHITE, Piece.Type.BISHOP);
-        verifyPiece(Piece.createWhiteRook(testPosition), Piece.Color.WHITE, Piece.Type.ROOK);
-        verifyPiece(Piece.createWhiteKing(testPosition), Piece.Color.WHITE, Piece.Type.KING);
-        verifyPiece(Piece.createWhiteKnight(testPosition), Piece.Color.WHITE, Piece.Type.KNIGHT);
-        verifyPiece(Piece.createWhitePawn(testPosition), Piece.Color.WHITE, Piece.Type.PAWN);
-        verifyPiece(Piece.createWhiteQueen(testPosition), Piece.Color.WHITE, Piece.Type.QUEEN);
+        verifyPiece(Bishop.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.BISHOP);
+        verifyPiece(Rook.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.ROOK);
+        verifyPiece(King.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.KING);
+        verifyPiece(Knight.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.KNIGHT);
+        verifyPiece(Pawn.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.PAWN);
+        verifyPiece(Queen.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.QUEEN);
+        verifyPiece(Bishop.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.BISHOP);
+        verifyPiece(Rook.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.ROOK);
+        verifyPiece(King.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.KING);
+        verifyPiece(Knight.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.KNIGHT);
+        verifyPiece(Pawn.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.PAWN);
+        verifyPiece(Queen.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.QUEEN);
     }
 
     @Test
     @DisplayName("기물의 색이 흰 색이면 isWhite()는 true를 반환해야 한다.")
     public void isWhiteTrue() {
-        assertTrue(whitePiece.isWhite());
+        assertTrue(whitePiece.hasColor(Piece.Color.WHITE));
     }
 
     @Test
     @DisplayName("기물의 색이 검은 색이면 isWhite는 false를 반환해야 한다.")
     public void isWhiteFalse() {
-        assertFalse(blackPiece.isWhite());
+        assertFalse(blackPiece.hasColor(Piece.Color.WHITE));
     }
 
     @Test
     @DisplayName("기물의 색이 검정 색이면 isBlack()는 true를 반환해야 한다.")
     public void isBlackTrue() {
-        assertTrue(blackPiece.isBlack());
+        assertTrue(blackPiece.hasColor(Piece.Color.BLACK));
     }
 
     @Test
     @DisplayName("기물의 색이 흰 색이면 isBlack은 false를 반환해야 한다.")
     public void isBlackFalse() {
-        assertFalse(whitePiece.isBlack());
+        assertFalse(whitePiece.hasColor(Piece.Color.BLACK));
     }
 
     @Test
