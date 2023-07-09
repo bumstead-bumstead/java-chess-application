@@ -71,4 +71,6 @@ public class PieceTest {
         assertEquals(color, piece.getColor());
         assertEquals(type, piece.getType());
     }
+
+
 }
