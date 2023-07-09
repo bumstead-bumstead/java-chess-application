@@ -92,11 +92,11 @@ public abstract class Piece {
             return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
         }
 
-        public static List<Direction> whitePawnDirection() {
+        public static List<Direction> blackPawnDirection() {
             return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
         }
 
-        public static List<Direction> blackPawnDirection() {
+        public static List<Direction> whitePawnDirection() {
             return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
         }
     }
