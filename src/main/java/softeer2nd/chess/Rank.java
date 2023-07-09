@@ -93,11 +93,9 @@ public class Rank {
     public List<Piece> collectPieces(Piece.Color color) {
         List<Piece> result = new ArrayList<>();
 
-        for (Piece piece : pieces) {
-            if (piece.hasColor(color)) {
-                result.add(piece);
-            }
-        }
+        pieces.stream()
+                .filter(piece -> piece.hasColor(color))
+                .forEach(result::add);
 
         return result;
     }
