@@ -31,8 +31,9 @@ public class Rook extends Piece {
     }
 
     private boolean isReachableInDirection(Position targetPosition, Piece.Direction direction) {
-        int row = targetPosition.getRow() + direction.getYDegree();
-        int column = targetPosition.getColumn() + direction.getXDegree();
+        int row = this.position.getRow() + direction.getYDegree();
+        int column = this.position.getColumn() + direction.getXDegree();
+
         Position possiblePosition = new Position(row, column);
 
         while (isValidPosition(possiblePosition)) {
