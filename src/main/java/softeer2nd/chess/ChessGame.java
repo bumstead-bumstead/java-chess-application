@@ -16,14 +16,20 @@ public class ChessGame {
         this.board = new Board();
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public void start() {
         board.initialize();
     }
 
-
-    //todo : 예외처리 추가
     public void move(String sourcePosition, String targetPosition) {
         Piece oldPiece = board.findPiece(sourcePosition);
+        Piece targetPiece = board.findPiece(targetPosition);
+
+        oldPiece.verifySameColor(targetPiece);
+        oldPiece.verifyMovePosition(new Position(targetPosition));
 
         board.removePiece(sourcePosition);
         board.setPiece(targetPosition, oldPiece.createMovedPiece(ChessPositionParser.parse(targetPosition)));

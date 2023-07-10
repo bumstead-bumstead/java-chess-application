@@ -1,6 +1,7 @@
 package softeer2nd.chess.pieces;
 
 import softeer2nd.chess.Position;
+import softeer2nd.chess.exceptions.OccupiedPositionException;
 import softeer2nd.chess.exceptions.OutOfPieceRangeException;
 
 import java.util.Arrays;
@@ -148,8 +149,11 @@ public abstract class Piece {
         return this.type == Type.NO_PIECE;
     }
 
-    //abstract void verifyMovePosition(Position position) throws RuntimeException;
-
+    public void verifySameColor(Piece piece) {
+        if (this.hasColor(piece.color)) {
+            throw new OccupiedPositionException();
+        }
+    }
     public void verifyMovePosition(Position targetPosition) throws RuntimeException {
         if (!isValidPosition(targetPosition) || !isReachablePosition(targetPosition)) {
             throw new OutOfPieceRangeException();

@@ -1,46 +1,48 @@
 package softeer2nd.chess;
 
-import java.util.Scanner;
-
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
-    private static Board board = new Board();
+    private static ChessGame chessGame = new ChessGame();
+    private static ChessView chessView = new ChessView();
 
     public static void main(String[] args) {
-        try {
-            run();
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
+         run();
     }
 
     private static void run() throws RuntimeException {
-        while (true) {
-            String command = scanner.nextLine();
 
-            if (command.equals("start")) {
-                System.out.println("게임을 시작합니다.");
-                board.initialize();
-                System.out.println(board.showBoard());
-                continue;
-            }
+        System.out.println(chessView.getStartMessage());
+        chessGame.start();
+        System.out.println(chessView.showBoard(chessGame.getBoard()));
+
+        while (processTurn());
+    }
+
+    private static boolean processTurn() {
+
+        try {
+            String command = chessView.getCommandInput();
+
             if (command.startsWith("move")) {
                 String[] commandArray = command.split(" ");
                 String sourcePosition = commandArray[1];
                 String targetPosition = commandArray[2];
 
-                System.out.println("기물을 이동합니다. : " + sourcePosition + " to " + targetPosition);
-                board.move(sourcePosition, targetPosition);
-                System.out.println(board.showBoard());
-                System.out.println("---------------------------");
-                continue;
-            }
-            if (command.equals("end")) {
-                System.out.println("게임을 종료합니다.");
-                return;
+                chessGame.move(sourcePosition, targetPosition);
+
+                System.out.println(chessView.getMoveMessage(sourcePosition, targetPosition));
+                System.out.println(chessView.showBoard(chessGame.getBoard()));
+                return true;
             }
 
-            throw new IllegalArgumentException("잘못된 입력입니다.");
+            if (command.equals("end")) {
+                System.out.println(chessView.getEndMessage());
+                return false;
+            }
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return processTurn();
         }
+
+        return true;
     }
 }
