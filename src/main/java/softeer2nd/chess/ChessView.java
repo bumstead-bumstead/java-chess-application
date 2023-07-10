@@ -13,6 +13,8 @@ public class ChessView {
     private static final String BOARD_UPPER_LINE = "--BOARD--";
     private static final String BOARD_UNDER_LINE = "--------";
     public static final String END_MESSAGE = "게임을 종료합니다.";
+    public static final String BLACK_SCORE_MESSAGE = "흑색 점수 : ";
+    public static final String WHITE_SCORE_MESSAGE = "백색 점수 : ";
 
     Scanner scanner = new Scanner(System.in);
 
@@ -68,14 +70,11 @@ public class ChessView {
 
         if (input.startsWith("move")) {
             verifyMoveCommand(input);
-            return;
         }
-
-        verifyEndCommand(input);
     }
 
     private static void verifyCommandType(String input) {
-        if (!input.startsWith("move") && !input.equals("end")) {
+        if (!input.startsWith("move") && !input.equals("end") && !input.equals("score")) {
             throw new IllegalCommandException();
         }
     }
@@ -107,5 +106,13 @@ public class ChessView {
 
     private static boolean hasCorrectArgumentNumber(String[] inputArray) {
         return inputArray.length == 3;
+    }
+
+    public String getWhiteScore(double whiteScore) {
+        return WHITE_SCORE_MESSAGE + whiteScore;
+    }
+
+    public String getBlackScore(double blackScore) {
+        return BLACK_SCORE_MESSAGE + blackScore;
     }
 }
