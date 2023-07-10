@@ -1,5 +1,6 @@
 package softeer2nd.chess;
 
+import softeer2nd.chess.exceptions.IllegalCommandException;
 import softeer2nd.chess.pieces.Piece;
 import softeer2nd.chess.utils.ChessPositionParser;
 
@@ -24,15 +25,22 @@ public class ChessGame {
         board.initialize();
     }
 
-    public void move(String sourcePosition, String targetPosition) {
+    public void move(String sourcePosition, String targetPosition, Piece.Color turn) throws RuntimeException {
         Piece oldPiece = board.findPiece(sourcePosition);
         Piece targetPiece = board.findPiece(targetPosition);
 
         oldPiece.verifySameColor(targetPiece);
         oldPiece.verifyMovePosition(new Position(targetPosition));
+        verifyTurn(oldPiece, turn);
 
         board.removePiece(sourcePosition);
         board.setPiece(targetPosition, oldPiece.createMovedPiece(ChessPositionParser.parse(targetPosition)));
+    }
+
+    private void verifyTurn(Piece oldPiece, Piece.Color turn) {
+        if (!oldPiece.hasColor(turn)) {
+            throw new IllegalCommandException();
+        }
     }
 
     public double calculatePoint(Piece.Color targetColor) {

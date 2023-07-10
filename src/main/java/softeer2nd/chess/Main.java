@@ -5,7 +5,7 @@ import softeer2nd.chess.pieces.Piece;
 public class Main {
     private static ChessGame chessGame = new ChessGame();
     private static ChessView chessView = new ChessView();
-
+    private static Piece.Color turn = Piece.Color.BLACK;
     public static void main(String[] args) {
          run();
     }
@@ -15,7 +15,19 @@ public class Main {
         chessGame.start();
         System.out.println(chessView.showBoard(chessGame.getBoard()));
 
-        while (processTurn());
+        while (processTurn()) {
+            changeTurn();
+        };
+    }
+
+    private static void changeTurn() {
+        if (turn == Piece.Color.BLACK) {
+            turn = Piece.Color.WHITE;
+            return;
+        }
+        if (turn == Piece.Color.WHITE) {
+            turn = Piece.Color.BLACK;
+        }
     }
 
     private static boolean processTurn() {
@@ -23,7 +35,7 @@ public class Main {
             String command = chessView.getCommandInput();
 
             if (command.startsWith("move")) {
-                moveRoutine(command);
+                moveRoutine(command, turn);
                 return true;
             }
             if (command.equals("score")) {
@@ -52,12 +64,13 @@ public class Main {
         System.out.println(chessView.getEndMessage());
     }
 
-    private static void moveRoutine(String command) {
+    //todo : sourcePosition의 색이 turn의 색인 지 검증하는 로직 추가
+    private static void moveRoutine(String command, Piece.Color turn) {
         String[] commandArray = command.split(" ");
         String sourcePosition = commandArray[1];
         String targetPosition = commandArray[2];
 
-        chessGame.move(sourcePosition, targetPosition);
+        chessGame.move(sourcePosition, targetPosition, turn);
 
         System.out.println(chessView.getMoveMessage(sourcePosition, targetPosition));
         System.out.println(chessView.showBoard(chessGame.getBoard()));
