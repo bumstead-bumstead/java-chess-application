@@ -2,8 +2,9 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Position;
-import softeer2nd.chess.exceptions.IllegalCommandException;
+import softeer2nd.chess.domain.pieces.Pawn;
 import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.List;
 
@@ -28,6 +29,15 @@ public class ChessGame {
 
     public void move(Position sourcePosition, Position targetPosition, Piece.Color turn) throws RuntimeException {
         Piece oldPiece = board.findPiece(sourcePosition);
+
+        verifyMove(sourcePosition, targetPosition, turn);
+
+        board.removePiece(sourcePosition);
+        board.setPiece(targetPosition, oldPiece);
+    }
+
+    private void verifyMove(Position sourcePosition, Position targetPosition, Piece.Color turn) throws RuntimeException {
+        Piece oldPiece = board.findPiece(sourcePosition);
         Piece targetPiece = board.findPiece(targetPosition);
 
         verifyTurn(oldPiece, turn);
@@ -35,8 +45,30 @@ public class ChessGame {
         oldPiece.verifyMovePosition(sourcePosition, targetPosition);
         board.verifyBlockedByPiece(sourcePosition, targetPosition);
 
-        board.removePiece(sourcePosition);
-        board.setPiece(targetPosition, oldPiece);
+        if (oldPiece.hasType(Piece.Type.PAWN)) {
+            verifyPawnMove(sourcePosition, targetPosition);
+        }
+    }
+
+    private void verifyPawnMove(Position sourcePosition, Position targetPosition) {
+        Pawn sourcePawn = (Pawn) board.findPiece(sourcePosition);
+        Piece targetPiece = board.findPiece(targetPosition);
+
+        if (isVertical(sourcePosition, targetPosition)) {
+            sourcePawn.setHasMoved();
+            return;
+        }
+
+        if (targetPiece.hasColor(sourcePawn.getColor().getReverseColor())) {
+            sourcePawn.setHasMoved();
+            return;
+        }
+
+        throw new IllegalCommandException();
+    }
+
+    private static boolean isVertical(Position sourcePosition, Position targetPosition) {
+        return targetPosition.getColumn() == sourcePosition.getColumn();
     }
 
     private void verifyTurn(Piece oldPiece, Piece.Color turn) {
