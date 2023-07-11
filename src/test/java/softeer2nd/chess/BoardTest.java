@@ -26,12 +26,13 @@ class BoardTest {
     public void create() throws Exception {
         assertEquals(32, board.pieceCount());
         String blankRank = appendNewLine("........");
-        assertEquals(
+        assertEquals( appendNewLine("--BOARD--") +
                 appendNewLine("RNBQKBNR") +
                         appendNewLine("PPPPPPPP") +
                         blankRank + blankRank + blankRank + blankRank +
                         appendNewLine("pppppppp") +
-                        appendNewLine("rnbqkbnr"),
+                        appendNewLine("rnbqkbnr") +
+                appendNewLine("--------"),
                 chessView.showBoard(board));
     }
 
