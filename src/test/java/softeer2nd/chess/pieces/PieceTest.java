@@ -8,10 +8,12 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.*;
+import softeer2nd.chess.exceptions.OccupiedPositionException;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PieceTest {
     Piece whitePiece;
@@ -55,6 +57,7 @@ public class PieceTest {
     void hasColor(Piece piece, Piece.Color color, boolean result) {
         assertEquals(result, piece.hasColor(color));
     }
+
     private static Stream<Arguments> provideColorForHasColor() {
         Piece whitePiece = Bishop.createWhite();
         Piece blackPiece = Bishop.createBlack();
@@ -72,6 +75,20 @@ public class PieceTest {
     public void getRepresentationPerPiece() throws Exception {
         assertEquals('p', Piece.Type.PAWN.getWhiteRepresentation());
         assertEquals('P', Piece.Type.PAWN.getBlackRepresentation());
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePiecesForVerifySameColor")
+    @DisplayName("verifySameColor 테스트")
+    void verifySameColor(Piece piece, Piece targetPiece) {
+        assertThrows(OccupiedPositionException.class, () -> piece.verifySameColor(targetPiece));
+    }
+
+    private static Stream<Arguments> providePiecesForVerifySameColor() {
+        return Stream.of(
+                Arguments.of(Pawn.createBlack(), Pawn.createBlack()),
+                Arguments.of(Pawn.createWhite(), Pawn.createWhite())
+        );
     }
 
     private void verifyPiece(final Piece piece, final Piece.Color color, final Piece.Type type) {
