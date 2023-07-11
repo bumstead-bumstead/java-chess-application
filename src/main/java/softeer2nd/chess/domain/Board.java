@@ -2,6 +2,7 @@ package softeer2nd.chess.domain;
 
 import softeer2nd.chess.domain.pieces.Blank;
 import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,5 +127,39 @@ public class Board {
                 targetPosition.getRow() > -1 &&
                 targetPosition.getColumn() < Board.BOARD_LENGTH &&
                 targetPosition.getColumn() > -1;
+    }
+
+    public void verifyBlockedByPiece(Position sourcePosition, Position targetPosition) {
+        Position temporalPosition = new Position(sourcePosition.getRow(), sourcePosition.getColumn());
+
+        int rowDifference = targetPosition.getRow() - sourcePosition.getRow();
+        int columnDifference = targetPosition.getColumn() - sourcePosition.getColumn();
+        int rowDirection;
+        int columnDirection;
+        if (rowDifference != 0) {
+            rowDirection = rowDifference / Math.abs(rowDifference);
+        } else {
+            rowDirection = 0;
+        }
+        if (columnDifference != 0) {
+            columnDirection = columnDifference / Math.abs(columnDifference);
+        } else {
+            columnDirection = 0;
+        }
+
+        while (rowDifference != 0 || columnDifference != 0) {
+            if (rowDifference != 0) {
+                temporalPosition.transfer(rowDirection, 0);
+                rowDifference -= rowDirection;
+            }
+            if (columnDifference != 0) {
+                temporalPosition.transfer(0, columnDirection);
+                columnDifference -= columnDirection;
+            }
+
+            if (!findPiece(temporalPosition).isEmptyPiece()) {
+                throw new IllegalCommandException();
+            }
+        }
     }
 }

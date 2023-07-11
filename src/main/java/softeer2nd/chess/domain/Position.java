@@ -5,8 +5,8 @@ import softeer2nd.chess.utils.ChessPositionParser;
 import java.util.Objects;
 
 public class Position {
-    private final int row;
-    private final int column;
+    private int row;
+    private int column;
 
     public Position(int row, int column) {
         this.row = row;
@@ -18,12 +18,14 @@ public class Position {
         this.column = ChessPositionParser.parseFile(position.charAt(0));
     }
 
+    public void transfer(int rowDifference, int columnDifference) {
+        row += rowDifference;
+        column += columnDifference;
+    }
+
     @Override
     public String toString() {
-        return "Position{" +
-                "row=" + row +
-                ", column=" + column +
-                '}';
+        return "[" + row + ", " + column + ']';
     }
 
     @Override
