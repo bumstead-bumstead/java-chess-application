@@ -1,116 +1,14 @@
 package softeer2nd.chess.view;
 
 import softeer2nd.chess.domain.Board;
-import softeer2nd.chess.domain.Rank;
-import softeer2nd.chess.exceptions.IllegalCommandException;
 
-import java.util.Scanner;
+public interface ChessView {
+    String MOVE = "move";
+    String END = "end";
+    String SCORE = "score";
 
-import static softeer2nd.chess.utils.StringUtils.appendNewLine;
+    void showBoard(Board board);
+    String getCommandInput();
 
-public class ChessView {
 
-    private static final String START_MESSAGE = "게임을 시작합니다.";
-    private static final String MOVE_MESSAGE = "기물을 이동합니다. : ";
-    private static final String BOARD_UPPER_LINE = "--BOARD--";
-    private static final String BOARD_UNDER_LINE = "--------";
-    private static final String END_MESSAGE = "게임을 종료합니다.";
-    private static final String BLACK_SCORE_MESSAGE = "흑색 점수 : ";
-    private static final String WHITE_SCORE_MESSAGE = "백색 점수 : ";
-    public static final String MOVE = "move";
-    public static final String END = "end";
-    public static final String SCORE = "score";
-
-    Scanner scanner = new Scanner(System.in);
-
-    public String getMoveMessage(String sourcePosition, String targetPosition) {
-        return MOVE_MESSAGE + sourcePosition + " to " + targetPosition;
-    }
-
-    public String getEndMessage() {
-        return END_MESSAGE;
-    }
-
-    public String getStartMessage() {
-        return START_MESSAGE;
-    }
-
-    public String getErrorMessage(RuntimeException e) {
-        return e.getMessage();
-    }
-
-    public String showBoard(Board board) {
-        StringBuilder result = new StringBuilder();
-
-        result.append(appendNewLine(BOARD_UPPER_LINE));
-
-        for (Rank rank : board.getPieces()) {
-            result.append(appendNewLine(rank.concat()));
-        }
-
-        result.append(appendNewLine(BOARD_UNDER_LINE));
-
-        return result.toString();
-    }
-    public String getCommandInput() {
-        String input = scanner.nextLine();
-
-        veryfyCommandInput(input);
-
-        return input;
-    }
-
-    private static void veryfyCommandInput(String input) {
-        verifyCommandType(input);
-
-        if (input.startsWith(MOVE)) {
-            verifyMoveCommand(input);
-        }
-    }
-
-    private static void verifyCommandType(String input) {
-        if (!input.startsWith(MOVE) && !input.equals(END) && !input.equals(SCORE)) {
-            throw new IllegalCommandException();
-        }
-    }
-
-    private static void verifyMoveCommand(String input) {
-        String[] inputArray = input.split(" ");
-
-        if (!hasCorrectArgumentNumber(inputArray)) {
-            throw new IllegalCommandException();
-        }
-
-        String startPosition = inputArray[1];
-        String targetPosition = inputArray[2];
-
-        if (!hasCorrectPositionFormat(startPosition) || !hasCorrectPositionFormat(targetPosition)) {
-            throw new IllegalCommandException();
-        }
-    }
-
-    private static boolean hasCorrectPositionFormat(String startPosition) {
-        return startPosition.matches("[a-h][1-8]");
-    }
-
-    private static boolean hasCorrectArgumentNumber(String[] inputArray) {
-        return inputArray.length == 3;
-    }
-
-    public String getWhiteScore(double whiteScore) {
-        return WHITE_SCORE_MESSAGE + whiteScore;
-    }
-
-    public String getBlackScore(double blackScore) {
-        return BLACK_SCORE_MESSAGE + blackScore;
-    }
-
-    //for test
-    public String getCommandInput(Scanner scanner) {
-        String input = scanner.nextLine();
-
-        veryfyCommandInput(input);
-
-        return input;
-    }
 }

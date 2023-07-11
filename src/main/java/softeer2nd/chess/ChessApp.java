@@ -2,17 +2,18 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.view.ChessConsoleView;
 import softeer2nd.chess.view.ChessView;
 
 public class ChessApp {
     private ChessGame chessGame = new ChessGame();
-    private ChessView chessView = new ChessView();
+    private ChessConsoleView chessView = new ChessConsoleView();
     private static Piece.Color turn = Piece.Color.BLACK;
 
     public void run() throws RuntimeException {
-        System.out.println(chessView.getStartMessage());
+        chessView.printStartMessage();
         chessGame.start();
-        System.out.println(chessView.showBoard(chessGame.getBoard()));
+        chessView.showBoard(chessGame.getBoard());
 
         while (processTurn()) {
             changeTurn();
@@ -46,7 +47,7 @@ public class ChessApp {
                 return false;
             }
         } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
+            chessView.printErrorMessage(e);
             return processTurn();
         }
         return true;
@@ -56,12 +57,12 @@ public class ChessApp {
         double blackScore = chessGame.calculatePoint(Piece.Color.BLACK);
         double whiteScore = chessGame.calculatePoint(Piece.Color.WHITE);
 
-        System.out.println(chessView.getBlackScore(blackScore));
-        System.out.println(chessView.getWhiteScore(whiteScore));
+        chessView.getBlackScore(blackScore);
+        chessView.getWhiteScore(whiteScore);
     }
 
     private void endRoutine() {
-        System.out.println(chessView.getEndMessage());
+        chessView.printEndMessage();
     }
 
     private void moveRoutine(String command, Piece.Color turn) {
@@ -71,7 +72,7 @@ public class ChessApp {
 
         chessGame.move(sourcePosition, targetPosition, turn);
 
-        System.out.println(chessView.getMoveMessage(commandArray[1], commandArray[2]));
-        System.out.println(chessView.showBoard(chessGame.getBoard()));
+        chessView.printMoveMessage(commandArray[1], commandArray[2]);
+        chessView.showBoard(chessGame.getBoard());
     }
 }
