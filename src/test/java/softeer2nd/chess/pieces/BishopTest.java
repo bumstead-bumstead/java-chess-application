@@ -5,7 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import softeer2nd.chess.Position;
+import softeer2nd.chess.domain.Position;
+import softeer2nd.chess.domain.pieces.Bishop;
 import softeer2nd.chess.exceptions.OutOfPieceRangeException;
 
 import java.util.stream.Stream;

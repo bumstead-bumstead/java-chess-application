@@ -1,6 +1,8 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.domain.Position;
+import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.view.ChessView;
 
 public class ChessApp {
     private ChessGame chessGame = new ChessGame();

@@ -3,10 +3,11 @@ package softeer2nd.chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.exceptions.IllegalCommandException;
-import softeer2nd.chess.pieces.Blank;
-import softeer2nd.chess.pieces.Pawn;
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.domain.pieces.Blank;
+import softeer2nd.chess.domain.pieces.Pawn;
+import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.utils.ChessPositionParser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

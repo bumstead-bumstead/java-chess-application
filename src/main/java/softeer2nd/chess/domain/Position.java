@@ -1,4 +1,4 @@
-package softeer2nd.chess;
+package softeer2nd.chess.domain;
 
 import softeer2nd.chess.utils.ChessPositionParser;
 

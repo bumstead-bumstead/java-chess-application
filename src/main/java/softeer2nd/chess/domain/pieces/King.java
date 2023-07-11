@@ -1,22 +1,21 @@
-package softeer2nd.chess.pieces;
+package softeer2nd.chess.domain.pieces;
 
-import softeer2nd.chess.Position;
+import softeer2nd.chess.domain.Position;
 
 import java.util.List;
 
-public class Knight extends Piece {
-    public Knight(Piece.Color color, Position position) {
-        super(color, Type.KNIGHT, position);
+public class King extends Piece {
+    public King(Color color, Position position) {
+        super(color, Type.KING, position);
     }
 
     @Override
     public Piece createMovedPiece(Position position) {
-        return new Knight(this.getColor(), position);
+        return new King(this.getColor(), position);
     }
 
-
     protected boolean isReachablePosition(Position targetPosition) {
-        List<Direction> directions = Piece.Direction.knightDirection();
+        List<Direction> directions = Piece.Direction.everyDirection();
 
         for (Direction direction : directions) {
             int row = this.position.getRow() + direction.getYDegree();
@@ -28,11 +27,11 @@ public class Knight extends Piece {
         return false;
     }
 
-    public static Knight createWhite(Position position) {
-        return new Knight(Piece.Color.WHITE, position);
+    public static King createWhite(Position position) {
+        return new King(Color.WHITE, position);
     }
 
-    public static Knight createBlack(Position position) {
-        return new Knight(Piece.Color.BLACK, position);
+    public static King createBlack(Position position) {
+        return new King(Color.BLACK, position);
     }
 }

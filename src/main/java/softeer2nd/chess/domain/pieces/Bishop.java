@@ -1,24 +1,24 @@
-package softeer2nd.chess.pieces;
+package softeer2nd.chess.domain.pieces;
 
-import softeer2nd.chess.Position;
+import softeer2nd.chess.domain.Position;
 
 import java.util.List;
 
-import static softeer2nd.chess.Board.isValidPosition;
+import static softeer2nd.chess.domain.Board.isValidPosition;
 
-public class Rook extends Piece {
-    public Rook(Piece.Color color, Position position) {
-        super(color, Piece.Type.ROOK, position);
+public class Bishop extends Piece {
+
+    public Bishop(Piece.Color color, Position position) {
+        super(color, Type.BISHOP, position);
     }
 
     @Override
     public Piece createMovedPiece(Position position) {
-        return new Rook(this.getColor(), position);
+        return new Bishop(this.getColor(), position);
     }
-
-
+    @Override
     protected boolean isReachablePosition(Position targetPosition) {
-        List<Piece.Direction> directions = Piece.Direction.linearDirection();
+        List<Direction> directions = Piece.Direction.diagonalDirection();
 
         for (Piece.Direction direction : directions) {
             if (isReachableInDirection(targetPosition, direction)) return true;
@@ -26,10 +26,9 @@ public class Rook extends Piece {
         return false;
     }
 
-    private boolean isReachableInDirection(Position targetPosition, Piece.Direction direction) {
+    private boolean isReachableInDirection(Position targetPosition, Direction direction) {
         int row = this.position.getRow() + direction.getYDegree();
         int column = this.position.getColumn() + direction.getXDegree();
-
         Position possiblePosition = new Position(row, column);
 
         while (isValidPosition(possiblePosition)) {
@@ -40,12 +39,11 @@ public class Rook extends Piece {
         return false;
     }
 
-    public static Rook createWhite(Position position) {
-        return new Rook(Piece.Color.WHITE, position);
+    public static Bishop createWhite(Position position) {
+        return new Bishop(Piece.Color.WHITE, position);
     }
 
-    public static Rook createBlack(Position position) {
-        return new Rook(Piece.Color.BLACK, position);
+    public static Bishop createBlack(Position position) {
+        return new Bishop(Piece.Color.BLACK, position);
     }
-
 }

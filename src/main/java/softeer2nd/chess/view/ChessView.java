@@ -1,5 +1,7 @@
-package softeer2nd.chess;
+package softeer2nd.chess.view;
 
+import softeer2nd.chess.domain.Board;
+import softeer2nd.chess.domain.Rank;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.Scanner;
@@ -8,13 +10,16 @@ import static softeer2nd.chess.utils.StringUtils.appendNewLine;
 
 public class ChessView {
 
-    public static final String START_MESSAGE = "게임을 시작합니다.";
+    private static final String START_MESSAGE = "게임을 시작합니다.";
     private static final String MOVE_MESSAGE = "기물을 이동합니다. : ";
     private static final String BOARD_UPPER_LINE = "--BOARD--";
     private static final String BOARD_UNDER_LINE = "--------";
-    public static final String END_MESSAGE = "게임을 종료합니다.";
-    public static final String BLACK_SCORE_MESSAGE = "흑색 점수 : ";
-    public static final String WHITE_SCORE_MESSAGE = "백색 점수 : ";
+    private static final String END_MESSAGE = "게임을 종료합니다.";
+    private static final String BLACK_SCORE_MESSAGE = "흑색 점수 : ";
+    private static final String WHITE_SCORE_MESSAGE = "백색 점수 : ";
+    public static final String MOVE = "move";
+    public static final String END = "end";
+    public static final String SCORE = "score";
 
     Scanner scanner = new Scanner(System.in);
 
@@ -55,32 +60,16 @@ public class ChessView {
         return input;
     }
 
-    //for test
-
-    public String getCommandInput(Scanner scanner) {
-        String input = scanner.nextLine();
-
-        veryfyCommandInput(input);
-
-        return input;
-    }
-
     private static void veryfyCommandInput(String input) {
         verifyCommandType(input);
 
-        if (input.startsWith("move")) {
+        if (input.startsWith(MOVE)) {
             verifyMoveCommand(input);
         }
     }
 
     private static void verifyCommandType(String input) {
-        if (!input.startsWith("move") && !input.equals("end") && !input.equals("score")) {
-            throw new IllegalCommandException();
-        }
-    }
-
-    private static void verifyEndCommand(String input) {
-        if (!input.equals("end")) {
+        if (!input.startsWith(MOVE) && !input.equals(END) && !input.equals(SCORE)) {
             throw new IllegalCommandException();
         }
     }
@@ -114,5 +103,14 @@ public class ChessView {
 
     public String getBlackScore(double blackScore) {
         return BLACK_SCORE_MESSAGE + blackScore;
+    }
+
+    //for test
+    public String getCommandInput(Scanner scanner) {
+        String input = scanner.nextLine();
+
+        veryfyCommandInput(input);
+
+        return input;
     }
 }

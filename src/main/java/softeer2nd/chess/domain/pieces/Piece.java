@@ -1,6 +1,6 @@
-package softeer2nd.chess.pieces;
+package softeer2nd.chess.domain.pieces;
 
-import softeer2nd.chess.Position;
+import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.exceptions.OccupiedPositionException;
 import softeer2nd.chess.exceptions.OutOfPieceRangeException;
 
@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static softeer2nd.chess.Board.isValidPosition;
+import static softeer2nd.chess.domain.Board.isValidPosition;
 
 public abstract class Piece {
     public enum Color {

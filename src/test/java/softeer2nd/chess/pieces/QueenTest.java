@@ -3,7 +3,8 @@ package softeer2nd.chess.pieces;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import softeer2nd.chess.Position;
+import softeer2nd.chess.domain.Position;
+import softeer2nd.chess.domain.pieces.Queen;
 import softeer2nd.chess.exceptions.OutOfPieceRangeException;
 
 import static org.junit.jupiter.api.Assertions.*;

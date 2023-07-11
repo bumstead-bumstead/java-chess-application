@@ -1,6 +1,6 @@
 package softeer2nd.chess.utils;
 
-import softeer2nd.chess.Position;
+import softeer2nd.chess.domain.Position;
 
 public class ChessPositionParser {
     private final static int BOARD_LENGTH = 8;

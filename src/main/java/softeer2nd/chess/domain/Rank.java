@@ -1,11 +1,12 @@
-package softeer2nd.chess;
+package softeer2nd.chess.domain;
 
+import softeer2nd.chess.domain.pieces.*;
 import softeer2nd.chess.pieces.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static softeer2nd.chess.Board.BOARD_LENGTH;
+import static softeer2nd.chess.domain.Board.BOARD_LENGTH;
 
 public class Rank {
 

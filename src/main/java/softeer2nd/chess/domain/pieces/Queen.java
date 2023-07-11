@@ -1,24 +1,23 @@
-package softeer2nd.chess.pieces;
+package softeer2nd.chess.domain.pieces;
 
-import softeer2nd.chess.Position;
+import softeer2nd.chess.domain.Position;
 
 import java.util.List;
 
-import static softeer2nd.chess.Board.isValidPosition;
+import static softeer2nd.chess.domain.Board.isValidPosition;
 
-public class Bishop extends Piece {
-
-    public Bishop(Piece.Color color, Position position) {
-        super(color, Type.BISHOP, position);
+public class Queen extends Piece {
+    public Queen(Piece.Color color, Position position) {
+        super(color, Type.QUEEN, position);
     }
 
     @Override
     public Piece createMovedPiece(Position position) {
-        return new Bishop(this.getColor(), position);
+        return new Queen(this.getColor(), position);
     }
-    @Override
+
     protected boolean isReachablePosition(Position targetPosition) {
-        List<Direction> directions = Piece.Direction.diagonalDirection();
+        List<Piece.Direction> directions = Piece.Direction.everyDirection();
 
         for (Piece.Direction direction : directions) {
             if (isReachableInDirection(targetPosition, direction)) return true;
@@ -39,11 +38,11 @@ public class Bishop extends Piece {
         return false;
     }
 
-    public static Bishop createWhite(Position position) {
-        return new Bishop(Piece.Color.WHITE, position);
+    public static Queen createWhite(Position position) {
+        return new Queen(Piece.Color.WHITE, position);
     }
 
-    public static Bishop createBlack(Position position) {
-        return new Bishop(Piece.Color.BLACK, position);
+    public static Queen createBlack(Position position) {
+        return new Queen(Piece.Color.BLACK, position);
     }
 }

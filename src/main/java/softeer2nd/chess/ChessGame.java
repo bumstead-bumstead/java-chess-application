@@ -1,11 +1,13 @@
 package softeer2nd.chess;
 
+import softeer2nd.chess.domain.Board;
+import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.exceptions.IllegalCommandException;
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.domain.pieces.Piece;
 
 import java.util.List;
 
-import static softeer2nd.chess.Board.BOARD_LENGTH;
+import static softeer2nd.chess.domain.Board.BOARD_LENGTH;
 
 public class ChessGame {
     public static final double PAWN_HALF_SCORE = 0.5;

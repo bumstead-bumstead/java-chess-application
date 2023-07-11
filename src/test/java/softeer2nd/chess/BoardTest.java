@@ -3,8 +3,11 @@ package softeer2nd.chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import softeer2nd.chess.pieces.*;
+import softeer2nd.chess.domain.Board;
+import softeer2nd.chess.domain.Position;
+import softeer2nd.chess.domain.pieces.*;
 import softeer2nd.chess.utils.ChessPositionParser;
+import softeer2nd.chess.view.ChessView;
 
 import java.util.List;
 

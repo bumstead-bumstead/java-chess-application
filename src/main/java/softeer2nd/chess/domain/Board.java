@@ -1,7 +1,7 @@
-package softeer2nd.chess;
+package softeer2nd.chess.domain;
 
-import softeer2nd.chess.pieces.Blank;
-import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.domain.pieces.Blank;
+import softeer2nd.chess.domain.pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
