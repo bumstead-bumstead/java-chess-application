@@ -1,78 +1,8 @@
 package softeer2nd.chess;
 
-import softeer2nd.chess.pieces.Piece;
-
 public class Main {
-    private static ChessGame chessGame = new ChessGame();
-    private static ChessView chessView = new ChessView();
-    private static Piece.Color turn = Piece.Color.BLACK;
+
     public static void main(String[] args) {
-         run();
-    }
-
-    private static void run() throws RuntimeException {
-        System.out.println(chessView.getStartMessage());
-        chessGame.start();
-        System.out.println(chessView.showBoard(chessGame.getBoard()));
-
-        while (processTurn()) {
-            changeTurn();
-        };
-    }
-
-    private static void changeTurn() {
-        if (turn == Piece.Color.BLACK) {
-            turn = Piece.Color.WHITE;
-            return;
-        }
-        if (turn == Piece.Color.WHITE) {
-            turn = Piece.Color.BLACK;
-        }
-    }
-
-    private static boolean processTurn() {
-        try {
-            String command = chessView.getCommandInput();
-
-            if (command.startsWith("move")) {
-                moveRoutine(command, turn);
-                return true;
-            }
-            if (command.equals("score")) {
-                scoreRoutine();
-            }
-            if (command.equals("end")) {
-                endRoutine();
-                return false;
-            }
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-            return processTurn();
-        }
-        return true;
-    }
-
-    private static void scoreRoutine() {
-        double blackScore = chessGame.calculatePoint(Piece.Color.BLACK);
-        double whiteScore = chessGame.calculatePoint(Piece.Color.WHITE);
-
-        System.out.println(chessView.getBlackScore(blackScore));
-        System.out.println(chessView.getWhiteScore(whiteScore));
-    }
-
-    private static void endRoutine() {
-        System.out.println(chessView.getEndMessage());
-    }
-
-    //todo : sourcePosition의 색이 turn의 색인 지 검증하는 로직 추가
-    private static void moveRoutine(String command, Piece.Color turn) {
-        String[] commandArray = command.split(" ");
-        String sourcePosition = commandArray[1];
-        String targetPosition = commandArray[2];
-
-        chessGame.move(sourcePosition, targetPosition, turn);
-
-        System.out.println(chessView.getMoveMessage(sourcePosition, targetPosition));
-        System.out.println(chessView.showBoard(chessGame.getBoard()));
+        new ChessApp().run();
     }
 }
