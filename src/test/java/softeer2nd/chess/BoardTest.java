@@ -3,15 +3,20 @@ package softeer2nd.chess;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.*;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 import softeer2nd.chess.utils.ChessPositionParser;
 import softeer2nd.chess.view.ChessConsoleView;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
     private Board board;
@@ -101,6 +106,65 @@ class BoardTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @ParameterizedTest(name = "{0} : [4, 4] to {1} blocked by {2}")
+    @MethodSource("ProvidePositionsForVerifyBlockedByPiece")
+    @DisplayName("경로 중간에 기물이 존재하면 예외를 발생시킨다.")
+    void verifyBlockedByPiece(Piece piece, Position targetPosition, Position blockedPosition) {
+        //given
+        board.initializeEmpty();
+        Position sourcePosition = new Position(4, 4);
+        board.setPiece(sourcePosition, piece);
+        board.setPiece(blockedPosition, Pawn.createBlack());
+
+        //when, then
+        assertThrows(IllegalCommandException.class, () -> board.verifyBlockedByPiece(sourcePosition, targetPosition));
+    }
+
+    private static Stream<Arguments> ProvidePositionsForVerifyBlockedByPiece() {
+        return Stream.of(
+                Arguments.of(Bishop.createBlack(), new Position(7, 7), new Position(5, 5)),
+                Arguments.of(Bishop.createBlack(), new Position(7, 7), new Position(6, 6)),
+                Arguments.of(Bishop.createBlack(), new Position(0, 0), new Position(3, 3)),
+                Arguments.of(Bishop.createBlack(), new Position(0, 0), new Position(2, 2)),
+                Arguments.of(Bishop.createBlack(), new Position(0, 0), new Position(1, 1)),
+                Arguments.of(Bishop.createBlack(), new Position(7, 1), new Position(5, 3)),
+                Arguments.of(Bishop.createBlack(), new Position(7, 1), new Position(6, 2)),
+                Arguments.of(Bishop.createBlack(), new Position(1, 7), new Position(3, 5)),
+                Arguments.of(Bishop.createBlack(), new Position(1, 7), new Position(2, 6)),
+
+                Arguments.of(Queen.createBlack(), new Position(7, 7), new Position(5, 5)),
+                Arguments.of(Queen.createBlack(), new Position(7, 7), new Position(6, 6)),
+                Arguments.of(Queen.createBlack(), new Position(0, 0), new Position(3, 3)),
+                Arguments.of(Queen.createBlack(), new Position(0, 0), new Position(2, 2)),
+                Arguments.of(Queen.createBlack(), new Position(0, 0), new Position(1, 1)),
+                Arguments.of(Queen.createBlack(), new Position(7, 1), new Position(5, 3)),
+                Arguments.of(Queen.createBlack(), new Position(7, 1), new Position(6, 2)),
+                Arguments.of(Queen.createBlack(), new Position(1, 7), new Position(3, 5)),
+                Arguments.of(Queen.createBlack(), new Position(1, 7), new Position(2, 6)),
+
+                Arguments.of(Queen.createBlack(), new Position(7, 4), new Position(5, 4)),
+                Arguments.of(Queen.createBlack(), new Position(7, 4), new Position(6, 4)),
+                Arguments.of(Queen.createBlack(), new Position(4, 7), new Position(4, 5)),
+                Arguments.of(Queen.createBlack(), new Position(4, 7), new Position(4, 6)),
+                Arguments.of(Queen.createBlack(), new Position(4, 0), new Position(4, 3)),
+                Arguments.of(Queen.createBlack(), new Position(4, 0), new Position(4, 2)),
+                Arguments.of(Queen.createBlack(), new Position(4, 0), new Position(4, 1)),
+                Arguments.of(Queen.createBlack(), new Position(0, 4), new Position(1, 4)),
+                Arguments.of(Queen.createBlack(), new Position(0, 4), new Position(2, 4)),
+                Arguments.of(Queen.createBlack(), new Position(0, 4), new Position(3, 4)),
+
+                Arguments.of(Rook.createBlack(), new Position(7, 4), new Position(5, 4)),
+                Arguments.of(Rook.createBlack(), new Position(7, 4), new Position(6, 4)),
+                Arguments.of(Rook.createBlack(), new Position(4, 7), new Position(4, 5)),
+                Arguments.of(Rook.createBlack(), new Position(4, 7), new Position(4, 6)),
+                Arguments.of(Rook.createBlack(), new Position(4, 0), new Position(4, 3)),
+                Arguments.of(Rook.createBlack(), new Position(4, 0), new Position(4, 2)),
+                Arguments.of(Rook.createBlack(), new Position(4, 0), new Position(4, 1)),
+                Arguments.of(Rook.createBlack(), new Position(0, 4), new Position(1, 4)),
+                Arguments.of(Rook.createBlack(), new Position(0, 4), new Position(2, 4)),
+                Arguments.of(Rook.createBlack(), new Position(0, 4), new Position(3, 4))
+        );
+    }
     private void addPiece(Position position, Piece piece) {
         board.setPiece(position, piece);
     }
