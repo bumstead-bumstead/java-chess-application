@@ -134,18 +134,9 @@ public class Board {
 
         int rowDifference = targetPosition.getRow() - sourcePosition.getRow();
         int columnDifference = targetPosition.getColumn() - sourcePosition.getColumn();
-        int rowDirection;
-        int columnDirection;
-        if (rowDifference != 0) {
-            rowDirection = rowDifference / Math.abs(rowDifference);
-        } else {
-            rowDirection = 0;
-        }
-        if (columnDifference != 0) {
-            columnDirection = columnDifference / Math.abs(columnDifference);
-        } else {
-            columnDirection = 0;
-        }
+
+        int rowDirection = calculateRowDirection(rowDifference);
+        int columnDirection = calculateColumnDirection(columnDifference);
 
         while (rowDifference != 0 || columnDifference != 0) {
             if (rowDifference != 0) {
@@ -157,9 +148,30 @@ public class Board {
                 columnDifference -= columnDirection;
             }
 
+            if (temporalPosition.equals(targetPosition)) {
+                break;
+            }
+
             if (!findPiece(temporalPosition).isEmptyPiece()) {
                 throw new IllegalCommandException();
             }
         }
+    }
+
+    private static int calculateColumnDirection(int columnDifference) {
+        if (columnDifference != 0) {
+            return columnDifference / Math.abs(columnDifference);
+        } else {
+            return 0;
+        }
+    }
+
+    private static int calculateRowDirection(int rowDifference) {
+        if (rowDifference != 0) {
+            return rowDifference / Math.abs(rowDifference);
+        } else {
+            return 0;
+        }
+
     }
 }

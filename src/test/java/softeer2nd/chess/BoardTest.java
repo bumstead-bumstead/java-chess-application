@@ -106,6 +106,19 @@ class BoardTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    @Test
+    @DisplayName("경로 중간에 기물이 존재하지 않으면 예외를 발생시키지 않는다.")
+    void verifyBlockedByPieceSuccess() {
+        board.initializeEmpty();
+        Position sourcePosition = new Position(4, 4);
+        Position targetPosition = new Position(5, 5);
+        board.setPiece(sourcePosition, Bishop.createBlack());
+        board.setPiece(targetPosition, Pawn.createWhite());
+
+        board.verifyBlockedByPiece(sourcePosition, targetPosition);
+
+    }
+
     @ParameterizedTest(name = "{0} : [4, 4] to {1} blocked by {2}")
     @MethodSource("ProvidePositionsForVerifyBlockedByPiece")
     @DisplayName("경로 중간에 기물이 존재하면 예외를 발생시킨다.")
