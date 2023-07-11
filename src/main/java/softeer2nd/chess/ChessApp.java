@@ -32,14 +32,14 @@ public class ChessApp {
         try {
             String command = chessView.getCommandInput();
 
-            if (command.startsWith("move")) {
+            if (command.startsWith(ChessView.MOVE)) {
                 moveRoutine(command, turn);
                 return true;
             }
-            if (command.equals("score")) {
+            if (command.equals(ChessView.SCORE)) {
                 scoreRoutine();
             }
-            if (command.equals("end")) {
+            if (command.equals(ChessView.END)) {
                 endRoutine();
                 return false;
             }
@@ -64,13 +64,12 @@ public class ChessApp {
 
     private void moveRoutine(String command, Piece.Color turn) {
         String[] commandArray = command.split(" ");
-        String sourcePosition = commandArray[1];
-        String targetPosition = commandArray[2];
+        Position sourcePosition = new Position(commandArray[1]);
+        Position targetPosition = new Position(commandArray[2]);
 
         chessGame.move(sourcePosition, targetPosition, turn);
 
-        System.out.println(chessView.getMoveMessage(sourcePosition, targetPosition));
+        System.out.println(chessView.getMoveMessage(commandArray[1], commandArray[2]));
         System.out.println(chessView.showBoard(chessGame.getBoard()));
     }
-
 }

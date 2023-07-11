@@ -2,7 +2,6 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.pieces.Blank;
 import softeer2nd.chess.pieces.Piece;
-import softeer2nd.chess.utils.ChessPositionParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,17 +45,13 @@ public class Board {
         pieces.add(Rank.createBlankRank(7));
     }
 
-    public void setPiece(String request, Piece piece) {
-        Position position = ChessPositionParser.parse(request);
-
+    public void setPiece(Position position, Piece piece) {
         Rank rank = pieces.get(position.getRow());
 
         rank.set(position.getColumn(), piece);
     }
 
-    public void removePiece(String request) {
-        Position position = ChessPositionParser.parse(request);
-
+    public void removePiece(Position position) {
         Rank rank = pieces.get(position.getRow());
 
         rank.set(position.getColumn(), Blank.create(position));
@@ -82,9 +77,7 @@ public class Board {
         return number;
     }
 
-    public Piece findPiece(String request) {
-        Position position = ChessPositionParser.parse(request);
-
+    public Piece findPiece(Position position) {
         Rank rank = pieces.get(position.getRow());
 
         return rank.get(position.getColumn());

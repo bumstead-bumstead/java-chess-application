@@ -7,6 +7,7 @@ import softeer2nd.chess.exceptions.IllegalCommandException;
 import softeer2nd.chess.pieces.Blank;
 import softeer2nd.chess.pieces.Pawn;
 import softeer2nd.chess.pieces.Piece;
+import softeer2nd.chess.utils.ChessPositionParser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -45,19 +46,19 @@ public class ChessGameTest {
     @DisplayName("기물 이동 테스트")
     public void move() throws Exception {
 
-        String sourcePosition = "b7";
-        String targetPosition = "b6";
+        Position sourcePosition = ChessPositionParser.parse("b7");
+        Position targetPosition = ChessPositionParser.parse("b6");
 
         chessGame.move(sourcePosition, targetPosition, turn);
-        assertEquals(Blank.create(new Position(sourcePosition)), chessGame.findPiece(sourcePosition));
-        assertEquals(Pawn.createBlack(new Position(targetPosition)), chessGame.findPiece(targetPosition));
+        assertEquals(Blank.create(sourcePosition), chessGame.findPiece(sourcePosition));
+        assertEquals(Pawn.createBlack(targetPosition), chessGame.findPiece(targetPosition));
     }
 
     @Test
     @DisplayName("흑색 턴일 때 흰색 기물을 움직이려 하면 예외를 발생시킨다.")
     void verifyTurnBlack() {
-        String sourcePosition = "a2";
-        String targetPosition = "a3";
+        Position sourcePosition = ChessPositionParser.parse("a2");
+        Position targetPosition = ChessPositionParser.parse("a3");
 
         assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
     }
@@ -66,8 +67,8 @@ public class ChessGameTest {
     @DisplayName("흰색 턴일 때 흑색 기물을 움직이려 하면 예외를 발생시킨다.")
     void verifyTurnWhite() {
         turn = Piece.Color.WHITE;
-        String sourcePosition = "a7";
-        String targetPosition = "a6";
+        Position sourcePosition = ChessPositionParser.parse("a7");
+        Position targetPosition = ChessPositionParser.parse("a6");
 
         assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
     }

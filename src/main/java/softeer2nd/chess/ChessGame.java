@@ -2,7 +2,6 @@ package softeer2nd.chess;
 
 import softeer2nd.chess.exceptions.IllegalCommandException;
 import softeer2nd.chess.pieces.Piece;
-import softeer2nd.chess.utils.ChessPositionParser;
 
 import java.util.List;
 
@@ -25,16 +24,18 @@ public class ChessGame {
         board.initialize();
     }
 
-    public void move(String sourcePosition, String targetPosition, Piece.Color turn) throws RuntimeException {
+    public void move(Position sourcePosition, Position targetPosition, Piece.Color turn) throws RuntimeException {
         Piece oldPiece = board.findPiece(sourcePosition);
         Piece targetPiece = board.findPiece(targetPosition);
 
-        oldPiece.verifySameColor(targetPiece);
-        oldPiece.verifyMovePosition(new Position(targetPosition));
+        //todo : 퀸, 룩, 비숍인 경우 경로 상의 다른 기물 존재하는 지 검증
         verifyTurn(oldPiece, turn);
+        oldPiece.verifySameColor(targetPiece);
+        oldPiece.verifyMovePosition(targetPosition);
+        //board.verifyBlockedByPiece(sourcePosition, targetPosition);
 
         board.removePiece(sourcePosition);
-        board.setPiece(targetPosition, oldPiece.createMovedPiece(ChessPositionParser.parse(targetPosition)));
+        board.setPiece(targetPosition, oldPiece.createMovedPiece(targetPosition));
     }
 
     private void verifyTurn(Piece oldPiece, Piece.Color turn) {
@@ -69,7 +70,7 @@ public class ChessGame {
         return totalPoint;
     }
 
-    public Piece findPiece(String position) {
+    public Piece findPiece(Position position) {
         return board.findPiece(position);
     }
 }
