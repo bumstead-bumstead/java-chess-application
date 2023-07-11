@@ -51,8 +51,8 @@ public class ChessGameTest {
         Position targetPosition = ChessPositionParser.parse("b6");
 
         chessGame.move(sourcePosition, targetPosition, turn);
-        assertEquals(Blank.create(sourcePosition), chessGame.findPiece(sourcePosition));
-        assertEquals(Pawn.createBlack(targetPosition), chessGame.findPiece(targetPosition));
+        assertEquals(Blank.create(), chessGame.findPiece(sourcePosition));
+        assertEquals(Pawn.createBlack(), chessGame.findPiece(targetPosition));
     }
 
     @Test

@@ -11,21 +11,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QueenTest {
     private Queen queen;
+    private Position testPosition;
     @BeforeEach
     void init() {
-        queen = Queen.createBlack(new Position(3, 3));
+        queen = Queen.createBlack();
+        testPosition = new Position(3, 3);
     }
 
     @Test
     @DisplayName("상하좌우 대각선 이외에 이동은 불가능하다.")
     void verifyMovePosition() {
-        queen.verifyMovePosition(new Position(1, 1));
-        queen.verifyMovePosition(new Position(3, 7));
-        queen.verifyMovePosition(new Position(7, 3));
-        queen.verifyMovePosition(new Position(5, 1));
+        queen.verifyMovePosition(testPosition, new Position(1, 1));
+        queen.verifyMovePosition(testPosition, new Position(3, 7));
+        queen.verifyMovePosition(testPosition, new Position(7, 3));
+        queen.verifyMovePosition(testPosition, new Position(5, 1));
 
-        assertThrows(OutOfPieceRangeException.class, () -> queen.verifyMovePosition(new Position(5, 2)));
-        assertThrows(OutOfPieceRangeException.class, () -> queen.verifyMovePosition(new Position(5, 4)));
+        assertThrows(OutOfPieceRangeException.class, () -> queen.verifyMovePosition(testPosition, new Position(5, 2)));
+        assertThrows(OutOfPieceRangeException.class, () -> queen.verifyMovePosition(testPosition, new Position(5, 4)));
     }
 
 }

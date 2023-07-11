@@ -54,7 +54,7 @@ public class Board {
     public void removePiece(Position position) {
         Rank rank = pieces.get(position.getRow());
 
-        rank.set(position.getColumn(), Blank.create(position));
+        rank.set(position.getColumn(), Blank.create());
     }
 
     public int pieceCount() {

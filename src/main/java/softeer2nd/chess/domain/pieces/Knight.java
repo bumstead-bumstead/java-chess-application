@@ -5,22 +5,23 @@ import softeer2nd.chess.domain.Position;
 import java.util.List;
 
 public class Knight extends Piece {
-    public Knight(Piece.Color color, Position position) {
-        super(color, Type.KNIGHT, position);
+    public Knight(Piece.Color color) {
+        super(color, Type.KNIGHT);
     }
 
     @Override
-    public Piece createMovedPiece(Position position) {
-        return new Knight(this.getColor(), position);
+    public Piece createMovedPiece() {
+        return new Knight(this.getColor());
     }
 
 
-    protected boolean isReachablePosition(Position targetPosition) {
+    @Override
+    public boolean isReachablePosition(Position sourcePosition, Position targetPosition) {
         List<Direction> directions = Piece.Direction.knightDirection();
 
         for (Direction direction : directions) {
-            int row = this.position.getRow() + direction.getYDegree();
-            int column = this.position.getColumn() + direction.getXDegree();
+            int row = sourcePosition.getRow() + direction.getYDegree();
+            int column = sourcePosition.getColumn() + direction.getXDegree();
             Position possiblePosition = new Position(row, column);
 
             if (possiblePosition.equals(targetPosition)) return true;
@@ -28,11 +29,11 @@ public class Knight extends Piece {
         return false;
     }
 
-    public static Knight createWhite(Position position) {
-        return new Knight(Piece.Color.WHITE, position);
+    public static Knight createWhite() {
+        return new Knight(Piece.Color.WHITE);
     }
 
-    public static Knight createBlack(Position position) {
-        return new Knight(Piece.Color.BLACK, position);
+    public static Knight createBlack() {
+        return new Knight(Piece.Color.BLACK);
     }
 }

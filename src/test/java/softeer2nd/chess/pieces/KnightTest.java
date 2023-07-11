@@ -13,20 +13,22 @@ class KnightTest {
 
 
     private Knight knight;
+    private Position testPosition;
     @BeforeEach
     void init() {
-        knight = Knight.createBlack(new Position(2, 2));
+        knight = Knight.createBlack();
+        testPosition = new Position(2, 2);
     }
 
     @Test
     @DisplayName("나이트의 행보법 이외의 이동은 불가능하다.")
     void verifyMovePosition() {
-        knight.verifyMovePosition(new Position(0, 1));
-        knight.verifyMovePosition(new Position(1, 0));
-        knight.verifyMovePosition(new Position(4, 3));
-        knight.verifyMovePosition(new Position(3, 4));
+        knight.verifyMovePosition(testPosition, new Position(0, 1));
+        knight.verifyMovePosition(testPosition, new Position(1, 0));
+        knight.verifyMovePosition(testPosition, new Position(4, 3));
+        knight.verifyMovePosition(testPosition, new Position(3, 4));
 
-        assertThrows(OutOfPieceRangeException.class, () -> knight.verifyMovePosition(new Position(4, 4)));
-        assertThrows(OutOfPieceRangeException.class, () -> knight.verifyMovePosition(new Position(2, 3)));
+        assertThrows(OutOfPieceRangeException.class, () -> knight.verifyMovePosition(testPosition, new Position(4, 4)));
+        assertThrows(OutOfPieceRangeException.class, () -> knight.verifyMovePosition(testPosition, new Position(2, 3)));
     }
 }

@@ -21,8 +21,8 @@ public class PieceTest {
     @BeforeEach
     void init() {
         testPosition = new Position(0, 0);
-        whitePiece = Bishop.createWhite(testPosition);
-        blackPiece = Bishop.createBlack(testPosition);
+        whitePiece = Bishop.createWhite();
+        blackPiece = Bishop.createBlack();
     }
 
     @ParameterizedTest
@@ -35,18 +35,18 @@ public class PieceTest {
         Position testPosition = new Position(0, 0);
 
         return Stream.of(
-                Arguments.of(Bishop.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.BISHOP),
-                Arguments.of(Rook.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.ROOK),
-                Arguments.of(King.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.KING),
-                Arguments.of(Knight.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.KNIGHT),
-                Arguments.of(Pawn.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.PAWN),
-                Arguments.of(Queen.createBlack(testPosition), Piece.Color.BLACK, Piece.Type.QUEEN),
-                Arguments.of(Bishop.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.BISHOP),
-                Arguments.of(Rook.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.ROOK),
-                Arguments.of(King.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.KING),
-                Arguments.of(Knight.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.KNIGHT),
-                Arguments.of(Pawn.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.PAWN),
-                Arguments.of(Queen.createWhite(testPosition), Piece.Color.WHITE, Piece.Type.QUEEN)
+                Arguments.of(Bishop.createBlack(), Piece.Color.BLACK, Piece.Type.BISHOP),
+                Arguments.of(Rook.createBlack(), Piece.Color.BLACK, Piece.Type.ROOK),
+                Arguments.of(King.createBlack(), Piece.Color.BLACK, Piece.Type.KING),
+                Arguments.of(Knight.createBlack(), Piece.Color.BLACK, Piece.Type.KNIGHT),
+                Arguments.of(Pawn.createBlack(), Piece.Color.BLACK, Piece.Type.PAWN),
+                Arguments.of(Queen.createBlack(), Piece.Color.BLACK, Piece.Type.QUEEN),
+                Arguments.of(Bishop.createWhite(), Piece.Color.WHITE, Piece.Type.BISHOP),
+                Arguments.of(Rook.createWhite(), Piece.Color.WHITE, Piece.Type.ROOK),
+                Arguments.of(King.createWhite(), Piece.Color.WHITE, Piece.Type.KING),
+                Arguments.of(Knight.createWhite(), Piece.Color.WHITE, Piece.Type.KNIGHT),
+                Arguments.of(Pawn.createWhite(), Piece.Color.WHITE, Piece.Type.PAWN),
+                Arguments.of(Queen.createWhite(), Piece.Color.WHITE, Piece.Type.QUEEN)
         );
     }
 
@@ -56,9 +56,8 @@ public class PieceTest {
         assertEquals(result, piece.hasColor(color));
     }
     private static Stream<Arguments> provideColorForHasColor() {
-        Position testPosition = new Position(0, 0);
-        Piece whitePiece = Bishop.createWhite(testPosition);
-        Piece blackPiece = Bishop.createBlack(testPosition);
+        Piece whitePiece = Bishop.createWhite();
+        Piece blackPiece = Bishop.createBlack();
 
         return Stream.of(
                 Arguments.of(whitePiece, Piece.Color.WHITE, true),

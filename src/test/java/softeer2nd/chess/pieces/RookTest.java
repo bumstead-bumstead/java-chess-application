@@ -13,22 +13,22 @@ class RookTest {
 
 
     private Rook rook;
+    private Position testPosition;
     @BeforeEach
     void init() {
-        rook = Rook.createBlack(new Position(2, 2));
+        rook = Rook.createBlack();
+        testPosition = new Position(2, 2);
     }
 
     @Test
     @DisplayName("상하좌우 이외의 이동은 불가능하다.")
     void verifyMovePosition() {
-        rook.verifyMovePosition(new Position(0, 2));
-        rook.verifyMovePosition(new Position(2, 0));
-        rook.verifyMovePosition(new Position(6, 2));
-        rook.verifyMovePosition(new Position(2, 6));
+        rook.verifyMovePosition(testPosition, new Position(0, 2));
+        rook.verifyMovePosition(testPosition, new Position(2, 0));
+        rook.verifyMovePosition(testPosition, new Position(6, 2));
+        rook.verifyMovePosition(testPosition, new Position(2, 6));
 
-        assertThrows(OutOfPieceRangeException.class, () -> rook.verifyMovePosition(new Position(4, 4)));
-        assertThrows(OutOfPieceRangeException.class, () -> rook.verifyMovePosition(new Position(0, 1)));
+        assertThrows(OutOfPieceRangeException.class, () -> rook.verifyMovePosition(testPosition, new Position(4, 4)));
+        assertThrows(OutOfPieceRangeException.class, () -> rook.verifyMovePosition(testPosition, new Position(0, 1)));
     }
-
-
 }

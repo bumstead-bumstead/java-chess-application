@@ -12,17 +12,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class KingTest {
 
     private King king;
+    private Position testPosition;
     @BeforeEach
     void init() {
-        king = King.createBlack(new Position(1, 1));
+        king = King.createBlack();
+        testPosition = new Position(1, 1);
     }
 
     @Test
     @DisplayName("주변 한 칸 이상의 이동은 불가능하다.")
     void verifyMovePosition() {
-        king.verifyMovePosition(new Position(0, 0));
-        king.verifyMovePosition(new Position(2, 2));
+        king.verifyMovePosition(testPosition, new Position(0, 0));
+        king.verifyMovePosition(testPosition, new Position(2, 2));
 
-        assertThrows(OutOfPieceRangeException.class, () -> king.verifyMovePosition(new Position(3, 2)));
+        assertThrows(OutOfPieceRangeException.class, () -> king.verifyMovePosition(testPosition, new Position(3, 2)));
     }
 }

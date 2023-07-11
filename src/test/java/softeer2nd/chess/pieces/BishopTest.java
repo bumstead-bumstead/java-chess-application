@@ -17,24 +17,26 @@ class BishopTest {
 
 
     private Bishop bishop;
+    private Position testPosition;
 
     @BeforeEach
     void init() {
-        bishop = Bishop.createBlack(new Position(1, 1));
+        bishop = Bishop.createBlack();
+        testPosition = new Position(1, 1);
     }
 
     @ParameterizedTest
     @DisplayName("대각선 상의 이동_성공")
     @MethodSource("providePositionForVerifyDiagonalMove")
     void verifyDiagonalMove(int row, int column) {
-        bishop.verifyMovePosition(new Position(row, column));
+        bishop.verifyMovePosition(testPosition, new Position(row, column));
     }
 
     @ParameterizedTest
     @DisplayName("대각선 외의 이동_실패")
     @MethodSource("providePositionForVerifyNondiagonalMove")
     void verifyNondiagonalMove(int row, int column) {
-        assertThrows(OutOfPieceRangeException.class, () -> bishop.verifyMovePosition(new Position(row, column)));
+        assertThrows(OutOfPieceRangeException.class, () -> bishop.verifyMovePosition(testPosition, new Position(row, column)));
     }
 
     private static Stream<Arguments> providePositionForVerifyDiagonalMove() {

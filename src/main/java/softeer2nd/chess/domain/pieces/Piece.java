@@ -11,6 +11,7 @@ import java.util.Objects;
 import static softeer2nd.chess.domain.Board.isValidPosition;
 
 public abstract class Piece {
+
     public enum Color {
         WHITE, BLACK, NOCOLOR;
     }
@@ -107,19 +108,13 @@ public abstract class Piece {
 
     protected final Color color;
     protected final Type type;
-    protected final Position position;
 
-    protected Piece(Color color, Type type, Position position) {
+    protected Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
-        this.position = position;
     }
 
-    public abstract Piece createMovedPiece(Position position);
-
-    public Position getPosition() {
-        return position;
-    }
+    public abstract Piece createMovedPiece();
 
     public Color getColor() {
         return color;
@@ -154,20 +149,20 @@ public abstract class Piece {
             throw new OccupiedPositionException();
         }
     }
-    public void verifyMovePosition(Position targetPosition) throws RuntimeException {
-        if (!isValidPosition(targetPosition) || !isReachablePosition(targetPosition)) {
+    public void verifyMovePosition(Position sourcePosition, Position targetPosition) throws RuntimeException {
+        if (!isValidPosition(targetPosition) || !isReachablePosition(sourcePosition, targetPosition)) {
             throw new OutOfPieceRangeException();
         }
     }
 
-    abstract boolean isReachablePosition(Position targetPosition);
+    public abstract boolean isReachablePosition(Position sourcePosition, Position targetPosition);
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return color == piece.color && type == piece.type && Objects.equals(position, piece.position);
+        return color == piece.color && type == piece.type;
     }
 
     @Override
@@ -175,12 +170,11 @@ public abstract class Piece {
         return "Piece{" +
                 "color=" + color +
                 ", type=" + type +
-                ", position=" + position +
                 '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, type, position);
+        return Objects.hash(color, type);
     }
 }

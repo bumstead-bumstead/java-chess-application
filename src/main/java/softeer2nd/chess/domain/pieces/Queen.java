@@ -7,27 +7,28 @@ import java.util.List;
 import static softeer2nd.chess.domain.Board.isValidPosition;
 
 public class Queen extends Piece {
-    public Queen(Piece.Color color, Position position) {
-        super(color, Type.QUEEN, position);
+    public Queen(Piece.Color color) {
+        super(color, Type.QUEEN);
     }
 
     @Override
-    public Piece createMovedPiece(Position position) {
-        return new Queen(this.getColor(), position);
+    public Piece createMovedPiece() {
+        return new Queen(this.getColor());
     }
 
-    protected boolean isReachablePosition(Position targetPosition) {
+    @Override
+    public boolean isReachablePosition(Position sourcePosition, Position targetPosition) {
         List<Piece.Direction> directions = Piece.Direction.everyDirection();
 
         for (Piece.Direction direction : directions) {
-            if (isReachableInDirection(targetPosition, direction)) return true;
+            if (isReachableInDirection(sourcePosition, targetPosition, direction)) return true;
         }
         return false;
     }
 
-    private boolean isReachableInDirection(Position targetPosition, Direction direction) {
-        int row = this.position.getRow() + direction.getYDegree();
-        int column = this.position.getColumn() + direction.getXDegree();
+    private boolean isReachableInDirection(Position sourcePosition, Position targetPosition, Direction direction) {
+        int row = sourcePosition.getRow() + direction.getYDegree();
+        int column = sourcePosition.getColumn() + direction.getXDegree();
         Position possiblePosition = new Position(row, column);
 
         while (isValidPosition(possiblePosition)) {
@@ -38,11 +39,11 @@ public class Queen extends Piece {
         return false;
     }
 
-    public static Queen createWhite(Position position) {
-        return new Queen(Piece.Color.WHITE, position);
+    public static Queen createWhite() {
+        return new Queen(Piece.Color.WHITE);
     }
 
-    public static Queen createBlack(Position position) {
-        return new Queen(Piece.Color.BLACK, position);
+    public static Queen createBlack() {
+        return new Queen(Piece.Color.BLACK);
     }
 }

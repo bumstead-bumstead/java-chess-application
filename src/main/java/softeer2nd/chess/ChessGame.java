@@ -33,11 +33,11 @@ public class ChessGame {
         //todo : 퀸, 룩, 비숍인 경우 경로 상의 다른 기물 존재하는 지 검증
         verifyTurn(oldPiece, turn);
         oldPiece.verifySameColor(targetPiece);
-        oldPiece.verifyMovePosition(targetPosition);
+        oldPiece.verifyMovePosition(sourcePosition, targetPosition);
         //board.verifyBlockedByPiece(sourcePosition, targetPosition);
 
         board.removePiece(sourcePosition);
-        board.setPiece(targetPosition, oldPiece.createMovedPiece(targetPosition));
+        board.setPiece(targetPosition, oldPiece);
     }
 
     private void verifyTurn(Piece oldPiece, Piece.Color turn) {

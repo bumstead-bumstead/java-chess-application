@@ -7,28 +7,28 @@ import java.util.List;
 import static softeer2nd.chess.domain.Board.isValidPosition;
 
 public class Rook extends Piece {
-    public Rook(Piece.Color color, Position position) {
-        super(color, Piece.Type.ROOK, position);
+    public Rook(Piece.Color color) {
+        super(color, Piece.Type.ROOK);
     }
 
     @Override
-    public Piece createMovedPiece(Position position) {
-        return new Rook(this.getColor(), position);
+    public Piece createMovedPiece() {
+        return new Rook(this.getColor());
     }
 
-
-    protected boolean isReachablePosition(Position targetPosition) {
+    @Override
+    public boolean isReachablePosition(Position sourcePosition, Position targetPosition) {
         List<Piece.Direction> directions = Piece.Direction.linearDirection();
 
         for (Piece.Direction direction : directions) {
-            if (isReachableInDirection(targetPosition, direction)) return true;
+            if (isReachableInDirection(sourcePosition, targetPosition, direction)) return true;
         }
         return false;
     }
 
-    private boolean isReachableInDirection(Position targetPosition, Piece.Direction direction) {
-        int row = this.position.getRow() + direction.getYDegree();
-        int column = this.position.getColumn() + direction.getXDegree();
+    private boolean isReachableInDirection(Position sourcePosition, Position targetPosition, Piece.Direction direction) {
+        int row = sourcePosition.getRow() + direction.getYDegree();
+        int column = sourcePosition.getColumn() + direction.getXDegree();
 
         Position possiblePosition = new Position(row, column);
 
@@ -40,11 +40,11 @@ public class Rook extends Piece {
         return false;
     }
 
-    public static Rook createWhite(Position position) {
-        return new Rook(Piece.Color.WHITE, position);
+    public static Rook createWhite() {
+        return new Rook(Piece.Color.WHITE);
     }
 
-    public static Rook createBlack(Position position) {
-        return new Rook(Piece.Color.BLACK, position);
+    public static Rook createBlack() {
+        return new Rook(Piece.Color.BLACK);
     }
 }

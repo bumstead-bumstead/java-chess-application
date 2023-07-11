@@ -5,21 +5,22 @@ import softeer2nd.chess.domain.Position;
 import java.util.List;
 
 public class King extends Piece {
-    public King(Color color, Position position) {
-        super(color, Type.KING, position);
+    public King(Color color) {
+        super(color, Type.KING);
     }
 
     @Override
-    public Piece createMovedPiece(Position position) {
-        return new King(this.getColor(), position);
+    public Piece createMovedPiece() {
+        return new King(this.getColor());
     }
 
-    protected boolean isReachablePosition(Position targetPosition) {
+    @Override
+    public boolean isReachablePosition(Position sourcePosition, Position targetPosition) {
         List<Direction> directions = Piece.Direction.everyDirection();
 
         for (Direction direction : directions) {
-            int row = this.position.getRow() + direction.getYDegree();
-            int column = this.position.getColumn() + direction.getXDegree();
+            int row = sourcePosition.getRow() + direction.getYDegree();
+            int column = sourcePosition.getColumn() + direction.getXDegree();
             Position possiblePosition = new Position(row, column);
 
             if (possiblePosition.equals(targetPosition)) return true;
@@ -27,11 +28,11 @@ public class King extends Piece {
         return false;
     }
 
-    public static King createWhite(Position position) {
-        return new King(Color.WHITE, position);
+    public static King createWhite() {
+        return new King(Color.WHITE);
     }
 
-    public static King createBlack(Position position) {
-        return new King(Color.BLACK, position);
+    public static King createBlack() {
+        return new King(Color.BLACK);
     }
 }

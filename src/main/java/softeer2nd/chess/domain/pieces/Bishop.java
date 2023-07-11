@@ -8,27 +8,27 @@ import static softeer2nd.chess.domain.Board.isValidPosition;
 
 public class Bishop extends Piece {
 
-    public Bishop(Piece.Color color, Position position) {
-        super(color, Type.BISHOP, position);
+    protected Bishop(Piece.Color color) {
+        super(color, Type.BISHOP);
     }
 
     @Override
-    public Piece createMovedPiece(Position position) {
-        return new Bishop(this.getColor(), position);
+    public Piece createMovedPiece() {
+        return new Bishop(this.getColor());
     }
     @Override
-    protected boolean isReachablePosition(Position targetPosition) {
+    public boolean isReachablePosition(Position sourcePosition, Position targetPosition) {
         List<Direction> directions = Piece.Direction.diagonalDirection();
 
         for (Piece.Direction direction : directions) {
-            if (isReachableInDirection(targetPosition, direction)) return true;
+            if (isReachableInDirection(sourcePosition, targetPosition, direction)) return true;
         }
         return false;
     }
 
-    private boolean isReachableInDirection(Position targetPosition, Direction direction) {
-        int row = this.position.getRow() + direction.getYDegree();
-        int column = this.position.getColumn() + direction.getXDegree();
+    private boolean isReachableInDirection(Position sourcePosition, Position targetPosition, Direction direction) {
+        int row = sourcePosition.getRow() + direction.getYDegree();
+        int column = sourcePosition.getColumn() + direction.getXDegree();
         Position possiblePosition = new Position(row, column);
 
         while (isValidPosition(possiblePosition)) {
@@ -39,11 +39,11 @@ public class Bishop extends Piece {
         return false;
     }
 
-    public static Bishop createWhite(Position position) {
-        return new Bishop(Piece.Color.WHITE, position);
+    public static Bishop createWhite() {
+        return new Bishop(Piece.Color.WHITE);
     }
 
-    public static Bishop createBlack(Position position) {
-        return new Bishop(Piece.Color.BLACK, position);
+    public static Bishop createBlack() {
+        return new Bishop(Piece.Color.BLACK);
     }
 }
