@@ -55,9 +55,19 @@ public class ChessGameTest {
 
     @Test
     @DisplayName("흑색 턴일 때 흰색 기물을 움직이려 하면 예외를 발생시킨다.")
-    void verifyTurn() {
+    void verifyTurnBlack() {
         String sourcePosition = "a2";
         String targetPosition = "a3";
+
+        assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
+    }
+
+    @Test
+    @DisplayName("흰색 턴일 때 흑색 기물을 움직이려 하면 예외를 발생시킨다.")
+    void verifyTurnWhite() {
+        turn = Piece.Color.WHITE;
+        String sourcePosition = "a7";
+        String targetPosition = "a6";
 
         assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
     }
