@@ -4,6 +4,11 @@ import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.exceptions.BlankMoveException;
 
 public class Blank extends Piece {
+
+    public Blank() {
+        super(Color.NOCOLOR, Type.NO_PIECE);
+    }
+
     protected Blank(Color color, Type type) {
         super(color, type);
     }
@@ -21,9 +26,5 @@ public class Blank extends Piece {
     @Override
     public boolean isReachablePosition(Position sourcePosition, Position targetPosition) {
         return false;
-    }
-
-    public static Blank create() {
-        return new Blank(Color.NOCOLOR, Type.NO_PIECE);
     }
 }

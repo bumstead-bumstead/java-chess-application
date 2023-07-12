@@ -4,19 +4,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.domain.Position;
-import softeer2nd.chess.domain.pieces.Rook;
+import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.domain.pieces.PieceFactory;
 import softeer2nd.chess.exceptions.OutOfPieceRangeException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RookTest {
 
 
-    private Rook rook;
+    private Piece rook;
     private Position testPosition;
     @BeforeEach
     void init() {
-        rook = Rook.createBlack();
+        rook = PieceFactory.createBlackRook();
         testPosition = new Position(2, 2);
     }
 

@@ -7,8 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
-import softeer2nd.chess.domain.pieces.Blank;
-import softeer2nd.chess.domain.pieces.Pawn;
 import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 import softeer2nd.chess.utils.ChessPositionParser;
@@ -17,6 +15,8 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static softeer2nd.chess.domain.pieces.PieceFactory.createBlackPawn;
+import static softeer2nd.chess.domain.pieces.PieceFactory.createBlank;
 
 public class ChessGameTest {
 
@@ -47,8 +47,8 @@ public class ChessGameTest {
         Position targetPosition = ChessPositionParser.parse("b6");
 
         chessGame.move(sourcePosition, targetPosition, turn);
-        assertEquals(Blank.create(), chessGame.findPiece(sourcePosition));
-        assertEquals(Pawn.createBlack(), chessGame.findPiece(targetPosition));
+        assertEquals(createBlank(), chessGame.findPiece(sourcePosition));
+        assertEquals(createBlackPawn(), chessGame.findPiece(targetPosition));
     }
 
     @Test

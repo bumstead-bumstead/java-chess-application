@@ -1,11 +1,12 @@
 package softeer2nd.chess.domain;
 
-import softeer2nd.chess.domain.pieces.Blank;
 import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static softeer2nd.chess.domain.pieces.PieceFactory.createBlank;
 
 public class Board {
 
@@ -55,7 +56,7 @@ public class Board {
     public void removePiece(Position position) {
         Rank rank = pieces.get(position.getRow());
 
-        rank.set(position.getColumn(), Blank.create());
+        rank.set(position.getColumn(), createBlank());
     }
 
     public int pieceCount() {

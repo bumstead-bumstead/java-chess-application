@@ -6,7 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
-import softeer2nd.chess.domain.pieces.Bishop;
+import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.domain.pieces.PieceFactory;
 import softeer2nd.chess.exceptions.OutOfPieceRangeException;
 
 import java.util.stream.Stream;
@@ -14,14 +15,12 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BishopTest {
-
-
-    private Bishop bishop;
+    private Piece bishop;
     private Position testPosition;
 
     @BeforeEach
     void init() {
-        bishop = Bishop.createBlack();
+        bishop = PieceFactory.createBlackBishop();
         testPosition = new Position(1, 1);
     }
 

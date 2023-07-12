@@ -27,12 +27,4 @@ public class King extends Piece {
         }
         return false;
     }
-
-    public static King createWhite() {
-        return new King(Color.WHITE);
-    }
-
-    public static King createBlack() {
-        return new King(Color.BLACK);
-    }
 }

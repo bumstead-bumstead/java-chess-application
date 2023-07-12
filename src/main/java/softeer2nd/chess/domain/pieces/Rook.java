@@ -39,12 +39,4 @@ public class Rook extends Piece {
         }
         return false;
     }
-
-    public static Rook createWhite() {
-        return new Rook(Piece.Color.WHITE);
-    }
-
-    public static Rook createBlack() {
-        return new Rook(Piece.Color.BLACK);
-    }
 }

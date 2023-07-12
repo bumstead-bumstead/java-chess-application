@@ -5,13 +5,6 @@ import softeer2nd.chess.domain.Position;
 import java.util.List;
 
 public class Pawn extends Piece {
-    /*
-     * todo
-     *  1. 앙파상, 프로모션 행마법 구현
-     *  2. 기물 잡기 구현 -> (board단에서 확인해야할 듯)
-     *  3. 첫 단계 두 개 뛰기 구현
-     * */
-
     private boolean hasMoved;
 
     public Pawn(Piece.Color color) {
@@ -53,13 +46,5 @@ public class Pawn extends Piece {
 
     private static boolean isDoubleMove(Direction direction) {
         return direction == Direction.NORTH_TWICE || direction == Direction.SOUTH_TWICE;
-    }
-
-    public static Pawn createWhite() {
-        return new Pawn(Piece.Color.WHITE);
-    }
-
-    public static Pawn createBlack() {
-        return new Pawn(Piece.Color.BLACK);
     }
 }

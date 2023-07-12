@@ -33,17 +33,11 @@ public class Bishop extends Piece {
 
         while (isValidPosition(possiblePosition)) {
             if (possiblePosition.equals(targetPosition)) return true;
+            row += direction.getYDegree();
+            column += direction.getXDegree();
 
-            possiblePosition = new Position(row += direction.getYDegree(), column += direction.getXDegree());
+            possiblePosition = new Position(row, column);
         }
         return false;
-    }
-
-    public static Bishop createWhite() {
-        return new Bishop(Piece.Color.WHITE);
-    }
-
-    public static Bishop createBlack() {
-        return new Bishop(Piece.Color.BLACK);
     }
 }

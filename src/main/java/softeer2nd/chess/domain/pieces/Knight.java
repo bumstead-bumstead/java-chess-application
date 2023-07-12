@@ -28,12 +28,4 @@ public class Knight extends Piece {
         }
         return false;
     }
-
-    public static Knight createWhite() {
-        return new Knight(Piece.Color.WHITE);
-    }
-
-    public static Knight createBlack() {
-        return new Knight(Piece.Color.BLACK);
-    }
 }

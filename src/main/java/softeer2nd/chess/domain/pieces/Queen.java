@@ -38,12 +38,4 @@ public class Queen extends Piece {
         }
         return false;
     }
-
-    public static Queen createWhite() {
-        return new Queen(Piece.Color.WHITE);
-    }
-
-    public static Queen createBlack() {
-        return new Queen(Piece.Color.BLACK);
-    }
 }

@@ -4,19 +4,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import softeer2nd.chess.domain.Position;
-import softeer2nd.chess.domain.pieces.Pawn;
+import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.domain.pieces.PieceFactory;
 import softeer2nd.chess.exceptions.OutOfPieceRangeException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PawnTest {
 
 
-    private Pawn pawn;
+    private Piece pawn;
     private Position testPosition;
     @BeforeEach
     void init() {
-        pawn = Pawn.createBlack();
+        pawn = PieceFactory.createBlackPawn();
         testPosition = new Position(2, 2);
     }
 

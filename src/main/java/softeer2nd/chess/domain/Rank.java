@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static softeer2nd.chess.domain.Board.BOARD_LENGTH;
+import static softeer2nd.chess.domain.pieces.PieceFactory.*;
 
 public class Rank {
 
@@ -21,14 +22,14 @@ public class Rank {
         int rankNumber = 0;
         List<Piece> list = new ArrayList<>();
 
-        list.add(Rook.createBlack());
-        list.add(Knight.createBlack());
-        list.add(Bishop.createBlack());
-        list.add(Queen.createBlack());
-        list.add(King.createBlack());
-        list.add(Bishop.createBlack());
-        list.add(Knight.createBlack());
-        list.add(Rook.createBlack());
+        list.add(createBlackRook());
+        list.add(createBlackKnight());
+        list.add(createBlackBishop());
+        list.add(createBlackQueen());
+        list.add(createBlackKing());
+        list.add(createBlackBishop());
+        list.add(createBlackKnight());
+        list.add(createBlackRook());
 
         return new Rank(list, rankNumber);
     }
@@ -37,14 +38,14 @@ public class Rank {
         int rankNumber = 7;
         List<Piece> list = new ArrayList<>();
 
-        list.add(Rook.createWhite());
-        list.add(Knight.createWhite());
-        list.add(Bishop.createWhite());
-        list.add(Queen.createWhite());
-        list.add(King.createWhite());
-        list.add(Bishop.createWhite());
-        list.add(Knight.createWhite());
-        list.add(Rook.createWhite());
+        list.add(createWhiteRook());
+        list.add(createWhiteKnight());
+        list.add(createWhiteBishop());
+        list.add(createWhiteQueen());
+        list.add(createWhiteKing());
+        list.add(createWhiteBishop());
+        list.add(createWhiteKnight());
+        list.add(createWhiteRook());
 
         return new Rank(list, rankNumber);
     }
@@ -54,7 +55,7 @@ public class Rank {
         List<Piece> list = new ArrayList<>();
 
         for (int file = 0; file < BOARD_LENGTH; file++) {
-            list.add(Pawn.createBlack());
+            list.add(createBlackPawn());
         }
 
         return new Rank(list, rankNumber);
@@ -65,7 +66,7 @@ public class Rank {
         List<Piece> list = new ArrayList<>();
 
         for (int file = 0; file < BOARD_LENGTH; file++) {
-            list.add(Pawn.createWhite());
+            list.add(createWhitePawn());
         }
 
         return new Rank(list, rankNumber);
@@ -76,7 +77,7 @@ public class Rank {
 
 
         for (int file = 0; file < BOARD_LENGTH; file++) {
-            list.add(Blank.create());
+            list.add(createBlank());
         }
 
         return new Rank(list, rankNumber);
