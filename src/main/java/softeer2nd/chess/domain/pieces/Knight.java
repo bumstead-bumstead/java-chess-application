@@ -1,31 +1,9 @@
 package softeer2nd.chess.domain.pieces;
 
-import softeer2nd.chess.domain.Position;
+import softeer2nd.chess.domain.AvailableDirections;
 
-import java.util.List;
-
-public class Knight extends Piece {
+public class Knight extends NonSlidingPiece {
     public Knight(Piece.Color color) {
-        super(color, Type.KNIGHT);
-    }
-
-    @Override
-    public Piece createMovedPiece() {
-        return new Knight(this.getColor());
-    }
-
-
-    @Override
-    public boolean isReachablePosition(Position sourcePosition, Position targetPosition) {
-        List<Direction> directions = Piece.Direction.knightDirection();
-
-        for (Direction direction : directions) {
-            int row = sourcePosition.getRow() + direction.getYDegree();
-            int column = sourcePosition.getColumn() + direction.getXDegree();
-            Position possiblePosition = new Position(row, column);
-
-            if (possiblePosition.equals(targetPosition)) return true;
-        }
-        return false;
+        super(color, Type.KNIGHT, new AvailableDirections(Direction.knightDirection()));
     }
 }

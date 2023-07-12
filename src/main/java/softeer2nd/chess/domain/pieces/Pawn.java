@@ -1,20 +1,23 @@
 package softeer2nd.chess.domain.pieces;
 
+import softeer2nd.chess.domain.AvailableDirections;
 import softeer2nd.chess.domain.Position;
 
 import java.util.List;
 
-public class Pawn extends Piece {
+public class Pawn extends NonSlidingPiece {
     private boolean hasMoved;
 
-    public Pawn(Piece.Color color) {
-        super(color, Type.PAWN);
+    public Pawn(Color color) {
+        super(color, Type.PAWN, new AvailableDirections(getDirectionListByColor(color)));
         this.hasMoved = false;
     }
 
-    @Override
-    public Piece createMovedPiece() {
-        return new Pawn(this.getColor());
+    private static List<Direction> getDirectionListByColor(Color color) {
+        if (color == Color.WHITE) {
+            return Direction.whitePawnDirection();
+        }
+        return Direction.blackPawnDirection();
     }
 
     @Override

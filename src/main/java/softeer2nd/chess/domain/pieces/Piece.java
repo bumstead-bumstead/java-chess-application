@@ -1,5 +1,6 @@
 package softeer2nd.chess.domain.pieces;
 
+import softeer2nd.chess.domain.AvailableDirections;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.exceptions.OccupiedPositionException;
 import softeer2nd.chess.exceptions.OutOfPieceRangeException;
@@ -14,6 +15,16 @@ public abstract class Piece {
 
     public enum Color {
         WHITE, BLACK, NOCOLOR;
+
+        public Color getReverseColor() {
+            if (this == BLACK) {
+                return WHITE;
+            }
+            if (this == WHITE) {
+                return BLACK;
+            }
+            return NOCOLOR;
+        }
     }
 
     public enum Type {
@@ -48,10 +59,12 @@ public abstract class Piece {
 
     public enum Direction {
         NORTH(0, 1),
+        NORTH_TWICE(0, 2),
         NORTHEAST(1, 1),
         EAST(1, 0),
         SOUTHEAST(1, -1),
         SOUTH(0, -1),
+        SOUTH_TWICE(0, -2),
         SOUTHWEST(-1, -1),
         WEST(-1, 0),
         NORTHWEST(-1, 1),
@@ -63,7 +76,8 @@ public abstract class Piece {
         EEN(2, 1),
         EES(2, -1),
         WWN(-2, 1),
-        WWS(-2, -1);
+        WWS(-2, -1),
+        NO_DIRECTION(0, 0);
 
         private int xDegree;
         private int yDegree;
@@ -98,23 +112,28 @@ public abstract class Piece {
         }
 
         public static List<Direction> blackPawnDirection() {
-            return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
+            return Arrays.asList(NORTH, NORTHEAST, NORTHWEST, NORTH_TWICE);
         }
 
         public static List<Direction> whitePawnDirection() {
-            return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+            return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST, SOUTH_TWICE);
+        }
+
+        public static List<Direction> noDirection() {
+            return List.of(NO_DIRECTION);
         }
     }
 
     protected final Color color;
     protected final Type type;
+    protected final AvailableDirections availableDirections;
 
-    protected Piece(Color color, Type type) {
+
+    public Piece(Color color, Type type, AvailableDirections availableDirections) {
         this.color = color;
         this.type = type;
+        this.availableDirections = availableDirections;
     }
-
-    public abstract Piece createMovedPiece();
 
     public Color getColor() {
         return color;
