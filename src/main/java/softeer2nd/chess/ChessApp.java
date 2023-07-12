@@ -30,13 +30,23 @@ public class ChessApp {
                 scoreRoutine();
             }
             if (command.equals(ChessView.END)) {
-                endRoutine();
+                gameExitRoutine();
+                return false;
+            }
+            if (chessGame.isGameOver()) {
+                gameOverRoutine();
                 return false;
             }
         } catch (RuntimeException e) {
             chessView.printErrorMessage(e);
         }
         return true;
+    }
+
+    private void gameOverRoutine() {
+        chessView.showBoard(chessGame.getBoard());
+        chessView.printWinMessage(chessGame.getTurn().getReverseColor());
+        chessView.printEndMessage();
     }
 
     private void scoreRoutine() {
@@ -47,7 +57,8 @@ public class ChessApp {
         chessView.getWhiteScore(whiteScore);
     }
 
-    private void endRoutine() {
+    private void gameExitRoutine() {
+        scoreRoutine();
         chessView.printEndMessage();
     }
 
@@ -60,5 +71,9 @@ public class ChessApp {
 
         chessView.printMoveMessage(commandArray[1], commandArray[2]);
         chessView.showBoard(chessGame.getBoard());
+
+        if (chessGame.isGameOver()) {
+
+        }
     }
 }

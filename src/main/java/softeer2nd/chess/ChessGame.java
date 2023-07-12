@@ -4,8 +4,7 @@ import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Pawn;
 import softeer2nd.chess.domain.pieces.Piece;
-import softeer2nd.chess.exceptions.PawnDiagonalMoveException;
-import softeer2nd.chess.exceptions.WrongPlayerMoveException;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.List;
 
@@ -17,10 +16,12 @@ public class ChessGame {
     private Board board;
 
     private Piece.Color turn;
+    private boolean isGameOver;
 
     public ChessGame() {
         this.board = new Board();
         turn = Piece.Color.NOCOLOR;
+        this.isGameOver = false;
     }
 
     public Board getBoard() {
@@ -39,14 +40,20 @@ public class ChessGame {
 
     public void move(Position sourcePosition, Position targetPosition) throws RuntimeException {
         Piece oldPiece = board.findPiece(sourcePosition);
+        Piece targetPiece = board.findPiece(targetPosition);
 
         verifyMove(sourcePosition, targetPosition);
 
         board.removePiece(sourcePosition);
         board.setPiece(targetPosition, oldPiece);
 
+        if (isKingCaptured(targetPiece)) {
+            finishGame();
+        }
+
         changeTurn();
     }
+
 
     private void verifyMove(Position sourcePosition, Position targetPosition) throws RuntimeException {
         Piece oldPiece = board.findPiece(sourcePosition);
@@ -76,7 +83,7 @@ public class ChessGame {
             return;
         }
 
-        throw new PawnDiagonalMoveException();
+        throw new IllegalCommandException("상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
     }
 
     private static boolean isVertical(Position sourcePosition, Position targetPosition) {
@@ -85,8 +92,20 @@ public class ChessGame {
 
     private void verifyTurn(Piece oldPiece) {
         if (!oldPiece.hasColor(turn) && !oldPiece.isEmptyPiece()) {
-            throw new WrongPlayerMoveException();
+            throw new IllegalCommandException("현재 차례인 기물만 이동할 수 있습니다.");
         }
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    private void finishGame() {
+        isGameOver = true;
+    }
+
+    private boolean isKingCaptured(Piece targetPiece) {
+        return targetPiece.hasType(Piece.Type.KING);
     }
 
     private void changeTurn() {
@@ -125,6 +144,11 @@ public class ChessGame {
         return totalPoint;
     }
 
+    public Piece.Color getTurn() {
+        return turn;
+    }
+
+    //for test
     public Piece findPiece(Position position) {
         return board.findPiece(position);
     }

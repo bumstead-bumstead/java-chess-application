@@ -2,6 +2,7 @@ package softeer2nd.chess.view;
 
 import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Rank;
+import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.Scanner;
@@ -17,8 +18,13 @@ public class ChessConsoleView implements ChessView {
     private static final String END_MESSAGE = "게임을 종료합니다.";
     private static final String BLACK_SCORE_MESSAGE = "흑색 점수 : ";
     private static final String WHITE_SCORE_MESSAGE = "백색 점수 : ";
+    private static final String WINNER_MESSAGE = "의 승리입니다.";
 
     Scanner scanner = new Scanner(System.in);
+
+    public void printWinMessage(Piece.Color winner) {
+        System.out.println(winner + WINNER_MESSAGE);
+    }
 
     public void printMoveMessage(String sourcePosition, String targetPosition) {
         System.out.println(MOVE_MESSAGE + sourcePosition + " to " + targetPosition);
