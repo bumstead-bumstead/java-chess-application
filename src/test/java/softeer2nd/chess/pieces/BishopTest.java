@@ -24,7 +24,7 @@ class BishopTest {
         testPosition = new Position(1, 1);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[1, 1] to [{0}, {1}]")
     @DisplayName("대각선 상의 이동_성공")
     @MethodSource("providePositionForVerifyDiagonalMove")
     void verifyDiagonalMove(int row, int column) {
