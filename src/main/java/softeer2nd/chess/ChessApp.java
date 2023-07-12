@@ -14,8 +14,8 @@ public class ChessApp {
         chessGame.start();
         chessView.showBoard(chessGame.getBoard());
 
-        while (processTurn()) {
-//            changeTurn();
+        while (true) {
+            if (!processTurn()) break;
         }
     }
 
@@ -25,7 +25,6 @@ public class ChessApp {
 
             if (command.startsWith(ChessView.MOVE)) {
                 moveRoutine(command);
-                return true;
             }
             if (command.equals(ChessView.SCORE)) {
                 scoreRoutine();
@@ -36,7 +35,6 @@ public class ChessApp {
             }
         } catch (RuntimeException e) {
             chessView.printErrorMessage(e);
-            return processTurn();
         }
         return true;
     }
