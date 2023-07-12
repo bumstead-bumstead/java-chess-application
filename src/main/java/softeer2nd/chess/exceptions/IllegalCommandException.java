@@ -4,4 +4,8 @@ public class IllegalCommandException extends RuntimeException {
     public IllegalCommandException() {
         super("입력 형식이 잘못되었습니다.");
     }
+
+    public IllegalCommandException(String message) {
+        super(message);
+    }
 }

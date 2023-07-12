@@ -8,7 +8,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
-import softeer2nd.chess.exceptions.IllegalCommandException;
+import softeer2nd.chess.exceptions.OutOfPieceRangeException;
+import softeer2nd.chess.exceptions.PawnDiagonalMoveException;
+import softeer2nd.chess.exceptions.WrongPlayerMoveException;
 import softeer2nd.chess.utils.ChessPositionParser;
 
 import java.util.stream.Stream;
@@ -57,7 +59,7 @@ public class ChessGameTest {
         Position sourcePosition = ChessPositionParser.parse("a2");
         Position targetPosition = ChessPositionParser.parse("a3");
 
-        assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
+        assertThrows(WrongPlayerMoveException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
     }
 
     @Test
@@ -67,7 +69,7 @@ public class ChessGameTest {
         Position sourcePosition = ChessPositionParser.parse("a7");
         Position targetPosition = ChessPositionParser.parse("a6");
 
-        assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
+        assertThrows(WrongPlayerMoveException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
     }
 
     @ParameterizedTest
@@ -76,7 +78,7 @@ public class ChessGameTest {
     void verifyPawnDiagonalMoveFail(Position targetPosition) {
         Position sourcePosition = new Position(1, 3);
 
-        assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
+        assertThrows(PawnDiagonalMoveException.class, () -> chessGame.move(sourcePosition, targetPosition, turn));
     }
 
     private static Stream<Arguments> providePositionsForVerifyPwnDiagonalMove() {
@@ -106,7 +108,7 @@ public class ChessGameTest {
         Position sourcePosition = new Position(1, 3);
 
         chessGame.move(sourcePosition, new Position(3, 3), turn);
-        assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, new Position(5, 3), turn));
+        assertThrows(OutOfPieceRangeException.class, () -> chessGame.move(new Position(3, 3), new Position(5, 3), turn));
 
     }
 }

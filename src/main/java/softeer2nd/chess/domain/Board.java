@@ -1,7 +1,7 @@
 package softeer2nd.chess.domain;
 
 import softeer2nd.chess.domain.pieces.Piece;
-import softeer2nd.chess.exceptions.IllegalCommandException;
+import softeer2nd.chess.exceptions.BlockedByPieceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +154,7 @@ public class Board {
             }
 
             if (!findPiece(temporalPosition).isEmptyPiece()) {
-                throw new IllegalCommandException();
+                throw new BlockedByPieceException();
             }
         }
     }

@@ -8,15 +8,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Position;
-import softeer2nd.chess.domain.pieces.*;
-import softeer2nd.chess.exceptions.IllegalCommandException;
+import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.BlockedByPieceException;
 import softeer2nd.chess.utils.ChessPositionParser;
 import softeer2nd.chess.view.ChessConsoleView;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static softeer2nd.chess.domain.pieces.PieceFactory.*;
 
 class BoardTest {
@@ -131,7 +132,7 @@ class BoardTest {
         board.setPiece(blockedPosition, createBlackPawn());
 
         //when, then
-        assertThrows(IllegalCommandException.class, () -> board.verifyBlockedByPiece(sourcePosition, targetPosition));
+        assertThrows(BlockedByPieceException.class, () -> board.verifyBlockedByPiece(sourcePosition, targetPosition));
     }
 
     private static Stream<Arguments> ProvidePositionsForVerifyBlockedByPiece() {
