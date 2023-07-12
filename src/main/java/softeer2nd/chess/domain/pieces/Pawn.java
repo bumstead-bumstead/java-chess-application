@@ -23,21 +23,30 @@ public class Pawn extends Piece {
 
         if (this.color == Color.WHITE) directions = Piece.Direction.whitePawnDirection();
 
-        for (Direction direction : directions) {
-            int row = sourcePosition.getRow() + direction.getYDegree();
-            int column = sourcePosition.getColumn() + direction.getXDegree();
-            Position possiblePosition = new Position(row, column);
+        boolean isReachable = directions.stream()
+                .anyMatch(direction -> canMoveToTargetPosition(sourcePosition, targetPosition, direction));
 
-            if (canMoveToTargetPosition(possiblePosition, targetPosition, direction)) {
-                return true;
-            }
+        return isReachable;
+    }
+
+    private boolean canMoveToTargetPosition(Position sourcePosition, Position targetPosition, Direction direction) {
+        int row = sourcePosition.getRow() + direction.getYDegree();
+        int column = sourcePosition.getColumn() + direction.getXDegree();
+        Position possiblePosition = new Position(row, column);
+
+        if (isPositionSame(targetPosition, possiblePosition)
+                && !canNotDoublePawnPush(direction)) {
+            return true;
         }
         return false;
     }
 
-    private boolean canMoveToTargetPosition(Position position, Position targetPosition, Direction direction) {
-        return position.equals(targetPosition)
-                && !(hasMoved && isDoubleMove(direction));
+    private boolean canNotDoublePawnPush(Direction direction) {
+        return hasMoved && isDoubleMove(direction);
+    }
+
+    private static boolean isPositionSame(Position targetPosition, Position possiblePosition) {
+        return possiblePosition.equals(targetPosition);
     }
 
     public void setHasMoved() {
