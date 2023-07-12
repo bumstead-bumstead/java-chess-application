@@ -8,7 +8,6 @@ import softeer2nd.chess.view.ChessView;
 public class ChessApp {
     private ChessGame chessGame = new ChessGame();
     private ChessConsoleView chessView = new ChessConsoleView();
-    private static Piece.Color turn = Piece.Color.BLACK;
 
     public void run() throws RuntimeException {
         chessView.printStartMessage();
@@ -16,18 +15,7 @@ public class ChessApp {
         chessView.showBoard(chessGame.getBoard());
 
         while (processTurn()) {
-            changeTurn();
-        }
-        ;
-    }
-
-    private void changeTurn() {
-        if (turn == Piece.Color.BLACK) {
-            turn = Piece.Color.WHITE;
-            return;
-        }
-        if (turn == Piece.Color.WHITE) {
-            turn = Piece.Color.BLACK;
+//            changeTurn();
         }
     }
 
@@ -36,7 +24,7 @@ public class ChessApp {
             String command = chessView.getCommandInput();
 
             if (command.startsWith(ChessView.MOVE)) {
-                moveRoutine(command, turn);
+                moveRoutine(command);
                 return true;
             }
             if (command.equals(ChessView.SCORE)) {
@@ -65,12 +53,12 @@ public class ChessApp {
         chessView.printEndMessage();
     }
 
-    private void moveRoutine(String command, Piece.Color turn) {
+    private void moveRoutine(String command) {
         String[] commandArray = command.split(" ");
         Position sourcePosition = new Position(commandArray[1]);
         Position targetPosition = new Position(commandArray[2]);
 
-        chessGame.move(sourcePosition, targetPosition, turn);
+        chessGame.move(sourcePosition, targetPosition);
 
         chessView.printMoveMessage(commandArray[1], commandArray[2]);
         chessView.showBoard(chessGame.getBoard());

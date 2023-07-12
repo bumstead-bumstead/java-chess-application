@@ -16,8 +16,11 @@ public class ChessGame {
 
     private Board board;
 
+    private Piece.Color turn;
+
     public ChessGame() {
         this.board = new Board();
+        turn = Piece.Color.NOCOLOR;
     }
 
     public Board getBoard() {
@@ -26,22 +29,30 @@ public class ChessGame {
 
     public void start() {
         board.initialize();
+        this.turn = Piece.Color.BLACK;
     }
 
-    public void move(Position sourcePosition, Position targetPosition, Piece.Color turn) throws RuntimeException {
+    //for test
+    public void setTurn(Piece.Color turn) {
+        this.turn = turn;
+    }
+
+    public void move(Position sourcePosition, Position targetPosition) throws RuntimeException {
         Piece oldPiece = board.findPiece(sourcePosition);
 
-        verifyMove(sourcePosition, targetPosition, turn);
+        verifyMove(sourcePosition, targetPosition);
 
         board.removePiece(sourcePosition);
         board.setPiece(targetPosition, oldPiece);
+
+        changeTurn();
     }
 
-    private void verifyMove(Position sourcePosition, Position targetPosition, Piece.Color turn) throws RuntimeException {
+    private void verifyMove(Position sourcePosition, Position targetPosition) throws RuntimeException {
         Piece oldPiece = board.findPiece(sourcePosition);
         Piece targetPiece = board.findPiece(targetPosition);
 
-        verifyTurn(oldPiece, turn);
+        verifyTurn(oldPiece);
         oldPiece.verifySameColor(targetPiece);
         oldPiece.verifyMovePosition(sourcePosition, targetPosition);
         board.verifyBlockedByPiece(sourcePosition, targetPosition);
@@ -72,9 +83,19 @@ public class ChessGame {
         return targetPosition.getColumn() == sourcePosition.getColumn();
     }
 
-    private void verifyTurn(Piece oldPiece, Piece.Color turn) {
+    private void verifyTurn(Piece oldPiece) {
         if (!oldPiece.hasColor(turn) && !oldPiece.isEmptyPiece()) {
             throw new WrongPlayerMoveException();
+        }
+    }
+
+    private void changeTurn() {
+        if (turn == Piece.Color.BLACK) {
+            turn = Piece.Color.WHITE;
+            return;
+        }
+        if (turn == Piece.Color.WHITE) {
+            turn = Piece.Color.BLACK;
         }
     }
 
