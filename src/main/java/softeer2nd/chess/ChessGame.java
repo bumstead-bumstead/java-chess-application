@@ -4,7 +4,8 @@ import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Pawn;
 import softeer2nd.chess.domain.pieces.Piece;
-import softeer2nd.chess.exceptions.IllegalCommandException;
+import softeer2nd.chess.exceptions.PawnDiagonalMoveException;
+import softeer2nd.chess.exceptions.WrongPlayerMoveException;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class ChessGame {
             return;
         }
 
-        throw new IllegalCommandException();
+        throw new PawnDiagonalMoveException();
     }
 
     private static boolean isVertical(Position sourcePosition, Position targetPosition) {
@@ -72,8 +73,8 @@ public class ChessGame {
     }
 
     private void verifyTurn(Piece oldPiece, Piece.Color turn) {
-        if (!oldPiece.hasColor(turn)) {
-            throw new IllegalCommandException();
+        if (!oldPiece.hasColor(turn) && !oldPiece.isEmptyPiece()) {
+            throw new WrongPlayerMoveException();
         }
     }
 
