@@ -7,8 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
-import softeer2nd.chess.domain.pieces.*;
-import softeer2nd.chess.exceptions.OccupiedPositionException;
+import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.stream.Stream;
 
@@ -82,7 +82,7 @@ public class PieceTest {
     @MethodSource("providePiecesForVerifySameColor")
     @DisplayName("verifySameColor 테스트")
     void verifySameColor(Piece piece, Piece targetPiece) {
-        assertThrows(OccupiedPositionException.class, () -> piece.verifySameColor(targetPiece));
+        assertThrows(IllegalCommandException.class, () -> piece.verifySameColor(targetPiece));
     }
 
     private static Stream<Arguments> providePiecesForVerifySameColor() {

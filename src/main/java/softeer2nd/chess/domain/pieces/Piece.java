@@ -2,8 +2,7 @@ package softeer2nd.chess.domain.pieces;
 
 import softeer2nd.chess.domain.AvailableDirections;
 import softeer2nd.chess.domain.Position;
-import softeer2nd.chess.exceptions.OccupiedPositionException;
-import softeer2nd.chess.exceptions.OutOfPieceRangeException;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -165,12 +164,12 @@ public abstract class Piece {
 
     public void verifySameColor(Piece piece) {
         if (this.hasColor(piece.color)) {
-            throw new OccupiedPositionException();
+            throw new IllegalCommandException("아군 기물이 존재하는 위치입니다.");
         }
     }
     public void verifyMovePosition(Position sourcePosition, Position targetPosition) throws RuntimeException {
         if (!isValidPosition(targetPosition) || !isReachablePosition(sourcePosition, targetPosition)) {
-            throw new OutOfPieceRangeException();
+            throw new IllegalCommandException("해당 위치로 이동할 수 없습니다.");
         }
     }
 

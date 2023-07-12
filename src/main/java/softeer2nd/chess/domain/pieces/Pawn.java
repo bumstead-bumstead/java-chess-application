@@ -37,8 +37,7 @@ public class Pawn extends NonSlidingPiece {
         int column = sourcePosition.getColumn() + direction.getXDegree();
         Position possiblePosition = new Position(row, column);
 
-        if (isPositionSame(targetPosition, possiblePosition)
-                && !canNotDoublePawnPush(direction)) {
+        if (isPositionSame(targetPosition, possiblePosition) && !canNotDoublePawnPush(direction)) {
             return true;
         }
         return false;

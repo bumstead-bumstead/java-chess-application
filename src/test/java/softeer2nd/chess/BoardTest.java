@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
-import softeer2nd.chess.exceptions.BlockedByPieceException;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 import softeer2nd.chess.utils.ChessPositionParser;
 import softeer2nd.chess.view.ChessConsoleView;
 
@@ -132,7 +132,7 @@ class BoardTest {
         board.setPiece(blockedPosition, createBlackPawn());
 
         //when, then
-        assertThrows(BlockedByPieceException.class, () -> board.verifyBlockedByPiece(sourcePosition, targetPosition));
+        assertThrows(IllegalCommandException.class, () -> board.verifyBlockedByPiece(sourcePosition, targetPosition));
     }
 
     private static Stream<Arguments> ProvidePositionsForVerifyBlockedByPiece() {

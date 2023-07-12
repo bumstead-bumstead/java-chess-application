@@ -1,7 +1,7 @@
 package softeer2nd.chess.domain;
 
 import softeer2nd.chess.domain.pieces.Piece;
-import softeer2nd.chess.exceptions.BlockedByPieceException;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +154,7 @@ public class Board {
             }
 
             if (!findPiece(temporalPosition).isEmptyPiece()) {
-                throw new BlockedByPieceException();
+                throw new IllegalCommandException("이동 경로 상에 다른 기물이 존재합니다.");
             }
         }
     }

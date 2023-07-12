@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.domain.pieces.PieceFactory;
-import softeer2nd.chess.exceptions.OutOfPieceRangeException;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.stream.Stream;
 
@@ -35,7 +35,7 @@ class QueenTest {
     @DisplayName("퀸 행보_실패")
     @MethodSource("providePositionForVerifyMoveFail")
     void verifyNonQueenMove(int row, int column) {
-        assertThrows(OutOfPieceRangeException.class, () -> queen.verifyMovePosition(testPosition, new Position(row, column)));
+        assertThrows(IllegalCommandException.class, () -> queen.verifyMovePosition(testPosition, new Position(row, column)));
     }
 
     private static Stream<Arguments> providePositionForVerifyMoveSuccess() {

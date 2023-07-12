@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.domain.pieces.PieceFactory;
-import softeer2nd.chess.exceptions.OutOfPieceRangeException;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.stream.Stream;
 
@@ -35,7 +35,7 @@ class BishopTest {
     @DisplayName("대각선 외의 이동_실패")
     @MethodSource("providePositionForVerifyNondiagonalMove")
     void verifyNondiagonalMove(int row, int column) {
-        assertThrows(OutOfPieceRangeException.class, () -> bishop.verifyMovePosition(testPosition, new Position(row, column)));
+        assertThrows(IllegalCommandException.class, () -> bishop.verifyMovePosition(testPosition, new Position(row, column)));
     }
 
     private static Stream<Arguments> providePositionForVerifyDiagonalMove() {

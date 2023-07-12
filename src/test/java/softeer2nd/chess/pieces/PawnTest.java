@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.domain.pieces.PieceFactory;
-import softeer2nd.chess.exceptions.OutOfPieceRangeException;
+import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.stream.Stream;
 
@@ -33,8 +33,8 @@ class PawnTest {
         pawn.verifyMovePosition(testPosition, new Position(3, 1));
         pawn.verifyMovePosition(testPosition, new Position(3, 3));
 
-        assertThrows(OutOfPieceRangeException.class, () -> pawn.verifyMovePosition(testPosition, new Position(4, 4)));
-        assertThrows(OutOfPieceRangeException.class, () -> pawn.verifyMovePosition(testPosition, new Position(5, 3)));
+        assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(4, 4)));
+        assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(5, 3)));
     }
 
     @ParameterizedTest(name = "[2, 2] to [{0}, {1}]")
@@ -48,7 +48,7 @@ class PawnTest {
     @DisplayName("black pawn 행보_실패")
     @MethodSource("providePositionForVerifyMoveFailBlackPawn")
     void verifyNonBlackPawnMove(int row, int column) {
-        assertThrows(OutOfPieceRangeException.class, () -> pawn.verifyMovePosition(testPosition, new Position(row, column)));
+        assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(row, column)));
     }
 
     private static Stream<Arguments> providePositionForVerifyMoveSuccessBlackPawn() {
@@ -82,7 +82,7 @@ class PawnTest {
     @MethodSource("providePositionForVerifyMoveFailWhitePawn")
     void verifyNondiagonalMove(int row, int column) {
         pawn = PieceFactory.createWhitePawn();
-        assertThrows(OutOfPieceRangeException.class, () -> pawn.verifyMovePosition(testPosition, new Position(row, column)));
+        assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(row, column)));
     }
 
     private static Stream<Arguments> providePositionForVerifyMoveSuccessWhitePawn() {
