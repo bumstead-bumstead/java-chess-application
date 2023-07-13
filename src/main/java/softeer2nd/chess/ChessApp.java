@@ -21,6 +21,7 @@ public class ChessApp {
 
     private boolean processTurn() {
         try {
+            chessView.printTurnMessage(chessGame.getTurn());
             String command = chessView.getCommandInput();
 
             if (command.startsWith(ChessView.MOVE)) {
@@ -58,8 +59,8 @@ public class ChessApp {
     }
 
     private void gameExitRoutine() {
-        scoreRoutine();
         chessView.printEndMessage();
+        scoreRoutine();
     }
 
     private void moveRoutine(String command) {
@@ -71,9 +72,5 @@ public class ChessApp {
 
         chessView.printMoveMessage(commandArray[1], commandArray[2]);
         chessView.showBoard(chessGame.getBoard());
-
-        if (chessGame.isGameOver()) {
-
-        }
     }
 }

@@ -117,4 +117,9 @@ public class ChessConsoleView implements ChessView {
 
         return input;
     }
+
+    public void printTurnMessage(Piece.Color color) {
+        System.out.println(color.name() + " 턴입니다.");
+        System.out.println("명령을 입력해주세요. : move, score, end");
+    }
 }
