@@ -8,10 +8,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.domain.pieces.PieceFactory;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class QueenTest {
@@ -35,7 +37,8 @@ class QueenTest {
     @DisplayName("퀸 행보_실패")
     @MethodSource("providePositionForVerifyMoveFail")
     void verifyNonQueenMove(int row, int column) {
-        assertThrows(IllegalCommandException.class, () -> queen.verifyMovePosition(testPosition, new Position(row, column)));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> queen.verifyMovePosition(testPosition, new Position(row, column)));
+        assertEquals(exception.getMessage(), ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
     }
 
     private static Stream<Arguments> providePositionForVerifyMoveSuccess() {

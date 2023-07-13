@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.stream.Stream;
@@ -28,15 +29,13 @@ public class PieceTest {
         blackPiece = createBlackBishop();
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} : {1} and {2}")
     @MethodSource("providePieceAndColorAndTypeForCreatePiece")
     void create_piece(Piece piece, Piece.Color color, Piece.Type type) {
         verifyPiece(piece, color, type);
     }
 
     private static Stream<Arguments> providePieceAndColorAndTypeForCreatePiece() {
-        Position testPosition = new Position(0, 0);
-
         return Stream.of(
                 Arguments.of(createBlackBishop(), Piece.Color.BLACK, Piece.Type.BISHOP),
                 Arguments.of(createBlackRook(), Piece.Color.BLACK, Piece.Type.ROOK),
@@ -53,13 +52,13 @@ public class PieceTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("provideColorForHasColor")
+    @ParameterizedTest(name = "{0} : {1} - {2}")
+    @MethodSource("provideColorForIsSameColor")
     void hasColor(Piece piece, Piece.Color color, boolean result) {
         assertEquals(result, piece.isSameColor(color));
     }
 
-    private static Stream<Arguments> provideColorForHasColor() {
+    private static Stream<Arguments> provideColorForIsSameColor() {
         Piece whitePiece = createWhiteBishop();
         Piece blackPiece = createBlackBishop();
 
@@ -82,7 +81,8 @@ public class PieceTest {
     @MethodSource("providePiecesForVerifySameColor")
     @DisplayName("verifySameColor 테스트")
     void verifySameColor(Piece piece, Piece targetPiece) {
-        assertThrows(IllegalCommandException.class, () -> piece.verifyAlly(targetPiece));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> piece.verifyAlly(targetPiece));
+        assertEquals(exception.getMessage(), ExceptionMessage.CAPTURE_ALLY_EXCEPTION_MESSAGE);
     }
 
     private static Stream<Arguments> providePiecesForVerifySameColor() {

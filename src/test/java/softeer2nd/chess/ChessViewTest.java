@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 import softeer2nd.chess.view.ChessConsoleView;
 
@@ -28,7 +29,8 @@ class ChessViewTest {
     void getCommandInputInvalid(String input) {
         InputStream inputStream = getInputStream(input);
         System.setIn(inputStream);
-        assertThrows(IllegalCommandException.class, () -> chessView.getCommandInput(new Scanner(System.in)));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> chessView.getCommandInput(new Scanner(System.in)));
+        assertEquals(exception.getMessage(), ExceptionMessage.FORMAT_EXCEPTION_MESSAGE);
     }
 
     @ParameterizedTest

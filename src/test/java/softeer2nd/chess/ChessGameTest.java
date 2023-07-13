@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.stream.Stream;
@@ -53,7 +54,9 @@ public class ChessGameTest {
         Position targetPosition = new Position("a3");
         chessGame.setTurn(Piece.Color.BLACK);
 
-        assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition));
+        assertEquals(exception.getMessage(), ExceptionMessage.TURN_EXCEPTION_MESSAGE);
+
     }
 
     @Test
@@ -64,7 +67,8 @@ public class ChessGameTest {
         Position sourcePosition = new Position("a7");
         Position targetPosition = new Position("a6");
 
-        assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition));
+        assertEquals(exception.getMessage(), ExceptionMessage.TURN_EXCEPTION_MESSAGE);
     }
 
     @ParameterizedTest
@@ -73,7 +77,8 @@ public class ChessGameTest {
     void verifyPawnDiagonalMoveFail(Position targetPosition) {
         Position sourcePosition = new Position(1, 3);
 
-        assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition));
+        assertEquals(exception.getMessage(), ExceptionMessage.PAWN_DIAGONAL_MOVE_EXCEPTION_MESSAGE);
     }
 
     private static Stream<Arguments> providePositionsForVerifyPwnDiagonalMove() {
@@ -108,6 +113,7 @@ public class ChessGameTest {
 
         chessGame.setTurn(Piece.Color.BLACK);
         chessGame.move(sourcePosition, new Position(3, 3));
-        assertThrows(IllegalCommandException.class, () -> chessGame.move(new Position(3, 3), new Position(5, 3)));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> chessGame.move(new Position(3, 3), new Position(5, 3)));
+        assertEquals(exception.getMessage(), ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
     }
 }

@@ -9,10 +9,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Piece;
 import softeer2nd.chess.domain.pieces.PieceFactory;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PawnTest {
@@ -33,8 +35,12 @@ class PawnTest {
         pawn.verifyMovePosition(testPosition, new Position(3, 1));
         pawn.verifyMovePosition(testPosition, new Position(3, 3));
 
-        assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(4, 4)));
-        assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(5, 3)));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(4, 4)));
+        Exception exception2 = assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(5, 3)));
+
+        assertEquals(exception.getMessage(), ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
+        assertEquals(exception2.getMessage(), ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
+        ;
     }
 
     @ParameterizedTest(name = "[2, 2] to [{0}, {1}]")
@@ -48,7 +54,9 @@ class PawnTest {
     @DisplayName("black pawn 행보_실패")
     @MethodSource("providePositionForVerifyMoveFailBlackPawn")
     void verifyNonBlackPawnMove(int row, int column) {
-        assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(row, column)));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(row, column)));
+        assertEquals(exception.getMessage(), ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
+
     }
 
     private static Stream<Arguments> providePositionForVerifyMoveSuccessBlackPawn() {
@@ -82,7 +90,8 @@ class PawnTest {
     @MethodSource("providePositionForVerifyMoveFailWhitePawn")
     void verifyNondiagonalMove(int row, int column) {
         pawn = PieceFactory.createWhitePawn();
-        assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(row, column)));
+        Exception exception = assertThrows(IllegalCommandException.class, () -> pawn.verifyMovePosition(testPosition, new Position(row, column)));
+        assertEquals(exception.getMessage(), ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
     }
 
     private static Stream<Arguments> providePositionForVerifyMoveSuccessWhitePawn() {
