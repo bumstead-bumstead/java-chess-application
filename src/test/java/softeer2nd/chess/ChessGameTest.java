@@ -14,8 +14,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static softeer2nd.chess.domain.pieces.PieceFactory.createBlackPawn;
-import static softeer2nd.chess.domain.pieces.PieceFactory.createBlank;
+import static softeer2nd.chess.domain.pieces.PieceFactory.*;
 
 public class ChessGameTest {
 
@@ -39,13 +38,12 @@ public class ChessGameTest {
     @Test
     @DisplayName("기물 이동 테스트")
     void move() {
-
-        Position sourcePosition = new Position("b7");
-        Position targetPosition = new Position("b6");
+        Position sourcePosition = new Position("b2");
+        Position targetPosition = new Position("b3");
 
         chessGame.move(sourcePosition, targetPosition);
         assertEquals(createBlank(), chessGame.findPiece(sourcePosition));
-        assertEquals(createBlackPawn(), chessGame.findPiece(targetPosition));
+        assertEquals(createWhitePawn(), chessGame.findPiece(targetPosition));
     }
 
     @Test
@@ -53,6 +51,7 @@ public class ChessGameTest {
     void verifyTurnBlack() {
         Position sourcePosition = new Position("a2");
         Position targetPosition = new Position("a3");
+        chessGame.setTurn(Piece.Color.BLACK);
 
         assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition));
     }
@@ -107,8 +106,8 @@ public class ChessGameTest {
     void verifyPawnDoublePush() {
         Position sourcePosition = new Position(1, 3);
 
-        chessGame.move(sourcePosition, new Position(3, 3));
         chessGame.setTurn(Piece.Color.BLACK);
+        chessGame.move(sourcePosition, new Position(3, 3));
         assertThrows(IllegalCommandException.class, () -> chessGame.move(new Position(3, 3), new Position(5, 3)));
     }
 }
