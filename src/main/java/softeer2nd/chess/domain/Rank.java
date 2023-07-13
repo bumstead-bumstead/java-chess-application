@@ -11,15 +11,12 @@ import static softeer2nd.chess.domain.pieces.PieceFactory.*;
 public class Rank {
 
     private List<Piece> pieces;
-    private int rankNumber;
 
-    private Rank(List<Piece> rank, int rankNumber) {
+    private Rank(List<Piece> rank) {
         this.pieces = rank;
-        this.rankNumber = rankNumber;
     }
 
     public static Rank createFirstBlackRank() {
-        int rankNumber = 0;
         List<Piece> list = new ArrayList<>();
 
         list.add(createBlackRook());
@@ -31,11 +28,10 @@ public class Rank {
         list.add(createBlackKnight());
         list.add(createBlackRook());
 
-        return new Rank(list, rankNumber);
+        return new Rank(list);
     }
 
     public static Rank createFirstWhiteRank() {
-        int rankNumber = 7;
         List<Piece> list = new ArrayList<>();
 
         list.add(createWhiteRook());
@@ -47,32 +43,30 @@ public class Rank {
         list.add(createWhiteKnight());
         list.add(createWhiteRook());
 
-        return new Rank(list, rankNumber);
+        return new Rank(list);
     }
 
     public static Rank createSecondBlackRank() {
-        int rankNumber = 1;
         List<Piece> list = new ArrayList<>();
 
         for (int file = 0; file < BOARD_LENGTH; file++) {
             list.add(createBlackPawn());
         }
 
-        return new Rank(list, rankNumber);
+        return new Rank(list);
     }
 
     public static Rank createSecondWhiteRank() {
-        int rankNumber = 6;
         List<Piece> list = new ArrayList<>();
 
         for (int file = 0; file < BOARD_LENGTH; file++) {
             list.add(createWhitePawn());
         }
 
-        return new Rank(list, rankNumber);
+        return new Rank(list);
     }
 
-    public static Rank createBlankRank(int rankNumber) {
+    public static Rank createBlankRank() {
         List<Piece> list = new ArrayList<>();
 
 
@@ -80,7 +74,7 @@ public class Rank {
             list.add(createBlank());
         }
 
-        return new Rank(list, rankNumber);
+        return new Rank(list);
     }
 
     public void set(int column, Piece piece) {
