@@ -23,6 +23,13 @@ public class Position {
         column += columnDifference;
     }
 
+    public boolean isDiagonal(Position targetPosition) {
+        int rowDifference = Math.abs(this.row - targetPosition.row);
+        int columnDifference = Math.abs(this.column - targetPosition.column);
+
+        return rowDifference == columnDifference && rowDifference > 0;
+    }
+
     @Override
     public String toString() {
         return "[" + row + ", " + column + ']';

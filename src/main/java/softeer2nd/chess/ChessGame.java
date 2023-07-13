@@ -60,34 +60,14 @@ public class ChessGame {
         Piece targetPiece = board.findPiece(targetPosition);
 
         verifyTurn(oldPiece);
-        oldPiece.verifySameColor(targetPiece);
+        oldPiece.verifyAlly(targetPiece);
         oldPiece.verifyMovePosition(sourcePosition, targetPosition);
         board.verifyBlockedByPiece(sourcePosition, targetPosition);
 
         if (oldPiece.hasType(Piece.Type.PAWN)) {
-            verifyPawnMove(sourcePosition, targetPosition);
+            board.verifyDiagonalPawnMove(sourcePosition, targetPosition);
+            Pawn.reflectMove(oldPiece);
         }
-    }
-
-    private void verifyPawnMove(Position sourcePosition, Position targetPosition) {
-        Pawn sourcePawn = (Pawn) board.findPiece(sourcePosition);
-        Piece targetPiece = board.findPiece(targetPosition);
-
-        if (isVertical(sourcePosition, targetPosition)) {
-            sourcePawn.setHasMoved();
-            return;
-        }
-
-        if (targetPiece.hasColor(sourcePawn.getColor().getReverseColor())) {
-            sourcePawn.setHasMoved();
-            return;
-        }
-
-        throw new IllegalCommandException("상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
-    }
-
-    private static boolean isVertical(Position sourcePosition, Position targetPosition) {
-        return targetPosition.getColumn() == sourcePosition.getColumn();
     }
 
     private void verifyTurn(Piece oldPiece) {

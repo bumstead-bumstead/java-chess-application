@@ -20,6 +20,12 @@ public class Pawn extends NonSlidingPiece {
         return Direction.blackPawnDirection();
     }
 
+    public static void reflectMove(Piece piece) {
+        Pawn pawn = (Pawn) piece;
+
+        pawn.setHasMoved();
+    }
+
     @Override
     public boolean isReachablePosition(Position sourcePosition, Position targetPosition) {
         List<Direction> directions = Piece.Direction.blackPawnDirection();
@@ -51,7 +57,7 @@ public class Pawn extends NonSlidingPiece {
         return possiblePosition.equals(targetPosition);
     }
 
-    public void setHasMoved() {
+    private void setHasMoved() {
         this.hasMoved = true;
     }
 

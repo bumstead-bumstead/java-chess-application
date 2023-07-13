@@ -26,10 +26,10 @@ public class Board {
 
         pieces.add(Rank.createFirstBlackRank());
         pieces.add(Rank.createSecondBlackRank());
-        pieces.add(Rank.createBlankRank(2));
-        pieces.add(Rank.createBlankRank(3));
-        pieces.add(Rank.createBlankRank(4));
-        pieces.add(Rank.createBlankRank(5));
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
         pieces.add(Rank.createSecondWhiteRank());
         pieces.add(Rank.createFirstWhiteRank());
     }
@@ -37,14 +37,14 @@ public class Board {
     public void initializeEmpty() {
         pieces.clear();
 
-        pieces.add(Rank.createBlankRank(0));
-        pieces.add(Rank.createBlankRank(1));
-        pieces.add(Rank.createBlankRank(2));
-        pieces.add(Rank.createBlankRank(3));
-        pieces.add(Rank.createBlankRank(4));
-        pieces.add(Rank.createBlankRank(5));
-        pieces.add(Rank.createBlankRank(6));
-        pieces.add(Rank.createBlankRank(7));
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
+        pieces.add(Rank.createBlankRank());
     }
 
     public void setPiece(Position position, Piece piece) {
@@ -136,6 +136,10 @@ public class Board {
         int rowDifference = targetPosition.getRow() - sourcePosition.getRow();
         int columnDifference = targetPosition.getColumn() - sourcePosition.getColumn();
 
+        if (isLMove(rowDifference, columnDifference)) {
+            return;
+        }
+
         int rowDirection = calculateRowDirection(rowDifference);
         int columnDirection = calculateColumnDirection(columnDifference);
 
@@ -159,6 +163,10 @@ public class Board {
         }
     }
 
+    private static boolean isLMove(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) - Math.abs(columnDifference) == 1;
+    }
+
     private static int calculateColumnDirection(int columnDifference) {
         if (columnDifference != 0) {
             return columnDifference / Math.abs(columnDifference);
@@ -174,5 +182,16 @@ public class Board {
             return 0;
         }
 
+    }
+
+    public void verifyDiagonalPawnMove(Position sourcePosition, Position targetPosition) {
+        if (sourcePosition.isDiagonal(targetPosition)) {
+            Piece targetPiece = findPiece(targetPosition);
+            Piece sourcePiece = findPiece(sourcePosition);
+
+            if (!targetPiece.hasColor(sourcePiece.getColor().getReverseColor())) {
+                throw new IllegalCommandException("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
+            }
+        }
     }
 }
