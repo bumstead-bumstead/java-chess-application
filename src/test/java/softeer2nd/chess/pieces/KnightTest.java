@@ -21,7 +21,7 @@ class KnightTest {
     private Position testPosition;
 
     @BeforeEach
-    void init() {
+    void setup() {
         knight = PieceFactory.createBlackKnight();
         testPosition = new Position(2, 2);
     }

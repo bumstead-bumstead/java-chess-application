@@ -19,7 +19,7 @@ class BishopTest {
     private Position testPosition;
 
     @BeforeEach
-    void init() {
+    void setup() {
         bishop = PieceFactory.createBlackBishop();
         testPosition = new Position(1, 1);
     }

@@ -19,7 +19,7 @@ class QueenTest {
     private Position testPosition;
 
     @BeforeEach
-    void init() {
+    void setup() {
         queen = PieceFactory.createBlackQueen();
         testPosition = new Position(3, 3);
     }

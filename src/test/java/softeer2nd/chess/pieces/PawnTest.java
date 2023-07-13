@@ -21,7 +21,7 @@ class PawnTest {
     private Piece pawn;
     private Position testPosition;
     @BeforeEach
-    void init() {
+    void setup() {
         pawn = PieceFactory.createBlackPawn();
         testPosition = new Position(2, 2);
     }

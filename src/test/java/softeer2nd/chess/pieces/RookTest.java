@@ -21,7 +21,7 @@ class RookTest {
     private Position testPosition;
 
     @BeforeEach
-    void init() {
+    void setup() {
         rook = PieceFactory.createBlackRook();
         testPosition = new Position(3, 3);
     }

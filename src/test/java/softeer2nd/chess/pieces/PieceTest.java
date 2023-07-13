@@ -22,7 +22,7 @@ public class PieceTest {
     Position testPosition;
 
     @BeforeEach
-    void init() {
+    void setup() {
         testPosition = new Position(0, 0);
         whitePiece = createWhiteBishop();
         blackPiece = createBlackBishop();

@@ -20,7 +20,7 @@ class KingTest {
     private Position testPosition;
 
     @BeforeEach
-    void init() {
+    void setup() {
         king = PieceFactory.createBlackKing();
         testPosition = new Position(1, 1);
     }
