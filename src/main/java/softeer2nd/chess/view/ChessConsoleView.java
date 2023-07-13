@@ -60,7 +60,6 @@ public class ChessConsoleView implements ChessView {
 
         veryfyCommandInput(input);
 
-        System.out.println(input);
         return input;
     }
 
