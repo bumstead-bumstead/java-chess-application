@@ -55,5 +55,12 @@ public class Position {
     public int getColumn() {
         return column;
     }
+
+    public boolean isVertical(Position targetPosition) {
+        int rowDifference = Math.abs(this.row - targetPosition.row);
+        int columnDifference = Math.abs(this.column - targetPosition.column);
+
+        return rowDifference == 0 || columnDifference == 0;
+    }
 }
 

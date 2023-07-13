@@ -181,16 +181,21 @@ public class Board {
         } else {
             return 0;
         }
-
     }
 
-    public void verifyDiagonalPawnMove(Position sourcePosition, Position targetPosition) {
-        if (sourcePosition.isDiagonal(targetPosition)) {
-            Piece targetPiece = findPiece(targetPosition);
-            Piece sourcePiece = findPiece(sourcePosition);
+    public void verifyPawnCapture(Position sourcePosition, Position targetPosition) {
+        Piece targetPiece = findPiece(targetPosition);
+        Piece sourcePiece = findPiece(sourcePosition);
 
+        if (sourcePosition.isDiagonal(targetPosition)) {
             if (!targetPiece.hasColor(sourcePiece.getColor().getReverseColor())) {
                 throw new IllegalCommandException("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
+            }
+        }
+
+        if (sourcePosition.isVertical(targetPosition)) {
+            if (!targetPiece.hasColor(Piece.Color.NOCOLOR)) {
+                throw new IllegalCommandException("폰은 기물이 위치하는 칸으로 이동할 수 없습니다.");
             }
         }
     }

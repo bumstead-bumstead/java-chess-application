@@ -65,7 +65,7 @@ public class ChessGame {
         board.verifyBlockedByPiece(sourcePosition, targetPosition);
 
         if (oldPiece.hasType(Piece.Type.PAWN)) {
-            board.verifyDiagonalPawnMove(sourcePosition, targetPosition);
+            board.verifyPawnCapture(sourcePosition, targetPosition);
             Pawn.reflectMove(oldPiece);
         }
     }
