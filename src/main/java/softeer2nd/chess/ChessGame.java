@@ -4,6 +4,7 @@ import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Position;
 import softeer2nd.chess.domain.pieces.Pawn;
 import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ChessGame {
 
     public void start() {
         board.initialize();
-        this.turn = Piece.Color.BLACK;
+        this.turn = Piece.Color.WHITE;
     }
 
     //for test
@@ -56,23 +57,23 @@ public class ChessGame {
 
 
     private void verifyMove(Position sourcePosition, Position targetPosition) throws RuntimeException {
-        Piece oldPiece = board.findPiece(sourcePosition);
+        Piece movePiece = board.findPiece(sourcePosition);
         Piece targetPiece = board.findPiece(targetPosition);
 
-        verifyTurn(oldPiece);
-        oldPiece.verifyAlly(targetPiece);
-        oldPiece.verifyMovePosition(sourcePosition, targetPosition);
+        verifyTurn(movePiece);
+        movePiece.verifyAlly(targetPiece);
+        movePiece.verifyMovePosition(sourcePosition, targetPosition);
         board.verifyBlockedByPiece(sourcePosition, targetPosition);
 
-        if (oldPiece.hasType(Piece.Type.PAWN)) {
+        if (movePiece.isSameType(Piece.Type.PAWN)) {
             board.verifyPawnCapture(sourcePosition, targetPosition);
-            Pawn.reflectMove(oldPiece);
+            Pawn.reflectMove(movePiece);
         }
     }
 
     private void verifyTurn(Piece oldPiece) {
-        if (!oldPiece.hasColor(turn) && !oldPiece.isEmptyPiece()) {
-            throw new IllegalCommandException("현재 차례인 기물만 이동할 수 있습니다.");
+        if (!oldPiece.isSameColor(turn) && !oldPiece.isEmptyPiece()) {
+            throw new IllegalCommandException(ExceptionMessage.TURN_EXCEPTION_MESSAGE);
         }
     }
 
@@ -85,7 +86,7 @@ public class ChessGame {
     }
 
     private boolean isKingCaptured(Piece targetPiece) {
-        return targetPiece.hasType(Piece.Type.KING);
+        return targetPiece.isSameType(Piece.Type.KING);
     }
 
     private void changeTurn() {
@@ -115,11 +116,15 @@ public class ChessGame {
         double totalPoint = 0;
 
         for (Piece piece : pieces) {
-            if (piece.hasType(Piece.Type.PAWN)) pawnCount++;
+            if (piece.isSameType(Piece.Type.PAWN)) {
+                pawnCount++;
+            }
             totalPoint += piece.getType().getScore();
         }
 
-        if (pawnCount > 1) totalPoint -= pawnCount * PAWN_HALF_SCORE;
+        if (pawnCount > 1) {
+            totalPoint -= pawnCount * PAWN_HALF_SCORE;
+        }
 
         return totalPoint;
     }

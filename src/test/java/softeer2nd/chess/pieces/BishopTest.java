@@ -34,7 +34,7 @@ class BishopTest {
     @ParameterizedTest
     @DisplayName("대각선 외의 이동_실패")
     @MethodSource("providePositionForVerifyNondiagonalMove")
-    void verifyNondiagonalMove(int row, int column) {
+    void verifyNonDiagonalMove(int row, int column) {
         assertThrows(IllegalCommandException.class, () -> bishop.verifyMovePosition(testPosition, new Position(row, column)));
     }
 

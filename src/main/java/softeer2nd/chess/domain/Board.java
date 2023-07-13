@@ -1,6 +1,7 @@
 package softeer2nd.chess.domain;
 
 import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.ArrayList;
@@ -82,7 +83,9 @@ public class Board {
         for (Rank rank : pieces) {
             Piece piece = rank.get(column);
 
-            if (!piece.hasColor(targetColor)) continue;
+            if (!piece.isSameColor(targetColor)) {
+                continue;
+            }
 
             piecesOfColumn.add(piece);
         }
@@ -118,7 +121,7 @@ public class Board {
             }
 
             if (!findPiece(temporalPosition).isEmptyPiece()) {
-                throw new IllegalCommandException("이동 경로 상에 다른 기물이 존재합니다.");
+                throw new IllegalCommandException(ExceptionMessage.BLOCKED_EXCEPTION_MESSAGE);
             }
         }
     }
@@ -155,14 +158,14 @@ public class Board {
         Piece sourcePiece = findPiece(sourcePosition);
 
         if (sourcePosition.isDiagonal(targetPosition)) {
-            if (!targetPiece.hasColor(sourcePiece.getColor().getReverseColor())) {
-                throw new IllegalCommandException("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
+            if (!targetPiece.isSameColor(sourcePiece.getColor().getReverseColor())) {
+                throw new IllegalCommandException(ExceptionMessage.PAWN_DIAGONAL_MOVE_EXCEPTION_MESSAGE);
             }
         }
 
         if (sourcePosition.isVertical(targetPosition)) {
-            if (!targetPiece.hasColor(Piece.Color.NOCOLOR)) {
-                throw new IllegalCommandException("폰은 기물이 위치하는 칸으로 이동할 수 없습니다.");
+            if (!targetPiece.isSameColor(Piece.Color.NOCOLOR)) {
+                throw new IllegalCommandException(ExceptionMessage.PAWN_VERTICAL_CAPTURE_EXCEPTION_MESSAGE);
             }
         }
     }

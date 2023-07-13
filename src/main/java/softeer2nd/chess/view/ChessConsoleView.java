@@ -3,6 +3,7 @@ package softeer2nd.chess.view;
 import softeer2nd.chess.domain.Board;
 import softeer2nd.chess.domain.Rank;
 import softeer2nd.chess.domain.pieces.Piece;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.Scanner;
@@ -58,12 +59,12 @@ public class ChessConsoleView implements ChessView {
     public String getCommandInput() {
         String input = scanner.nextLine();
 
-        veryfyCommandInput(input);
+        verifyCommandInput(input);
 
         return input;
     }
 
-    private static void veryfyCommandInput(String input) {
+    private static void verifyCommandInput(String input) {
         verifyCommandType(input);
 
         if (input.startsWith(MOVE)) {
@@ -88,7 +89,7 @@ public class ChessConsoleView implements ChessView {
         String targetPosition = inputArray[2];
 
         if (!hasCorrectPositionFormat(startPosition) || !hasCorrectPositionFormat(targetPosition)) {
-            throw new IllegalCommandException();
+            throw new IllegalCommandException(ExceptionMessage.FORMAT_EXCEPTION_MESSAGE);
         }
     }
 
@@ -112,7 +113,7 @@ public class ChessConsoleView implements ChessView {
     public String getCommandInput(Scanner scanner) {
         String input = scanner.nextLine();
 
-        veryfyCommandInput(input);
+        verifyCommandInput(input);
 
         return input;
     }

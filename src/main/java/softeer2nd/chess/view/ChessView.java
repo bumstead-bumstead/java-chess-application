@@ -9,6 +9,4 @@ public interface ChessView {
 
     void showBoard(Board board);
     String getCommandInput();
-
-
 }
