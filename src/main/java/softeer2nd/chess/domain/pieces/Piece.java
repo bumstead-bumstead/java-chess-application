@@ -162,7 +162,7 @@ public abstract class Piece {
         return this.type == Type.NO_PIECE;
     }
 
-    public void verifySameColor(Piece piece) {
+    public void verifyAlly(Piece piece) {
         if (this.hasColor(piece.color)) {
             throw new IllegalCommandException("아군 기물이 존재하는 위치입니다.");
         }

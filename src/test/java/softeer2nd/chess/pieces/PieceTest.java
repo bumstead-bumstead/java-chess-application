@@ -82,7 +82,7 @@ public class PieceTest {
     @MethodSource("providePiecesForVerifySameColor")
     @DisplayName("verifySameColor 테스트")
     void verifySameColor(Piece piece, Piece targetPiece) {
-        assertThrows(IllegalCommandException.class, () -> piece.verifySameColor(targetPiece));
+        assertThrows(IllegalCommandException.class, () -> piece.verifyAlly(targetPiece));
     }
 
     private static Stream<Arguments> providePiecesForVerifySameColor() {
