@@ -89,7 +89,7 @@ public class Rank {
         List<Piece> result = new ArrayList<>();
 
         pieces.stream()
-                .filter(piece -> piece.hasColor(color))
+                .filter(piece -> piece.isSameColor(color))
                 .forEach(result::add);
 
         return result;
@@ -113,7 +113,7 @@ public class Rank {
 
     public int count(Piece.Color color, Piece.Type type) {
         int pieceCount = (int) pieces.stream()
-                .filter(piece -> piece.hasType(type) && piece.hasColor(color))
+                .filter(piece -> piece.isSameType(type) && piece.isSameColor(color))
                 .count();
 
         return pieceCount;

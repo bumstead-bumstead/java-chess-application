@@ -2,6 +2,7 @@ package softeer2nd.chess.domain.pieces;
 
 import softeer2nd.chess.domain.AvailableDirections;
 import softeer2nd.chess.domain.Position;
+import softeer2nd.chess.exceptions.ExceptionMessage;
 import softeer2nd.chess.exceptions.IllegalCommandException;
 
 import java.util.Arrays;
@@ -150,11 +151,11 @@ public abstract class Piece {
         return type.getBlackRepresentation();
     }
 
-    public boolean hasColor(Color color) {
+    public boolean isSameColor(Color color) {
         return this.color == color;
     }
 
-    public boolean hasType(Type type) {
+    public boolean isSameType(Type type) {
         return this.type == type;
     }
 
@@ -163,13 +164,13 @@ public abstract class Piece {
     }
 
     public void verifyAlly(Piece piece) {
-        if (this.hasColor(piece.color)) {
-            throw new IllegalCommandException("아군 기물이 존재하는 위치입니다.");
+        if (this.isSameColor(piece.color)) {
+            throw new IllegalCommandException(ExceptionMessage.CAPTURE_ALLY_EXCEPTION_MESSAGE);
         }
     }
     public void verifyMovePosition(Position sourcePosition, Position targetPosition) throws RuntimeException {
         if (!isValidPosition(targetPosition) || !isReachablePosition(sourcePosition, targetPosition)) {
-            throw new IllegalCommandException("해당 위치로 이동할 수 없습니다.");
+            throw new IllegalCommandException(ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
         }
     }
 

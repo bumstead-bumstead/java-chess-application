@@ -56,7 +56,7 @@ public class PieceTest {
     @ParameterizedTest
     @MethodSource("provideColorForHasColor")
     void hasColor(Piece piece, Piece.Color color, boolean result) {
-        assertEquals(result, piece.hasColor(color));
+        assertEquals(result, piece.isSameColor(color));
     }
 
     private static Stream<Arguments> provideColorForHasColor() {
