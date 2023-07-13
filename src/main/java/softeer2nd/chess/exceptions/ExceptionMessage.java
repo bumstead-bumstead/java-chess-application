@@ -9,5 +9,6 @@ public class ExceptionMessage {
     public static final String NO_PIECE_MOVE_EXCEPTION_MESSAGE = "기물이 존재하지 않는 위치입니다.";
     public static final String CAPTURE_ALLY_EXCEPTION_MESSAGE = "아군 기물이 존재하는 위치입니다.";
     public static final String UNREACHABLE_POSITION_EXCEPTION_MESSAGE = "해당 위치로 이동할 수 없습니다.";
+    public static final String BOARD_RANGE_EXCEPTION_MESSAGE = "보드 범위를 넘어섰습니다.";
 
 }

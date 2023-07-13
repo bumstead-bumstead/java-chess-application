@@ -63,6 +63,8 @@ public class ChessGame {
         verifyTurn(movePiece);
         movePiece.verifyAlly(targetPiece);
         movePiece.verifyMovePosition(sourcePosition, targetPosition);
+        board.verifyPositionRange(sourcePosition);
+        board.verifyPositionRange(targetPosition);
         board.verifyBlockedByPiece(sourcePosition, targetPosition);
 
         if (movePiece.isSameType(Piece.Type.PAWN)) {

@@ -9,8 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static softeer2nd.chess.domain.Board.isValidPosition;
-
 public abstract class Piece {
 
     public enum Color {
@@ -169,7 +167,7 @@ public abstract class Piece {
         }
     }
     public void verifyMovePosition(Position sourcePosition, Position targetPosition) throws RuntimeException {
-        if (!isValidPosition(targetPosition) || !isReachablePosition(sourcePosition, targetPosition)) {
+        if (!isReachablePosition(sourcePosition, targetPosition)) {
             throw new IllegalCommandException(ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
         }
     }

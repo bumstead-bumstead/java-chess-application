@@ -153,6 +153,12 @@ public class Board {
                 targetPosition.getColumn() > -1;
     }
 
+    public void verifyPositionRange(Position position) {
+        if (!isValidPosition(position)) {
+            throw new IllegalCommandException(ExceptionMessage.BOARD_RANGE_EXCEPTION_MESSAGE);
+        }
+    }
+
     public void verifyPawnCapture(Position sourcePosition, Position targetPosition) {
         Piece targetPiece = findPiece(targetPosition);
         Piece sourcePiece = findPiece(sourcePosition);
