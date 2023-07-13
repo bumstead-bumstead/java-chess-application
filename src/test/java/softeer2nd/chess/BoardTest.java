@@ -13,7 +13,6 @@ import softeer2nd.chess.exceptions.IllegalCommandException;
 import softeer2nd.chess.utils.ChessPositionParser;
 import softeer2nd.chess.view.ChessConsoleView;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,47 +64,6 @@ class BoardTest {
         board.setPiece(position, piece);
 
         assertEquals(piece, board.findPiece(position));
-    }
-
-    @Test
-    @DisplayName("정렬 기능 테스트_오름차순")
-    public void sort() {
-        board.initializeEmpty();
-
-        addPiece(new Position("f1"), createBlackPawn());
-        addPiece(new Position("a2"), createBlackBishop());
-        addPiece(new Position("b3"), createBlackRook());
-        addPiece(new Position("d3"), createBlackQueen());
-
-        List<Piece> expectedResult = List.of(createBlackPawn(),
-                createBlackBishop(),
-                createBlackRook(),
-                createBlackQueen());
-
-        List<Piece> actualResult = board.getSortedPiecesAscending(Piece.Color.BLACK);
-
-        assertEquals(actualResult, expectedResult);
-    }
-
-    @Test
-    @DisplayName("정렬 기능 테스트_내림차순")
-    public void sortDescending() {
-        board.initializeEmpty();
-
-        addPiece(new Position("f1"), createBlackPawn());
-        addPiece(new Position("a2"), createBlackBishop());
-        addPiece(new Position("b3"), createBlackRook());
-        addPiece(new Position("d3"), createBlackQueen());
-
-        List<Piece> expectedResult = List.of(createBlackQueen(),
-                createBlackRook(),
-                createBlackBishop(),
-                createBlackPawn()
-                );
-
-        List<Piece> actualResult = board.getSortedPiecesDescending(Piece.Color.BLACK);
-
-        assertEquals(actualResult, expectedResult);
     }
 
     @Test
@@ -178,8 +136,5 @@ class BoardTest {
                 Arguments.of(createBlackRook(), new Position(0, 4), new Position(2, 4)),
                 Arguments.of(createBlackRook(), new Position(0, 4), new Position(3, 4))
         );
-    }
-    private void addPiece(Position position, Piece piece) {
-        board.setPiece(position, piece);
     }
 }

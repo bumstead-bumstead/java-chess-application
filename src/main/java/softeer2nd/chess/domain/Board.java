@@ -59,16 +59,6 @@ public class Board {
         rank.set(position.getColumn(), createBlank());
     }
 
-    public int pieceCount() {
-        int numberOfPieces = 0;
-
-        for (Rank rank : pieces) {
-            numberOfPieces += rank.count();
-        }
-
-        return numberOfPieces;
-    }
-
     public int count(Piece.Color color, Piece.Type type) {
         int number = 0;
 
@@ -85,29 +75,6 @@ public class Board {
         return rank.get(position.getColumn());
     }
 
-    public List<Piece> getSortedPiecesAscending(Piece.Color color) {
-        List<Piece> result = collectPieces(color);
-
-        result.sort((piece1, piece2) -> (int) (piece1.getType().getScore() - piece2.getType().getScore()));
-
-        return result;
-    }
-
-    public List<Piece> getSortedPiecesDescending(Piece.Color color) {
-        List<Piece> result = collectPieces(color);
-
-        result.sort((piece1, piece2) -> (int) (piece2.getType().getScore() - piece1.getType().getScore()));
-
-        return result;
-    }
-
-    private List<Piece> collectPieces(Piece.Color color) {
-        List<Piece> result = new ArrayList<>();
-
-        for (Rank rank : pieces) result.addAll(rank.collectPieces(color));
-
-        return result;
-    }
 
     public List<Piece> getPiecesOfColumn(Piece.Color targetColor, int column) {
         List<Piece> piecesOfColumn = new ArrayList<>();
@@ -121,13 +88,6 @@ public class Board {
         }
 
         return piecesOfColumn;
-    }
-
-    public static boolean isValidPosition(Position targetPosition) {
-        return targetPosition.getRow() < Board.BOARD_LENGTH &&
-                targetPosition.getRow() > -1 &&
-                targetPosition.getColumn() < Board.BOARD_LENGTH &&
-                targetPosition.getColumn() > -1;
     }
 
     public void verifyBlockedByPiece(Position sourcePosition, Position targetPosition) {
@@ -181,6 +141,13 @@ public class Board {
         } else {
             return 0;
         }
+    }
+
+    public static boolean isValidPosition(Position targetPosition) {
+        return targetPosition.getRow() < Board.BOARD_LENGTH &&
+                targetPosition.getRow() > -1 &&
+                targetPosition.getColumn() < Board.BOARD_LENGTH &&
+                targetPosition.getColumn() > -1;
     }
 
     public void verifyPawnCapture(Position sourcePosition, Position targetPosition) {
