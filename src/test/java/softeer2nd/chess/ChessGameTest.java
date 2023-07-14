@@ -77,6 +77,7 @@ public class ChessGameTest {
     void verifyPawnDiagonalMoveFail(Position targetPosition) {
         Position sourcePosition = new Position(1, 3);
 
+        chessGame.setTurn(Piece.Color.BLACK);
         Exception exception = assertThrows(IllegalCommandException.class, () -> chessGame.move(sourcePosition, targetPosition));
         assertEquals(exception.getMessage(), ExceptionMessage.PAWN_DIAGONAL_MOVE_EXCEPTION_MESSAGE);
     }
@@ -113,6 +114,7 @@ public class ChessGameTest {
 
         chessGame.setTurn(Piece.Color.BLACK);
         chessGame.move(sourcePosition, new Position(3, 3));
+        chessGame.setTurn(Piece.Color.BLACK);
         Exception exception = assertThrows(IllegalCommandException.class, () -> chessGame.move(new Position(3, 3), new Position(5, 3)));
         assertEquals(exception.getMessage(), ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
     }

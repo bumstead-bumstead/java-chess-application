@@ -7,7 +7,6 @@ import java.util.List;
 public class AvailableDirections {
     List<Piece.Direction> availableDirections;
 
-
     public AvailableDirections(List <Piece.Direction> list) {
         this.availableDirections = list;
     }

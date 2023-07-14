@@ -20,6 +20,8 @@ public class ChessConsoleView implements ChessView {
     private static final String BLACK_SCORE_MESSAGE = "흑색 점수 : ";
     private static final String WHITE_SCORE_MESSAGE = "백색 점수 : ";
     private static final String WINNER_MESSAGE = "의 승리입니다.";
+    public static final String COMMAND_INFORMATION_MESSAGE = "명령을 입력해주세요. : move, score, end";
+    public static final String TURN_MESSAGE = " 턴입니다.";
 
     Scanner scanner = new Scanner(System.in);
 
@@ -74,7 +76,7 @@ public class ChessConsoleView implements ChessView {
 
     private static void verifyCommandType(String input) {
         if (!input.startsWith(MOVE) && !input.equals(END) && !input.equals(SCORE)) {
-            throw new IllegalCommandException();
+            throw new IllegalCommandException(ExceptionMessage.FORMAT_EXCEPTION_MESSAGE);
         }
     }
 
@@ -82,7 +84,7 @@ public class ChessConsoleView implements ChessView {
         String[] inputArray = input.split(" ");
 
         if (!hasCorrectArgumentNumber(inputArray)) {
-            throw new IllegalCommandException();
+            throw new IllegalCommandException(ExceptionMessage.FORMAT_EXCEPTION_MESSAGE);
         }
 
         String startPosition = inputArray[1];
@@ -119,7 +121,7 @@ public class ChessConsoleView implements ChessView {
     }
 
     public void printTurnMessage(Piece.Color color) {
-        System.out.println(color.name() + " 턴입니다.");
-        System.out.println("명령을 입력해주세요. : move, score, end");
+        System.out.println(color.name() + TURN_MESSAGE);
+        System.out.println(COMMAND_INFORMATION_MESSAGE);
     }
 }

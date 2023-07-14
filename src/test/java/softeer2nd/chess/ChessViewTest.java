@@ -30,7 +30,7 @@ class ChessViewTest {
         InputStream inputStream = getInputStream(input);
         System.setIn(inputStream);
         Exception exception = assertThrows(IllegalCommandException.class, () -> chessView.getCommandInput(new Scanner(System.in)));
-        assertEquals(exception.getMessage(), ExceptionMessage.FORMAT_EXCEPTION_MESSAGE);
+        assertEquals(ExceptionMessage.FORMAT_EXCEPTION_MESSAGE, exception.getMessage());
     }
 
     @ParameterizedTest

@@ -45,7 +45,6 @@ public class ChessApp {
     }
 
     private void gameOverRoutine() {
-        chessView.showBoard(chessGame.getBoard());
         chessView.printWinMessage(chessGame.getTurn().getReverseColor());
         chessView.printEndMessage();
     }

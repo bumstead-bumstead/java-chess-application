@@ -40,7 +40,6 @@ class KingTest {
     void verifyNonKingMove(int row, int column) {
         Exception exception = assertThrows(IllegalCommandException.class, () -> king.verifyMovePosition(testPosition, new Position(row, column)));
         assertEquals(exception.getMessage(), ExceptionMessage.UNREACHABLE_POSITION_EXCEPTION_MESSAGE);
-
     }
 
     private static Stream<Arguments> providePositionForVerifyMoveSuccess() {

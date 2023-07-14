@@ -126,7 +126,6 @@ public abstract class Piece {
     protected final Type type;
     protected final AvailableDirections availableDirections;
 
-
     public Piece(Color color, Type type, AvailableDirections availableDirections) {
         this.color = color;
         this.type = type;
